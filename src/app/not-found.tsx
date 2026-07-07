@@ -21,13 +21,13 @@ export default function NotFound() {
 
                 {/* Title */}
                 <h2 className="font-display text-2xl tracking-wide uppercase mb-4">
-                    Page Not Found
+                    Sayfa Bulunamadı
                 </h2>
 
                 {/* Message */}
                 <p className="text-muted-foreground mb-8 leading-relaxed">
-                    The page you're looking for doesn't exist or has been moved.
-                    Let's get you back on track.
+                    Aradığınız sayfa mevcut değil veya taşınmış.
+                    Sizi tekrar yola koyalım.
                 </p>
 
                 {/* Action Button */}
@@ -36,7 +36,7 @@ export default function NotFound() {
                     className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-accent-coral hover:bg-accent-coral/90 text-white font-medium transition-colors"
                 >
                     <Home size={20} />
-                    Return to Home
+                    Ana Sayfaya Dön
                 </Link>
             </div>
         </div>

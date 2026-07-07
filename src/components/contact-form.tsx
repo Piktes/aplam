@@ -13,8 +13,8 @@ interface ContactFormProps {
 
 export function ContactForm({
     successImage,
-    successTitle = "Message Sent!",
-    successMessage = "Mesajınız Heiraza'ya iletilmiştir.",
+    successTitle = "Mesajınız Gönderildi!",
+    successMessage = "Mesajınız Begüm Atak'a iletilmiştir.",
 }: ContactFormProps) {
     const [isPending, startTransition] = useTransition();
     const [showSuccess, setShowSuccess] = useState(false);
@@ -41,17 +41,17 @@ export function ContactForm({
                     const data = await response.json().catch(() => ({}));
 
                     if (data.error === "invalid_name") {
-                        setError("Please enter a valid name.");
+                        setError("Lütfen geçerli bir isim girin.");
                     } else if (data.error === "invalid_email") {
-                        setError("Please enter a valid email address.");
+                        setError("Lütfen geçerli bir e-posta adresi girin.");
                     } else if (data.error === "too_many_requests") {
-                        setError("Too many requests. Please wait a moment.");
+                        setError("Çok fazla istek gönderildi. Lütfen biraz bekleyin.");
                     } else {
-                        setError("Failed to send message. Please try again.");
+                        setError("Mesaj gönderilemedi. Lütfen tekrar deneyin.");
                     }
                 }
             } catch {
-                setError("Network error. Please check your connection.");
+                setError("Ağ hatası. Lütfen bağlantınızı kontrol edin.");
             }
         });
     };
@@ -74,7 +74,7 @@ export function ContactForm({
                     {/* Name Field */}
                     <div>
                         <label htmlFor="name" className="block text-sm font-medium mb-2">
-                            Your Name
+                            Adınız
                         </label>
                         <div className="relative">
                             <User
@@ -87,7 +87,7 @@ export function ContactForm({
                                 name="name"
                                 required
                                 minLength={2}
-                                placeholder="John Doe"
+                                placeholder="Adınız Soyadınız"
                                 className="input-field pl-12"
                             />
                         </div>
@@ -96,27 +96,27 @@ export function ContactForm({
                     {/* Email Field - Smart Autocomplete */}
                     <div>
                         <label htmlFor="email" className="block text-sm font-medium mb-2">
-                            Email Address
+                            E-posta Adresiniz
                         </label>
                         <SmartEmailInput
                             id="email"
                             name="email"
                             required
-                            placeholder="john@example.com"
+                            placeholder="ornek@eposta.com"
                         />
                     </div>
 
                     {/* Message Field - No minimum length */}
                     <div>
                         <label htmlFor="message" className="block text-sm font-medium mb-2">
-                            Your Message
+                            Mesajınız
                         </label>
                         <textarea
                             id="message"
                             name="message"
                             required
                             rows={5}
-                            placeholder="Write your message here..."
+                            placeholder="Mesajınızı buraya yazın..."
                             className="input-field resize-none"
                         />
                     </div>
@@ -137,12 +137,12 @@ export function ContactForm({
                         {isPending ? (
                             <>
                                 <Loader2 size={18} className="animate-spin" />
-                                Sending...
+                                Gönderiliyor...
                             </>
                         ) : (
                             <>
                                 <Send size={18} />
-                                Send Message
+                                Mesaj Gönder
                             </>
                         )}
                     </button>
@@ -163,7 +163,7 @@ export function ContactForm({
                         <button
                             onClick={() => setShowSuccess(false)}
                             className="absolute top-4 right-4 z-10 p-2 rounded-full bg-black/30 hover:bg-black/50 transition-colors"
-                            aria-label="Close"
+                            aria-label="Kapat"
                         >
                             <X size={20} className="text-white" />
                         </button>
@@ -173,7 +173,7 @@ export function ContactForm({
                             <div className="w-full aspect-[16/9] relative bg-neutral-900 rounded-t-2xl overflow-hidden">
                                 <Image
                                     src={successImage}
-                                    alt="Success"
+                                    alt="Başarılı"
                                     fill
                                     className="object-contain w-full h-full"
                                 />
@@ -197,7 +197,7 @@ export function ContactForm({
                                 onClick={() => setShowSuccess(false)}
                                 className="mt-8 btn-primary w-full"
                             >
-                                Continue
+                                Devam Et
                             </button>
                         </div>
                     </div>

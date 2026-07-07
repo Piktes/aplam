@@ -72,7 +72,7 @@ export function GalleryManager({
             setSelectedImages(prev => [...prev, ...compressedImages]);
         } catch (error) {
             console.error("Error compressing images:", error);
-            alert("Failed to process images. Please try again.");
+            alert("Görseller işlenemedi. Lütfen tekrar deneyin.");
         }
 
         // Reset input so same file can be selected again
@@ -135,7 +135,7 @@ export function GalleryManager({
                         className="btn-primary flex items-center gap-2 text-sm"
                     >
                         <Plus size={16} />
-                        Add Images
+                        Görsel Ekle
                     </button>
                 </div>
             )}
@@ -146,7 +146,7 @@ export function GalleryManager({
             {isAdding && (
                 <div className="mb-6 p-6 rounded-xl border border-accent-coral/30 bg-accent-coral/5">
                     <div className="flex items-center justify-between mb-4">
-                        <h3 className="font-medium text-lg">Upload Gallery Images</h3>
+                        <h3 className="font-medium text-lg">Galeri Görselleri Yükle</h3>
                         <button onClick={resetForm} className="p-1 hover:bg-muted rounded">
                             <X size={18} />
                         </button>
@@ -163,7 +163,7 @@ export function GalleryManager({
                                 }`}
                         >
                             <Grid3X3 size={16} />
-                            Batch Upload
+                            Toplu Yükleme
                         </button>
                         <button
                             type="button"
@@ -174,7 +174,7 @@ export function GalleryManager({
                                 }`}
                         >
                             <ImageIcon size={16} />
-                            Single with Details
+                             Detaylı Tekli
                         </button>
                     </div>
 
@@ -198,12 +198,12 @@ export function GalleryManager({
                             <Upload size={40} className="text-muted-foreground mb-3" />
                             <span className="text-muted-foreground">
                                 {isMultipleUpload
-                                    ? "Click to select multiple images"
-                                    : "Click to select an image"
+                                    ? "Birden fazla görsel seçmek için tıklayın"
+                                    : "Bir görsel seçmek için tıklayın"
                                 }
                             </span>
                             <span className="text-xs text-muted-foreground/60 mt-1">
-                                JPG, PNG, WebP supported
+                                JPG, PNG, WebP desteklenir
                             </span>
                         </label>
                     ) : (
@@ -240,22 +240,22 @@ export function GalleryManager({
                             {!isMultipleUpload && selectedImages.length === 1 && (
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t border-border">
                                     <div>
-                                        <label className="block text-sm font-medium mb-2">Title (Optional)</label>
+                                        <label className="block text-sm font-medium mb-2">Başlık (İsteğe Bağlı)</label>
                                         <input
                                             type="text"
                                             value={title}
                                             onChange={(e) => setTitle(e.target.value)}
-                                            placeholder="Image title..."
+                                            placeholder="Görsel başlığı..."
                                             className="input-field"
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-medium mb-2">Caption (Optional)</label>
+                                        <label className="block text-sm font-medium mb-2">Açıklama (İsteğe Bağlı)</label>
                                         <input
                                             type="text"
                                             value={caption}
                                             onChange={(e) => setCaption(e.target.value)}
-                                            placeholder="Image caption..."
+                                            placeholder="Görsel açıklaması..."
                                             className="input-field"
                                         />
                                     </div>
@@ -264,13 +264,13 @@ export function GalleryManager({
 
                             {/* Category (for all modes) */}
                             <div>
-                                <label className="block text-sm font-medium mb-2">Category (Optional)</label>
+                                <label className="block text-sm font-medium mb-2">Kategori (İsteğe Bağlı)</label>
                                 <div className="flex gap-2">
                                     <input
                                         type="text"
                                         value={category}
                                         onChange={(e) => setCategory(e.target.value)}
-                                        placeholder="e.g., concerts, backstage, studio"
+                                        placeholder="örn: konserler, sahne arkası, stüdyo"
                                         className="input-field flex-1"
                                         list="categories"
                                     />
@@ -294,17 +294,17 @@ export function GalleryManager({
                             {isSubmitting ? (
                                 <>
                                     <Loader2 size={16} className="animate-spin" />
-                                    Uploading {selectedImages.length} image{selectedImages.length > 1 ? "s" : ""}...
+                                    {selectedImages.length} görsel yükleniyor...
                                 </>
                             ) : (
                                 <>
                                     <Upload size={16} />
-                                    Upload {selectedImages.length} image{selectedImages.length > 1 ? "s" : ""}
+                                    {selectedImages.length} Görsel Yükle
                                 </>
                             )}
                         </button>
                         <button onClick={resetForm} className="btn-secondary text-sm">
-                            Cancel
+                            İptal
                         </button>
                     </div>
                 </div>
@@ -342,7 +342,7 @@ export function GalleryManager({
                                             <button
                                                 type="submit"
                                                 className="w-8 h-8 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition-colors"
-                                                title="Move earlier"
+                                                title="Öne taşı"
                                             >
                                                 <ArrowUp size={14} className="text-white" />
                                             </button>
@@ -353,7 +353,7 @@ export function GalleryManager({
                                             <button
                                                 type="submit"
                                                 className="w-8 h-8 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition-colors"
-                                                title="Move later"
+                                                title="Arkaya taşı"
                                             >
                                                 <ArrowDown size={14} className="text-white" />
                                             </button>
@@ -371,7 +371,7 @@ export function GalleryManager({
                                                 ? "bg-white/20 hover:bg-white/30 text-white"
                                                 : "bg-accent-coral hover:bg-accent-coral/80 text-white"
                                                 }`}
-                                            title={image.isActive ? "Hide from gallery" : "Show in gallery"}
+                                            title={image.isActive ? "Galeriden gizle" : "Galeride göster"}
                                         >
                                             {image.isActive ? <EyeOff size={16} /> : <Eye size={16} />}
                                         </button>
@@ -381,7 +381,7 @@ export function GalleryManager({
                                         <button
                                             type="submit"
                                             className="w-10 h-10 rounded-full bg-red-500/80 hover:bg-red-500 flex items-center justify-center transition-colors"
-                                            title="Delete image"
+                                            title="Görseli sil"
                                         >
                                             <Trash2 size={16} className="text-white" />
                                         </button>
@@ -397,7 +397,7 @@ export function GalleryManager({
                             )}
                             {!image.isActive && (
                                 <div className="absolute top-2 right-2 bg-muted text-muted-foreground text-xs px-2 py-1 rounded">
-                                    Hidden
+                                    Gizli
                                 </div>
                             )}
                         </div>
@@ -406,19 +406,19 @@ export function GalleryManager({
             ) : (
                 <div className="text-center py-10 text-muted-foreground">
                     <ImageIcon className="mx-auto mb-4" size={40} />
-                    <p>No gallery images yet</p>
-                    <p className="text-sm mt-1">Add your first images above</p>
+                    <p>Henüz galeri görseli yok</p>
+                    <p className="text-sm mt-1">Yukarıdan ilk görsellerinizi ekleyin</p>
                 </div>
             )}
 
             {/* Info */}
             <div className="mt-6 p-4 rounded-xl bg-muted/50 text-sm text-muted-foreground">
-                <p className="font-medium text-foreground mb-1">Gallery Features:</p>
+                <p className="font-medium text-foreground mb-1">Galeri Özellikleri:</p>
                 <ul className="list-disc list-inside space-y-1">
-                    <li>Batch upload multiple images at once</li>
-                    <li>Images with <Eye size={12} className="inline text-accent-coral" /> are shown in the public gallery</li>
-                    <li>Use categories to let visitors filter photos</li>
-                    <li>Hover effects & lightbox included in frontend display</li>
+                    <li>Birden fazla görseli aynı anda toplu yükleyin</li>
+                    <li><Eye size={12} className="inline text-accent-coral" /> işaretli görseller halka açık galeride görünür</li>
+                    <li>Ziyaretçilerin fotoğrafları filtrelemesi için kategorileri kullanın</li>
+                    <li>Ön yüz görünümünde hover efektleri ve lightbox dahildir</li>
                 </ul>
             </div>
         </div>

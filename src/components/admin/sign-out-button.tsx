@@ -22,14 +22,14 @@ export function SignOutButton({ className = "", showText = true }: SignOutButton
       onClick={handleSignOut}
       disabled={isLoading}
       className={`flex items-center gap-2 px-4 py-2 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-500 transition-colors disabled:opacity-50 ${className}`}
-      title="Sign Out"
+      title="Çıkış Yap"
     >
       {isLoading ? (
         <Loader2 size={16} className="animate-spin" />
       ) : (
         <LogOut size={16} />
       )}
-      {showText && <span className="text-sm font-medium">Sign Out</span>}
+      {showText && <span className="text-sm font-medium">Çıkış Yap</span>}
     </button>
   );
 }

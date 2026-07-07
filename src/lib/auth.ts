@@ -96,7 +96,7 @@ export const authOptions: AuthOptions = {
         // Redirect callback fix for reverse proxy / LiteSpeed header duplication
         async redirect({ url, baseUrl }) {
             // baseUrl can sometimes come as "https://a, https://a" -> take first
-            const safeBase = first(baseUrl) || process.env.NEXTAUTH_URL || "https://test.heiraza.com";
+            const safeBase = first(baseUrl) || process.env.NEXTAUTH_URL || "https://begumatak.com";
 
             // Relative redirect
             if (url.startsWith("/")) return `${safeBase}${url}`;

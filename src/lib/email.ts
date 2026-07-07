@@ -20,7 +20,7 @@ const gmailTransporter = nodemailer.createTransport({
 
 // Custom SMTP transporter - for ALL emails (event notifications + replies)
 const smtpTransporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST || "mail.heiraza.com",
+    host: process.env.SMTP_HOST || "mail.begumatak.com",
     port: parseInt(process.env.SMTP_PORT || "587"),
     secure: false, // TLS
     auth: {
@@ -75,13 +75,13 @@ function formatEventVariables(event: {
 
     return {
         event_title: event.title,
-        event_date: eventDate.toLocaleDateString("en-US", {
+        event_date: eventDate.toLocaleDateString("tr-TR", {
             weekday: "long",
             month: "long",
             day: "numeric",
             year: "numeric",
         }),
-        event_time: eventDate.toLocaleTimeString("en-US", {
+        event_time: eventDate.toLocaleTimeString("tr-TR", {
             hour: "2-digit",
             minute: "2-digit",
         }),
@@ -89,7 +89,7 @@ function formatEventVariables(event: {
         event_city: event.city,
         event_country: event.country,
         event_location: `${event.venue}, ${event.city}, ${event.country}`,
-        event_price: event.price || "TBA",
+        event_price: event.price || "Açıklanacak",
         event_description: event.description || "",
         event_image_url: event.imageUrl || "",
         ticket_link: event.ticketUrl || "",
@@ -121,7 +121,7 @@ export async function sendEventEmail(
 ): Promise<{ success: boolean; recipientCount: number; error?: string }> {
     try {
         console.log(`[EMAIL] sendEventEmail called with type: ${type}, event: ${event.title}`);
-        console.log(`[EMAIL] SMTP config - Host: ${process.env.SMTP_HOST || 'mail.heiraza.com'}, User: ${process.env.SMTP_USER || 'NOT SET'}`);
+        console.log(`[EMAIL] SMTP config - Host: ${process.env.SMTP_HOST || 'mail.begumatak.com'}, User: ${process.env.SMTP_USER || 'NOT SET'}`);
         console.log(`[EMAIL] SMTP Password: ${process.env.SMTP_PASSWORD ? 'SET' : 'NOT SET'}`);
 
         // Get site settings for templates
@@ -138,15 +138,15 @@ export async function sendEventEmail(
         switch (type) {
             case "announcement":
                 template = settings.announcementTemplate;
-                subject = `🎵 New Event: ${event.title}`;
+                subject = `🎭 Yeni Etkinlik: ${event.title}`;
                 break;
             case "reminder":
                 template = settings.reminderTemplate;
-                subject = `⏰ Reminder: ${event.title} is in 1 week!`;
+                subject = `⏰ Hatırlatma: ${event.title} 1 hafta sonra!`;
                 break;
             case "soldOut":
                 template = settings.soldOutTemplate;
-                subject = `🔥 ${event.title} is Sold Out!`;
+                subject = `🔥 ${event.title} Tükendi!`;
                 break;
         }
 
@@ -177,7 +177,7 @@ export async function sendEventEmail(
         const htmlContent = replaceVariables(template, variables);
 
         // Get base URL for unsubscribe links and images
-        const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://heiraza.com";
+        const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://begumatak.com";
         // Prepare CID attachments array for embedded images
         let attachments: { filename: string; content: Buffer; cid: string; contentType: string }[] = [];
 
@@ -272,11 +272,11 @@ export async function sendEventEmail(
                         contentType,
                     });
 
-                    notificationLogoHtml = `<div style="margin-top: 30px; text-align: center;"><img src="cid:notification-logo" alt="Heiraza" style="max-width: 600px; max-height: 240px; object-fit: contain;" /></div>`;
+                    notificationLogoHtml = `<div style="margin-top: 30px; text-align: center;"><img src="cid:notification-logo" alt="Begüm Atak" style="max-width: 600px; max-height: 240px; object-fit: contain;" /></div>`;
                 }
             } else {
                 // Regular URL
-                notificationLogoHtml = `<div style="margin-top: 30px; text-align: center;"><img src="${settings.notificationLogoUrl}" alt="Heiraza" style="max-width: 600px; max-height: 240px; object-fit: contain;" /></div>`;
+                notificationLogoHtml = `<div style="margin-top: 30px; text-align: center;"><img src="${settings.notificationLogoUrl}" alt="Begüm Atak" style="max-width: 600px; max-height: 240px; object-fit: contain;" /></div>`;
             }
         } else {
             console.log(`[EMAIL] Notification logo: NOT SET`);
@@ -307,21 +307,21 @@ export async function sendEventEmail(
                         ${htmlContent}
                         ${notificationLogoHtml}
                         <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; text-align: center; font-size: 12px; color: #888;">
-                            <p>You're receiving this because you subscribed to event alerts.</p>
-                            <p><a href="${unsubscribeLink}" style="color: #888;">Unsubscribe</a> from future emails</p>
+                            <p>Bu e-postayı etkinlik bildirimlerine abone olduğunuz için alıyorsunuz.</p>
+                            <p>Gelecek e-postalardan <a href="${unsubscribeLink}" style="color: #888;">abonelikten çıkın</a></p>
                         </div>
                     </div>
                 `;
 
                 // Use custom SMTP transporter (same as message replies)
-                const smtpFrom = process.env.SMTP_FROM || "heiraza@heiraza.com";
-                const domain = smtpFrom.split("@")[1] || "heiraza.com";
+                const smtpFrom = process.env.SMTP_FROM || "iletisim@begumatak.com";
+                const domain = smtpFrom.split("@")[1] || "begumatak.com";
 
                 // Generate unique Message-ID to prevent email threading
                 const uniqueMessageId = `<${Date.now()}-${Math.random().toString(36).substring(2, 15)}-${subscriber.id}@${domain}>`;
 
                 await smtpTransporter.sendMail({
-                    from: `"Heiraza" <${smtpFrom}>`,
+                    from: `"Begüm Atak" <${smtpFrom}>`,
                     to: subscriber.email,
                     subject,
                     html: fullEmailHtml,
@@ -394,15 +394,15 @@ export async function sendTestEmail(
         switch (type) {
             case "announcement":
                 template = settings.announcementTemplate;
-                subject += `New Event: ${event.title}`;
+                subject += `Yeni Etkinlik: ${event.title}`;
                 break;
             case "reminder":
                 template = settings.reminderTemplate;
-                subject += `Reminder: ${event.title}`;
+                subject += `Hatırlatma: ${event.title}`;
                 break;
             case "soldOut":
                 template = settings.soldOutTemplate;
-                subject += `Sold Out: ${event.title}`;
+                subject += `Tükendi: ${event.title}`;
                 break;
         }
 
@@ -414,9 +414,9 @@ export async function sendTestEmail(
         const htmlContent = replaceVariables(template, variables);
 
         // Use custom SMTP transporter (same as message replies)
-        const smtpFrom = process.env.SMTP_FROM || "heiraza@heiraza.com";
+        const smtpFrom = process.env.SMTP_FROM || "iletisim@begumatak.com";
         await smtpTransporter.sendMail({
-            from: `"Heiraza" <${smtpFrom}>`,
+            from: `"Begüm Atak" <${smtpFrom}>`,
             to,
             subject,
             html: htmlContent,
@@ -434,9 +434,9 @@ export async function sendTestEmail(
 // ========================================
 const DEFAULT_SIGNATURE = `
 <div style="font-family: Arial, sans-serif; color: #666;">
-    <p style="margin: 0;"><strong>Best regards,</strong></p>
-    <p style="margin: 5px 0 0 0;">Heiraza Team</p>
-    <p style="margin: 5px 0 0 0;"><a href="https://www.heiraza.com" style="color: #E8795E;">www.heiraza.com</a></p>
+    <p style="margin: 0;"><strong>Saygılarımızla,</strong></p>
+    <p style="margin: 5px 0 0 0;">Begüm Atak Ekibi</p>
+    <p style="margin: 5px 0 0 0;"><a href="https://www.begumatak.com" style="color: #E8795E;">www.begumatak.com</a></p>
 </div>
 `;
 
@@ -591,9 +591,9 @@ export async function sendMessageReply(
         `;
 
         // Use custom SMTP transporter for message replies
-        const smtpFrom = process.env.SMTP_FROM || "heiraza@test.heiraza.com";
+        const smtpFrom = process.env.SMTP_FROM || "iletisim@begumatak.com";
         await smtpTransporter.sendMail({
-            from: `"Heiraza" <${smtpFrom}>`,
+            from: `"Begüm Atak" <${smtpFrom}>`,
             to,
             subject,
             html: htmlContent,
@@ -634,7 +634,7 @@ export async function sendReply(
         `;
 
         await transporter.sendMail({
-            from: `"Heiraza" <${process.env.GMAIL_USER || process.env.EMAIL_USER}>`,
+            from: `"Begüm Atak" <${process.env.GMAIL_USER || process.env.EMAIL_USER}>`,
             to,
             subject,
             html: htmlContent,

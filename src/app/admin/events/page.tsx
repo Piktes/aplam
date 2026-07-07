@@ -63,11 +63,11 @@ export default function EventsPage() {
                 setEvents(events.map(e =>
                     e.id === id ? { ...e, isActive: !currentStatus } : e
                 ));
-                setMessage({ type: "success", text: currentStatus ? "Event hidden" : "Event visible" });
+                setMessage({ type: "success", text: currentStatus ? "Etkinlik gizlendi" : "Etkinlik görünür" });
                 setTimeout(() => setMessage(null), 2000);
             }
         } catch (error) {
-            setMessage({ type: "error", text: "Failed to update event" });
+            setMessage({ type: "error", text: "Etkinlik güncellenemedi" });
         }
     };
 
@@ -83,17 +83,17 @@ export default function EventsPage() {
                 setEvents(events.map(e =>
                     e.id === id ? { ...e, isSoldOut: !currentStatus } : e
                 ));
-                setMessage({ type: "success", text: !currentStatus ? "Marked as Sold Out" : "Available again" });
+                setMessage({ type: "success", text: !currentStatus ? "Tükendi olarak işaretlendi" : "Tekrar müsait" });
                 setTimeout(() => setMessage(null), 2000);
             }
         } catch (error) {
-            setMessage({ type: "error", text: "Failed to update event" });
+            setMessage({ type: "error", text: "Etkinlik güncellenemedi" });
         }
     };
 
     // Delete event
     const deleteEvent = async (id: number) => {
-        if (!confirm("Are you sure you want to delete this event?")) return;
+        if (!confirm("Bu etkinliği silmek istediğinizden emin misiniz?")) return;
 
         setDeletingId(id);
         try {
@@ -102,11 +102,11 @@ export default function EventsPage() {
             });
             if (res.ok) {
                 setEvents(events.filter(e => e.id !== id));
-                setMessage({ type: "success", text: "Event deleted" });
+                setMessage({ type: "success", text: "Etkinlik silindi" });
                 setTimeout(() => setMessage(null), 2000);
             }
         } catch (error) {
-            setMessage({ type: "error", text: "Failed to delete event" });
+            setMessage({ type: "error", text: "Etkinlik silinemedi" });
         } finally {
             setDeletingId(null);
         }
@@ -114,7 +114,7 @@ export default function EventsPage() {
 
     // Format date
     const formatDate = (date: Date) => {
-        return new Date(date).toLocaleDateString("en-US", {
+        return new Date(date).toLocaleDateString("tr-TR", {
             weekday: "short",
             month: "short",
             day: "numeric",
@@ -141,15 +141,15 @@ export default function EventsPage() {
     return (
         <div className="min-h-screen">
             {/* InfoBar */}
-            <InfoBar counter={`${upcomingEvents.length} upcoming, ${pastEvents.length} past`} />
+            <InfoBar counter={`${upcomingEvents.length} yaklaşan, ${pastEvents.length} geçmiş`} />
 
             <main className="max-w-5xl mx-auto px-4 pb-10">
                 {/* Page Header */}
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
                     <div>
-                        <h1 className="font-display text-display-sm sm:text-display-md tracking-wider uppercase">Events</h1>
+                        <h1 className="font-display text-display-sm sm:text-display-md tracking-wider uppercase">Etkinlikler</h1>
                         <p className="text-muted-foreground mt-1 text-sm sm:text-base">
-                            Manage concerts, tours, and shows.
+                            Konserleri, turneleri ve gösterileri yönetin.
                         </p>
                     </div>
                     <Link
@@ -157,7 +157,7 @@ export default function EventsPage() {
                         className="btn-primary flex items-center justify-center gap-2 text-sm w-full sm:w-auto"
                     >
                         <Plus size={18} />
-                        Add Event
+                        Etkinlik Ekle
                     </Link>
                 </div>
 
@@ -174,16 +174,16 @@ export default function EventsPage() {
                 <section className="mb-10">
                     <h2 className="font-display text-xl tracking-wide mb-4 flex items-center gap-2">
                         <Calendar className="text-accent-coral" size={20} />
-                        Upcoming Events ({upcomingEvents.length})
+                        Yaklaşan Etkinlikler ({upcomingEvents.length})
                     </h2>
 
                     {upcomingEvents.length === 0 ? (
                         <div className="glass-card p-8 text-center">
                             <Calendar className="mx-auto mb-4 text-muted-foreground" size={48} />
-                            <p className="text-muted-foreground">No upcoming events</p>
+                            <p className="text-muted-foreground">Yaklaşan etkinlik yok</p>
                             <Link href="/admin/events/new" className="btn-primary inline-flex items-center gap-2 mt-4">
                                 <Plus size={16} />
-                                Add Your First Event
+                                İlk Etkinliğinizi Ekleyin
                             </Link>
                         </div>
                     ) : (
@@ -208,7 +208,7 @@ export default function EventsPage() {
                     <section>
                         <h2 className="font-display text-xl tracking-wide mb-4 flex items-center gap-2 text-muted-foreground">
                             <Calendar size={20} />
-                            Past Events ({pastEvents.length})
+                            Geçmiş Etkinlikler ({pastEvents.length})
                         </h2>
 
                         <div className="space-y-4 opacity-60">
@@ -291,22 +291,22 @@ function EventCard({
                     <div className="flex flex-col gap-2">
                         {event.isFree && (
                             <span className="bg-green-500/10 text-green-600 text-xs font-medium px-3 py-1 rounded-full">
-                                🎉 Free
+                                🎉 Ücretsiz
                             </span>
                         )}
                         {event.isSoldOut && (
                             <span className="bg-red-500/10 text-red-500 text-xs font-medium px-3 py-1 rounded-full">
-                                Sold Out
+                                Tükendi
                             </span>
                         )}
                         {!event.isActive && (
                             <span className="bg-muted text-muted-foreground text-xs font-medium px-3 py-1 rounded-full">
-                                Hidden
+                                Gizli
                             </span>
                         )}
                         {isPast && (
                             <span className="bg-muted text-muted-foreground text-xs font-medium px-3 py-1 rounded-full">
-                                Past
+                                Geçmiş
                             </span>
                         )}
                     </div>
@@ -316,17 +316,17 @@ function EventCard({
                 <div className="flex flex-wrap gap-2 mt-3">
                     {event.announcementSent && (
                         <span className="bg-green-500/10 text-green-600 text-xs px-2 py-0.5 rounded flex items-center gap-1">
-                            ✉️ Announced
+                            ✉️ Duyuruldu
                         </span>
                     )}
                     {event.autoReminder && (
                         <span className="bg-blue-500/10 text-blue-500 text-xs px-2 py-0.5 rounded">
-                            Auto Reminder
+                            Otomatik Hatırlatma
                         </span>
                     )}
                     {event.autoSoldOut && (
                         <span className="bg-purple-500/10 text-purple-500 text-xs px-2 py-0.5 rounded">
-                            Auto Sold-Out Alert
+                            Otomatik Tükendi Uyarısı
                         </span>
                     )}
                 </div>
@@ -336,7 +336,7 @@ function EventCard({
                     <Link
                         href={`/admin/events/${event.id}/edit`}
                         className="p-2 rounded-lg hover:bg-muted transition-colors"
-                        title="Edit"
+                        title="Düzenle"
                     >
                         <Edit2 size={18} className="text-muted-foreground" />
                     </Link>
@@ -344,7 +344,7 @@ function EventCard({
                     <button
                         onClick={onToggleActive}
                         className="p-2 rounded-lg hover:bg-muted transition-colors"
-                        title={event.isActive ? "Hide event" : "Show event"}
+                        title={event.isActive ? "Etkinliği gizle" : "Etkinliği göster"}
                     >
                         {event.isActive ? (
                             <Eye size={18} className="text-accent-coral" />
@@ -356,7 +356,7 @@ function EventCard({
                     <button
                         onClick={onToggleSoldOut}
                         className="p-2 rounded-lg hover:bg-muted transition-colors"
-                        title={event.isSoldOut ? "Mark as available" : "Mark as sold out"}
+                        title={event.isSoldOut ? "Müsait olarak işaretle" : "Tükendi olarak işaretle"}
                     >
                         <TicketIcon size={18} className={event.isSoldOut ? "text-red-500" : "text-muted-foreground"} />
                     </button>
@@ -367,7 +367,7 @@ function EventCard({
                             target="_blank"
                             rel="noopener noreferrer"
                             className="p-2 rounded-lg hover:bg-muted transition-colors"
-                            title="View ticket link"
+                            title="Bilet bağlantısını gör"
                         >
                             <ExternalLink size={18} className="text-muted-foreground" />
                         </a>
@@ -377,7 +377,7 @@ function EventCard({
                         onClick={onDelete}
                         disabled={isDeleting}
                         className="p-2 rounded-lg hover:bg-red-50 dark:hover:bg-red-950 transition-colors ml-auto"
-                        title="Delete event"
+                        title="Etkinliği sil"
                     >
                         {isDeleting ? (
                             <Loader2 size={18} className="animate-spin text-red-500" />

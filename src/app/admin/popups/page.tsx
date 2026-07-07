@@ -173,7 +173,7 @@ export default async function PopupsPage() {
 
             <main className="max-w-5xl mx-auto px-4 pb-10">
                 <div className="mb-8">
-                    <h1 className="font-display text-display-md tracking-wider uppercase">Popup Manager</h1>
+                    <h1 className="font-display text-display-md tracking-wider uppercase">Açılır Pencereler</h1>
                     <p className="text-muted-foreground mt-2">Create and schedule promotional popups for your website.</p>
                 </div>
 

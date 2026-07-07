@@ -10,7 +10,7 @@ interface MobileNavProps {
     showShop?: boolean;
 }
 
-export function MobileNav({ artistName = "Heiraza", showVideos = true, showShop = true }: MobileNavProps) {
+export function MobileNav({ artistName = "Begüm Atak", showVideos = true, showShop = true }: MobileNavProps) {
     const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
@@ -33,12 +33,12 @@ export function MobileNav({ artistName = "Heiraza", showVideos = true, showShop 
     const handleLinkClick = () => setIsOpen(false);
 
     const navLinks = [
-        { href: "#concerts", label: "Concerts", show: true },
-        { href: "#videos", label: "Videos", show: showVideos },
-        { href: "#shop", label: "Shop", show: showShop },
-        { href: "#about", label: "About", show: true },
-        { href: "#contact", label: "Contact", show: true },
-        { href: "/press-kit", label: "Press Kit", show: true },
+        { href: "#concerts", label: "Etkinlikler", show: true },
+        { href: "#videos", label: "Videolar", show: showVideos },
+        { href: "#shop", label: "Mağaza", show: showShop },
+        { href: "#about", label: "Hakkında", show: true },
+        { href: "#contact", label: "İletişim", show: true },
+        { href: "/press-kit", label: "Basın Kiti", show: true },
     ].filter(link => link.show);
 
     return (
@@ -48,7 +48,7 @@ export function MobileNav({ artistName = "Heiraza", showVideos = true, showShop 
             <button
                 onClick={() => setIsOpen(true)}
                 className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 flex items-center justify-center w-14 h-14 rounded-full bg-background/80 backdrop-blur-md border border-foreground/10 shadow-2xl hover:scale-110 active:scale-95 transition-all duration-300 md:hidden group"
-                aria-label="Open menu"
+                aria-label="Menüyü aç"
                 aria-expanded={isOpen}
             >
                 <Menu size={28} className="text-foreground group-hover:text-accent-coral transition-colors" />
@@ -69,11 +69,11 @@ export function MobileNav({ artistName = "Heiraza", showVideos = true, showShop 
                 <div className="flex flex-col h-full bg-transparent">
                     {/* Header with Close Button */}
                     <div className="flex items-center justify-between p-6 border-b border-black/5 dark:border-white/5">
-                        <span className="font-display text-lg tracking-widest uppercase text-foreground/80">Menu</span>
+                        <span className="font-display text-lg tracking-widest uppercase text-foreground/80">Menü</span>
                         <button
                             onClick={() => setIsOpen(false)}
                             className="w-10 h-10 flex items-center justify-center rounded-full bg-black/5 dark:bg-white/10 hover:bg-black/10 dark:hover:bg-white/20 transition-colors"
-                            aria-label="Close menu"
+                            aria-label="Menüyü kapat"
                         >
                             <X size={18} className="text-foreground" />
                         </button>
@@ -99,7 +99,7 @@ export function MobileNav({ artistName = "Heiraza", showVideos = true, showShop 
                     {/* Footer Info */}
                     <div className="p-6 border-t border-black/5 dark:border-white/5 bg-neutral-50 dark:bg-black/20">
                         <p className="text-xs text-muted-foreground uppercase tracking-widest mb-1">{artistName}</p>
-                        <p className="text-xs text-muted-foreground/50">Official Website</p>
+                        <p className="text-xs text-muted-foreground/50">Resmi Web Sitesi</p>
                     </div>
                 </div>
             </div>

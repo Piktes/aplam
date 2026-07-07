@@ -66,13 +66,13 @@ export function GalleryStack({ images, className }: GalleryStackProps) {
                 {/* Header */}
                 <div className="text-center mb-12">
                     <span className="inline-flex items-center gap-2 text-sm font-medium tracking-[0.2em] uppercase text-accent-coral mb-4">
-                        Gallery
+                        Galeri
                     </span>
                     <h2 className="font-display text-display-lg tracking-wider uppercase">
-                        Photo Gallery
+                        Fotoğraf Galerisi
                     </h2>
                     <p className="text-muted-foreground mt-4 max-w-md mx-auto">
-                        Swipe through photos. Tap to view full size.
+                        Fotoğraflar arasında kaydırın. Tam boyut için dokunun.
                     </p>
                 </div>
 
@@ -101,7 +101,7 @@ export function GalleryStack({ images, className }: GalleryStackProps) {
                                     {/* Image with object-contain for FULL visibility, no cropping */}
                                     <Image
                                         src={getImageUrl(image.thumbnailUrl || image.imageUrl)}
-                                        alt={image.title || `Gallery photo ${index + 1}`}
+                                        alt={image.title || `Galeri fotoğrafı ${index + 1}`}
                                         fill
                                         className="w-full h-full object-contain p-3"
                                         sizes="(max-width: 640px) 90vw, 500px"
@@ -126,7 +126,7 @@ export function GalleryStack({ images, className }: GalleryStackProps) {
 
                     {/* Counter - with more spacing to avoid overlap */}
                     <p className="text-center text-sm text-muted-foreground mt-12 pt-4">
-                        {images.length} photos • Swipe to explore
+                        {images.length} fotoğraf • Keşfetmek için kaydırın
                     </p>
                 </div>
             </div>
@@ -145,7 +145,7 @@ export function GalleryStack({ images, className }: GalleryStackProps) {
                     <button
                         onClick={closeLightbox}
                         className="absolute top-4 right-4 z-10 w-12 h-12 rounded-full glass flex items-center justify-center hover:bg-white/20 transition-colors"
-                        aria-label="Close lightbox"
+                        aria-label="Görüntüleyiciyi kapat"
                     >
                         <X size={24} className="text-white" />
                     </button>
@@ -156,14 +156,14 @@ export function GalleryStack({ images, className }: GalleryStackProps) {
                             <button
                                 onClick={(e) => { e.stopPropagation(); goToPrev(); }}
                                 className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full glass flex items-center justify-center hover:bg-white/20 transition-colors"
-                                aria-label="Previous image"
+                                aria-label="Önceki görsel"
                             >
                                 <ChevronLeft size={24} className="text-white" />
                             </button>
                             <button
                                 onClick={(e) => { e.stopPropagation(); goToNext(); }}
                                 className="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full glass flex items-center justify-center hover:bg-white/20 transition-colors"
-                                aria-label="Next image"
+                                aria-label="Sonraki görsel"
                             >
                                 <ChevronRight size={24} className="text-white" />
                             </button>
@@ -177,7 +177,7 @@ export function GalleryStack({ images, className }: GalleryStackProps) {
                     >
                         <Image
                             src={getImageUrl(images[lightboxIndex].imageUrl)}
-                            alt={images[lightboxIndex].title || "Gallery image"}
+                            alt={images[lightboxIndex].title || "Galeri görseli"}
                             fill
                             className="object-contain"
                             sizes="100vw"

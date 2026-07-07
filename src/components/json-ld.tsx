@@ -14,17 +14,17 @@ interface JsonLdProps {
 }
 
 export async function JsonLd({ artist }: JsonLdProps) {
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://heiraza.com";
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://begumatak.com";
 
     // MusicGroup Schema
     const musicGroupSchema = {
         "@context": "https://schema.org",
-        "@type": "MusicGroup",
-        name: artist?.name || "Heiraza",
-        description: artist?.bio || "Experience the sound that moves souls.",
+        "@type": "PerformingGroup",
+        name: artist?.name || "Begüm Atak",
+        description: artist?.bio || "Tiyatro sahnesinden ekrana uzanan bir yolculuk.",
         url: baseUrl,
         image: artist?.heroImage || `${baseUrl}/og-image.jpg`,
-        genre: ["Electronic", "Ambient", "Experimental"],
+        genre: ["Tiyatro", "Dizi", "Sinema"],
         sameAs: [
             artist?.facebookUrl,
             artist?.instagramUrl,
@@ -38,11 +38,11 @@ export async function JsonLd({ artist }: JsonLdProps) {
     const personSchema = {
         "@context": "https://schema.org",
         "@type": "Person",
-        name: artist?.name || "Heiraza",
-        description: artist?.bio || "Sonic Architect and Music Producer",
+        name: artist?.name || "Begüm Atak",
+        description: artist?.bio || "Tiyatro ve dizi oyuncusu",
         url: baseUrl,
         image: artist?.heroImage || `${baseUrl}/og-image.jpg`,
-        jobTitle: "Sonic Architect",
+        jobTitle: "Oyuncu",
         sameAs: [
             artist?.facebookUrl,
             artist?.instagramUrl,
@@ -56,12 +56,12 @@ export async function JsonLd({ artist }: JsonLdProps) {
     const websiteSchema = {
         "@context": "https://schema.org",
         "@type": "WebSite",
-        name: "Heiraza - Official Website",
+        name: "Begüm Atak - Resmi Web Sitesi",
         url: baseUrl,
-        description: "Official website of Heiraza - Music, Events, and Exclusive Merch",
+        description: "Begüm Atak'ın resmi web sitesi - Oyunlar, diziler ve etkinlikler",
         publisher: {
             "@type": "Person",
-            name: artist?.name || "Heiraza",
+            name: artist?.name || "Begüm Atak",
         },
     };
 

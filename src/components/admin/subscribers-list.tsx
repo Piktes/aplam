@@ -31,12 +31,12 @@ export function SubscribersList({
                 <table className="w-full">
                     <thead>
                         <tr className="border-b border-border">
-                            <th className="text-left p-4 font-medium text-muted-foreground">Email</th>
-                            <th className="text-left p-4 font-medium text-muted-foreground">Location</th>
-                            <th className="text-left p-4 font-medium text-muted-foreground">Status</th>
-                            <th className="text-left p-4 font-medium text-muted-foreground">Unsubscribe Reason</th>
-                            <th className="text-left p-4 font-medium text-muted-foreground">Joined</th>
-                            <th className="text-right p-4 font-medium text-muted-foreground">Actions</th>
+                            <th className="text-left p-4 font-medium text-muted-foreground">E-posta</th>
+                            <th className="text-left p-4 font-medium text-muted-foreground">Konum</th>
+                            <th className="text-left p-4 font-medium text-muted-foreground">Durum</th>
+                            <th className="text-left p-4 font-medium text-muted-foreground">Ayrılma Nedeni</th>
+                            <th className="text-left p-4 font-medium text-muted-foreground">Katılma</th>
+                            <th className="text-right p-4 font-medium text-muted-foreground">İşlemler</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -48,7 +48,7 @@ export function SubscribersList({
                                         <span className="font-medium">{sub.email}</span>
                                         {sub.receiveEventAlerts && (
                                             <span className="text-xs text-green-600 dark:text-green-400">
-                                                🎵 Event Alerts
+                                                🎵 Etkinlik Bildirimleri
                                             </span>
                                         )}
                                     </div>
@@ -73,12 +73,12 @@ export function SubscribersList({
                                     {sub.isActive ? (
                                         <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400">
                                             <span className="w-1.5 h-1.5 rounded-full bg-green-500"></span>
-                                            Active
+                                            Aktif
                                         </span>
                                     ) : (
                                         <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400">
                                             <span className="w-1.5 h-1.5 rounded-full bg-red-500"></span>
-                                            Unsubscribed
+                                            Abonelikten Ayrıldı
                                         </span>
                                     )}
                                 </td>
@@ -112,7 +112,7 @@ export function SubscribersList({
                                         <button
                                             type="submit"
                                             className="p-2 rounded-lg hover:bg-red-50 dark:hover:bg-red-950 transition-colors"
-                                            title="Delete subscriber"
+                                            title="Aboneyi sil"
                                         >
                                             <Trash2 size={16} className="text-red-500" />
                                         </button>
@@ -126,7 +126,7 @@ export function SubscribersList({
 
             {/* Footer */}
             <div className="p-4 border-t border-border text-sm text-muted-foreground">
-                Showing {subscribers.length} subscriber{subscribers.length !== 1 ? "s" : ""}
+                Toplam {subscribers.length} abone gösteriliyor
             </div>
         </div>
     );

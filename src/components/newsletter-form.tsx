@@ -12,8 +12,8 @@ interface NewsletterFormProps {
 
 export function NewsletterForm({
     successImage,
-    successTitle = "Welcome Aboard!",
-    successMessage = "Thanks for subscribing! You'll be the first to know about new releases and events.",
+    successTitle = "Aramıza Hoş Geldiniz!",
+    successMessage = "Abone olduğunuz için teşekkürler! Yeni projelerden ve etkinliklerden ilk siz haberdar olacaksınız.",
 }: NewsletterFormProps) {
     const [isPending, startTransition] = useTransition();
     const [showSuccess, setShowSuccess] = useState(false);
@@ -30,7 +30,7 @@ export function NewsletterForm({
         setError(null);
 
         if (!email || !email.includes("@")) {
-            setError("Please enter a valid email address.");
+            setError("Lütfen geçerli bir e-posta adresi girin.");
             return;
         }
 
@@ -74,15 +74,15 @@ export function NewsletterForm({
                     }
                 } else {
                     if (data.error === "invalid_email") {
-                        setError("Please enter a valid email address.");
+                        setError("Lütfen geçerli bir e-posta adresi girin.");
                     } else if (data.error === "too_many_requests") {
-                        setError("Too many requests. Please wait a moment.");
+                        setError("Çok fazla istek gönderildi. Lütfen biraz bekleyin.");
                     } else {
-                        setError(data.message || "Failed to subscribe. Please try again.");
+                        setError(data.message || "Abonelik başarısız oldu. Lütfen tekrar deneyin.");
                     }
                 }
             } catch {
-                setError("Network error. Please check your connection.");
+                setError("Ağ hatası. Lütfen bağlantınızı kontrol edin.");
             }
         });
     };
@@ -103,7 +103,7 @@ export function NewsletterForm({
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Enter your email"
+                    placeholder="E-posta adresinizi girin"
                     className="input-field flex-1"
                 />
                 <button
@@ -114,10 +114,10 @@ export function NewsletterForm({
                     {isPending ? (
                         <>
                             <Loader2 size={16} className="animate-spin" />
-                            Processing...
+                            İşleniyor...
                         </>
                     ) : (
-                        "Subscribe"
+                        "Abone Ol"
                     )}
                 </button>
             </form>
@@ -141,7 +141,7 @@ export function NewsletterForm({
                         <button
                             onClick={() => setShowVerification(false)}
                             className="absolute top-4 right-4 z-10 p-2 rounded-full hover:bg-muted transition-colors"
-                            aria-label="Close"
+                            aria-label="Kapat"
                         >
                             <X size={20} />
                         </button>
@@ -152,10 +152,10 @@ export function NewsletterForm({
                                 <Mail size={32} className="text-accent-coral" />
                             </div>
                             <h3 className="font-display text-2xl tracking-wide mb-2">
-                                Confirm Subscription
+                                Aboneliği Onayla
                             </h3>
                             <p className="text-muted-foreground text-sm">
-                                Verify your email and choose your preferences
+                                E-postanızı doğrulayın ve tercihlerinizi seçin
                             </p>
                         </div>
 
@@ -163,7 +163,7 @@ export function NewsletterForm({
                         <div className="p-8 space-y-6">
                             {/* Editable Email */}
                             <div>
-                                <label className="block text-sm font-medium mb-2">Your Email</label>
+                                <label className="block text-sm font-medium mb-2">E-posta Adresiniz</label>
                                 <input
                                     type="email"
                                     value={editableEmail}
@@ -183,10 +183,10 @@ export function NewsletterForm({
                                 <div className="flex-1">
                                     <div className="flex items-center gap-2 font-medium">
                                         <Bell size={16} className="text-accent-coral" />
-                                        Event Notifications
+                                        Etkinlik Bildirimleri
                                     </div>
                                     <p className="text-sm text-muted-foreground mt-1">
-                                        Receive event reminders, updates, and sold-out alerts
+                                        Etkinlik hatırlatmaları, güncellemeler ve tükendi uyarıları alın
                                     </p>
                                 </div>
                             </label>
@@ -207,12 +207,12 @@ export function NewsletterForm({
                                 {isPending ? (
                                     <>
                                         <Loader2 size={18} className="animate-spin" />
-                                        Subscribing...
+                                        Abone olunuyor...
                                     </>
                                 ) : (
                                     <>
                                         <CheckCircle size={18} />
-                                        Confirm Subscription
+                                        Aboneliği Onayla
                                     </>
                                 )}
                             </button>
@@ -235,7 +235,7 @@ export function NewsletterForm({
                         <button
                             onClick={() => setShowSuccess(false)}
                             className="absolute top-4 right-4 z-10 p-2 rounded-full bg-black/30 hover:bg-black/50 transition-colors"
-                            aria-label="Close"
+                            aria-label="Kapat"
                         >
                             <X size={20} className="text-white" />
                         </button>
@@ -245,7 +245,7 @@ export function NewsletterForm({
                             <div className="w-full aspect-[16/9] relative bg-neutral-900 rounded-t-2xl overflow-hidden">
                                 <Image
                                     src={successImage}
-                                    alt="Success"
+                                    alt="Başarılı"
                                     fill
                                     className="object-contain w-full h-full"
                                 />
@@ -259,7 +259,7 @@ export function NewsletterForm({
                         {/* Body Content */}
                         <div className="p-8 text-center">
                             <h3 className="font-display text-2xl md:text-3xl tracking-wide mb-4">
-                                {customSuccessMessage ? "Welcome Back!" : successTitle}
+                                {customSuccessMessage ? "Tekrar Hoş Geldiniz!" : successTitle}
                             </h3>
                             <p className="text-muted-foreground leading-relaxed">
                                 {customSuccessMessage || successMessage}
@@ -269,7 +269,7 @@ export function NewsletterForm({
                                 onClick={() => setShowSuccess(false)}
                                 className="mt-8 btn-primary w-full"
                             >
-                                Continue
+                                Devam Et
                             </button>
                         </div>
                     </div>

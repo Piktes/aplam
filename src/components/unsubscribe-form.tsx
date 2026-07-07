@@ -9,11 +9,11 @@ interface UnsubscribeFormProps {
 }
 
 const UNSUBSCRIBE_REASONS = [
-    { id: "no-longer-interested", label: "I no longer want to receive these emails", emoji: "📧" },
-    { id: "too-frequent", label: "The emails are too frequent", emoji: "📬" },
-    { id: "not-relevant", label: "The content isn't relevant to me", emoji: "🎵" },
-    { id: "mistake", label: "I signed up by mistake", emoji: "🤔" },
-    { id: "other", label: "Other reason", emoji: "✍️" },
+    { id: "no-longer-interested", label: "Artık bu e-postaları almak istemiyorum", emoji: "📧" },
+    { id: "too-frequent", label: "E-postalar çok sık geliyor", emoji: "📬" },
+    { id: "not-relevant", label: "İçerik benimle ilgili değil", emoji: "🎵" },
+    { id: "mistake", label: "Yanlışlıkla kaydolmuşum", emoji: "🤔" },
+    { id: "other", label: "Başka bir neden", emoji: "✍️" },
 ];
 
 export function UnsubscribeForm({
@@ -32,7 +32,7 @@ export function UnsubscribeForm({
         setError(null);
 
         const reasonToSend = selectedReason === "other"
-            ? `Other: ${customReason}`
+            ? `Diğer: ${customReason}`
             : UNSUBSCRIBE_REASONS.find(r => r.id === selectedReason)?.label || selectedReason;
 
         const formData = new FormData();
@@ -44,10 +44,10 @@ export function UnsubscribeForm({
             if (result.success) {
                 setIsSuccess(true);
             } else {
-                setError(result.error || "Failed to unsubscribe");
+                setError(result.error || "Abonelikten çıkılamadı");
             }
         } catch {
-            setError("An unexpected error occurred");
+            setError("Beklenmedik bir hata oluştu");
         } finally {
             setIsSubmitting(false);
         }
@@ -60,17 +60,18 @@ export function UnsubscribeForm({
                     <div className="absolute inset-0 bg-green-500/20 blur-2xl rounded-full" />
                     <CheckCircle className="relative mx-auto text-green-500" size={80} />
                 </div>
-                <h2 className="font-display text-2xl mb-3">You&apos;ve Been Unsubscribed</h2>
+                <h2 className="font-display text-2xl mb-3">Abonelikten Çıktınız</h2>
                 <p className="text-muted-foreground max-w-sm mx-auto">
-                    We're sad to see you go, but we respect your decision.
-                    You won't receive any more emails from us.
+                    Gitmenize üzüldük ama kararınıza saygı duyuyoruz.
+                    Artık bizden e-posta almayacaksınız.
                 </p>
                 <div className="mt-8 p-4 rounded-xl bg-accent-coral/5 border border-accent-coral/10">
                     <p className="text-sm text-muted-foreground">
-                        Changed your mind? You can always subscribe again at{" "}
+                        Fikriniz mi değişti? İstediğiniz zaman{" "}
                         <a href="/" className="text-accent-coral hover:underline font-medium">
-                            heiraza.com
+                            ana sayfadan
                         </a>
+                        {" "}tekrar abone olabilirsiniz.
                     </p>
                 </div>
             </div>
@@ -83,15 +84,15 @@ export function UnsubscribeForm({
             <div className="text-center py-4 px-6 rounded-2xl bg-gradient-to-br from-orange-500/5 to-red-500/5 border border-orange-500/10">
                 <HeartCrack className="mx-auto mb-3 text-orange-400" size={36} />
                 <p className="text-muted-foreground">
-                    We're sorry to see you go! Before you leave, would you mind telling us why?
-                    Your feedback helps us improve.
+                    Gitmenize üzüldük! Ayrılmadan önce nedenini paylaşır mısınız?
+                    Geri bildiriminiz gelişmemize yardımcı oluyor.
                 </p>
             </div>
 
             {/* Feedback Question */}
             <div>
                 <label className="block font-medium mb-4 text-center">
-                    Why are you unsubscribing?
+                    Neden abonelikten çıkıyorsunuz?
                 </label>
                 <div className="space-y-2">
                     {UNSUBSCRIBE_REASONS.map((reason) => (
@@ -128,11 +129,11 @@ export function UnsubscribeForm({
             {/* Custom Reason Input */}
             {selectedReason === "other" && (
                 <div className="animate-in slide-in-from-top-2 fade-in duration-200">
-                    <label className="block font-medium mb-2">Please tell us more:</label>
+                    <label className="block font-medium mb-2">Lütfen biraz daha anlatın:</label>
                     <textarea
                         value={customReason}
                         onChange={(e) => setCustomReason(e.target.value)}
-                        placeholder="Your feedback helps us improve our communication..."
+                        placeholder="Geri bildiriminiz iletişimimizi geliştirmemize yardımcı olur..."
                         className="input-field w-full min-h-[120px] resize-none"
                         required={selectedReason === "other"}
                     />
@@ -157,12 +158,12 @@ export function UnsubscribeForm({
                 {isSubmitting ? (
                     <span className="flex items-center justify-center gap-2">
                         <Loader2 size={18} className="animate-spin" />
-                        Processing...
+                        İşleniyor...
                     </span>
                 ) : (
                     <span className="flex items-center justify-center gap-2">
                         <HeartCrack size={18} />
-                        Confirm Unsubscribe
+                        Abonelikten Çıkmayı Onayla
                     </span>
                 )}
             </button>
@@ -171,13 +172,13 @@ export function UnsubscribeForm({
             <div className="text-center pt-4 border-t border-border">
                 <div className="flex items-center justify-center gap-2 text-muted-foreground mb-2">
                     <Heart size={16} className="text-pink-500" />
-                    <span className="text-sm">Changed your mind?</span>
+                    <span className="text-sm">Fikriniz mi değişti?</span>
                 </div>
                 <a
                     href="/"
                     className="text-accent-coral hover:underline font-medium"
                 >
-                    Take me back to HEIRAZA
+                    Beni siteye geri götür
                 </a>
             </div>
         </form>

@@ -146,11 +146,11 @@ export default function SubscribersPage() {
             const res = await fetch(`/api/admin/subscribers?${params}`);
             const result = await res.json();
 
-            if (!res.ok) throw new Error(result.error || "Failed to fetch subscribers");
+            if (!res.ok) throw new Error(result.error || "Aboneler yüklenemedi");
 
             setData(result);
         } catch (err) {
-            setError(err instanceof Error ? err.message : "Failed to fetch subscribers");
+            setError(err instanceof Error ? err.message : "Aboneler yüklenemedi");
         } finally {
             setLoading(false);
         }
@@ -161,7 +161,7 @@ export default function SubscribersPage() {
     }, [fetchSubscribers]);
 
     const handleDelete = async (id: number) => {
-        if (!confirm("Are you sure you want to delete this subscriber?")) return;
+        if (!confirm("Bu aboneyi silmek istediğinizden emin misiniz?")) return;
 
         setDeleting(id);
         try {
@@ -185,7 +185,7 @@ export default function SubscribersPage() {
 
     const formatDate = (dateStr: string) => {
         const date = new Date(dateStr);
-        return date.toLocaleString("en-US", {
+        return date.toLocaleString("tr-TR", {
             month: "short",
             day: "numeric",
             year: "numeric",
@@ -209,19 +209,19 @@ export default function SubscribersPage() {
             const res = await fetch(`/api/admin/subscribers/export?${params}`);
             const result = await res.json();
 
-            if (!result.success) throw new Error("Export failed");
+            if (!result.success) throw new Error("Dışa aktarma başarısız");
 
             const doc = new jsPDF();
             doc.setFontSize(18);
-            doc.text("Subscribers Report", 14, 22);
+            doc.text("Abone Raporu", 14, 22);
             doc.setFontSize(10);
-            doc.text(`Generated: ${new Date().toLocaleDateString()}`, 14, 30);
-            doc.text(`Filters: Status=${status}, Country=${country || "All"}, Search=${search || "None"}`, 14, 36);
-            doc.text(`Total: ${result.count} subscribers`, 14, 42);
+            doc.text(`Oluşturulma: ${new Date().toLocaleDateString("tr-TR")}`, 14, 30);
+            doc.text(`Filtreler: Durum=${status}, Ülke=${country || "Tümü"}, Arama=${search || "Yok"}`, 14, 36);
+            doc.text(`Toplam: ${result.count} abone`, 14, 42);
 
             autoTable(doc, {
                 startY: 50,
-                head: [["Email", "Country", "City", "Status", "Events", "Joined", "Unsub Date", "Reason"]],
+                head: [["E-posta", "Ülke", "Şehir", "Durum", "Etkinlik", "Katılım", "Çıkış Tarihi", "Neden"]],
                 body: result.data.map((s: any) => [
                     s.email,
                     s.country,
@@ -243,7 +243,7 @@ export default function SubscribersPage() {
             doc.save(`subscribers_${new Date().toISOString().split("T")[0]}.pdf`);
         } catch (err) {
             console.error("PDF export failed:", err);
-            alert("Export failed");
+            alert("Dışa aktarma başarısız");
         } finally {
             setExporting(null);
         }
@@ -260,20 +260,20 @@ export default function SubscribersPage() {
             const res = await fetch(`/api/admin/subscribers/export?${params}`);
             const result = await res.json();
 
-            if (!result.success) throw new Error("Export failed");
+            if (!result.success) throw new Error("Dışa aktarma başarısız");
 
             const workbook = new ExcelJS.Workbook();
-            const worksheet = workbook.addWorksheet("Subscribers");
+            const worksheet = workbook.addWorksheet("Aboneler");
 
             worksheet.columns = [
-                { header: "Email", key: "email", width: 35 },
-                { header: "Country", key: "country", width: 20 },
-                { header: "City", key: "city", width: 20 },
-                { header: "Status", key: "status", width: 15 },
-                { header: "Event Alerts", key: "eventAlerts", width: 12 },
-                { header: "Joined", key: "joinedAt", width: 15 },
-                { header: "Unsubscribed", key: "unsubscribedAt", width: 15 },
-                { header: "Reason", key: "unsubscribeReason", width: 30 },
+                { header: "E-posta", key: "email", width: 35 },
+                { header: "Ülke", key: "country", width: 20 },
+                { header: "Şehir", key: "city", width: 20 },
+                { header: "Durum", key: "status", width: 15 },
+                { header: "Etkinlik Bildirimleri", key: "eventAlerts", width: 12 },
+                { header: "Katılım", key: "joinedAt", width: 15 },
+                { header: "Çıkış", key: "unsubscribedAt", width: 15 },
+                { header: "Neden", key: "unsubscribeReason", width: 30 },
             ];
 
             // Style header row
@@ -296,7 +296,7 @@ export default function SubscribersPage() {
             URL.revokeObjectURL(url);
         } catch (err) {
             console.error("Excel export failed:", err);
-            alert("Export failed");
+            alert("Dışa aktarma başarısız");
         } finally {
             setExporting(null);
         }
@@ -307,7 +307,7 @@ export default function SubscribersPage() {
     return (
         <div className="min-h-screen overflow-x-hidden">
             {/* InfoBar */}
-            <InfoBar counter={data?.stats ? `${activeCount}/${data.stats.total} active` : undefined} />
+            <InfoBar counter={data?.stats ? `${activeCount}/${data.stats.total} aktif` : undefined} />
 
             {/* Main Content */}
             <div className="max-w-7xl mx-auto px-4 pb-10">
@@ -316,10 +316,10 @@ export default function SubscribersPage() {
                     <div>
                         <h1 className="font-display text-display-md tracking-wider uppercase flex items-center gap-3">
                             <Users className="text-accent-coral" size={28} />
-                            Subscribers
+                            Aboneler
                         </h1>
                         <p className="text-muted-foreground mt-2 text-sm">
-                            Manage your newsletter subscribers and view analytics.
+                            Bülten abonelerinizi yönetin ve analizleri görüntüleyin.
                         </p>
                     </div>
 
@@ -329,7 +329,7 @@ export default function SubscribersPage() {
                             onClick={exportToPDF}
                             disabled={exporting !== null || !data?.stats?.total}
                             className="btn-secondary flex items-center gap-2 text-sm px-3 py-2"
-                            title="Export to PDF"
+                            title="PDF olarak dışa aktar"
                         >
                             {exporting === "pdf" ? (
                                 <Loader2 size={16} className="animate-spin" />
@@ -342,7 +342,7 @@ export default function SubscribersPage() {
                             onClick={exportToExcel}
                             disabled={exporting !== null || !data?.stats?.total}
                             className="btn-secondary flex items-center gap-2 text-sm px-3 py-2"
-                            title="Export to Excel"
+                            title="Excel olarak dışa aktar"
                         >
                             {exporting === "xlsx" ? (
                                 <Loader2 size={16} className="animate-spin" />
@@ -355,7 +355,7 @@ export default function SubscribersPage() {
                             onClick={() => fetchSubscribers()}
                             disabled={loading}
                             className="p-2 rounded-lg hover:bg-muted transition-colors"
-                            title="Refresh"
+                            title="Yenile"
                         >
                             <RefreshCw size={18} className={loading ? "animate-spin" : ""} />
                         </button>
@@ -382,7 +382,7 @@ export default function SubscribersPage() {
                                     <Users size={20} className="text-accent-coral sm:w-6 sm:h-6" />
                                 </div>
                                 <div>
-                                    <p className="text-xs sm:text-sm text-muted-foreground">Total</p>
+                                    <p className="text-xs sm:text-sm text-muted-foreground">Toplam</p>
                                     <p className="text-lg sm:text-2xl font-display">{data.stats.total}</p>
                                 </div>
                             </div>
@@ -405,7 +405,7 @@ export default function SubscribersPage() {
                                     <UserCheck size={20} className="text-green-500 sm:w-6 sm:h-6" />
                                 </div>
                                 <div>
-                                    <p className="text-xs sm:text-sm text-muted-foreground">Event Fans</p>
+                                    <p className="text-xs sm:text-sm text-muted-foreground">Etkinlik Takipçileri</p>
                                     <p className="text-lg sm:text-2xl font-display">{data.stats.eventFans}</p>
                                 </div>
                             </div>
@@ -428,7 +428,7 @@ export default function SubscribersPage() {
                                     <UserMinus size={20} className="text-red-500 sm:w-6 sm:h-6" />
                                 </div>
                                 <div>
-                                    <p className="text-xs sm:text-sm text-muted-foreground">Unsub</p>
+                                    <p className="text-xs sm:text-sm text-muted-foreground">Ayrılan</p>
                                     <p className="text-lg sm:text-2xl font-display">{data.stats.unsubscribed}</p>
                                 </div>
                             </div>
@@ -442,9 +442,9 @@ export default function SubscribersPage() {
                         <div className="flex items-center gap-2 mb-3">
                             <Flag size={16} className="text-accent-coral" />
                             <span className="font-medium text-sm">
-                                Top Countries
+                                En Çok Ülkeler
                                 <span className="text-muted-foreground ml-2 text-xs">
-                                    ({topCountriesMode === "total" ? "All" : topCountriesMode === "eventFans" ? "Event Fans" : "Unsubscribed"})
+                                    ({topCountriesMode === "total" ? "Tümü" : topCountriesMode === "eventFans" ? "Etkinlik Takipçileri" : "Ayrılanlar"})
                                 </span>
                             </span>
                         </div>
@@ -476,9 +476,9 @@ export default function SubscribersPage() {
                         <div className="flex items-center gap-2 mb-3">
                             <MessageSquare size={16} className="text-red-500" />
                             <span className="font-medium text-sm">
-                                Why Users Unsubscribe
+                                Kullanıcılar Neden Ayrılıyor
                                 <span className="text-muted-foreground ml-2 text-xs">
-                                    ({data.stats.unsubscribed} total)
+                                    ({data.stats.unsubscribed} toplam)
                                 </span>
                             </span>
                         </div>
@@ -495,7 +495,7 @@ export default function SubscribersPage() {
                                         />
                                         <div className="relative flex items-center justify-between p-2 rounded-lg">
                                             <span className="text-sm truncate flex-1" title={item.reason}>
-                                                {item.reason === "Other" ? "📝 Other (custom)" : item.reason}
+                                                {item.reason === "Other" ? "📝 Diğer (özel)" : item.reason}
                                             </span>
                                             <div className="flex items-center gap-2 ml-2 text-sm">
                                                 <span className="text-muted-foreground">{item.count}</span>
@@ -521,7 +521,7 @@ export default function SubscribersPage() {
                                 type="text"
                                 value={search}
                                 onChange={(e) => setSearch(e.target.value)}
-                                placeholder="Search email, location..."
+                                placeholder="E-posta, konum ara..."
                                 className="input-field pl-10 w-full"
                             />
                         </div>
@@ -535,9 +535,9 @@ export default function SubscribersPage() {
                                     onChange={(e) => { setStatus(e.target.value); setPage(1); }}
                                     className="px-3 py-2 rounded-lg bg-muted border-none text-sm font-medium focus:ring-2 focus:ring-accent-coral/20"
                                 >
-                                    <option value="all">All Status</option>
-                                    <option value="active">Active</option>
-                                    <option value="unsubscribed">Unsubscribed</option>
+                                    <option value="all">Tüm Durumlar</option>
+                                    <option value="active">Aktif</option>
+                                    <option value="unsubscribed">Ayrılan</option>
                                 </select>
                             </div>
 
@@ -549,7 +549,7 @@ export default function SubscribersPage() {
                                     onChange={(e) => { setCountry(e.target.value); setPage(1); }}
                                     className="px-3 py-2 rounded-lg bg-muted border-none text-sm font-medium focus:ring-2 focus:ring-accent-coral/20 max-w-[140px]"
                                 >
-                                    <option value="">All Countries</option>
+                                    <option value="">Tüm Ülkeler</option>
                                     {data?.availableCountries?.map((c) => (
                                         <option key={c} value={c}>
                                             {getCountryFlag(c)} {c}
@@ -560,7 +560,7 @@ export default function SubscribersPage() {
 
                             <button type="submit" className="btn-primary flex items-center gap-2 px-4 py-2">
                                 <Filter size={16} />
-                                Apply
+                                Uygula
                             </button>
                         </div>
 
@@ -568,11 +568,11 @@ export default function SubscribersPage() {
                         <div className="flex items-center gap-1 mt-3 sm:mt-0 w-full sm:w-auto">
                             <Calendar size={16} className="text-muted-foreground mr-1" />
                             {[
-                                { value: "all", label: "All" },
-                                { value: "today", label: "Today" },
-                                { value: "week", label: "Week" },
-                                { value: "month", label: "Month" },
-                                { value: "year", label: "Year" },
+                                { value: "all", label: "Tümü" },
+                                { value: "today", label: "Bugün" },
+                                { value: "week", label: "Hafta" },
+                                { value: "month", label: "Ay" },
+                                { value: "year", label: "Yıl" },
                             ].map((period) => (
                                 <button
                                     key={period.value}
@@ -604,11 +604,11 @@ export default function SubscribersPage() {
                     ) : !data?.subscribers.length ? (
                         <div className="text-center py-20 text-muted-foreground">
                             <Users size={32} className="mx-auto mb-4 opacity-50" />
-                            <p className="text-lg">No subscribers found</p>
+                            <p className="text-lg">Abone bulunamadı</p>
                             <p className="text-sm mt-1">
                                 {search || country || status !== "all"
-                                    ? "Try adjusting your search or filters"
-                                    : "Subscribers will appear here when users sign up"}
+                                    ? "Arama veya filtrelerinizi değiştirmeyi deneyin"
+                                    : "Kullanıcılar abone olduğunda burada görünecekler"}
                             </p>
                         </div>
                     ) : (
@@ -627,7 +627,7 @@ export default function SubscribersPage() {
                                         setPage(1);
                                     }}
                                 >
-                                    Email
+                                    E-posta
                                     {sortBy === "email" && (sortOrder === "asc" ? <ArrowUp size={14} /> : <ArrowDown size={14} />)}
                                 </button>
                                 <button
@@ -642,7 +642,7 @@ export default function SubscribersPage() {
                                         setPage(1);
                                     }}
                                 >
-                                    Location
+                                    Konum
                                     {sortBy === "country" && (sortOrder === "asc" ? <ArrowUp size={14} /> : <ArrowDown size={14} />)}
                                 </button>
                                 <button
@@ -657,11 +657,11 @@ export default function SubscribersPage() {
                                         setPage(1);
                                     }}
                                 >
-                                    Joined
+                                    Katılım
                                     {sortBy === "joinedAt" && (sortOrder === "asc" ? <ArrowUp size={14} /> : <ArrowDown size={14} />)}
                                 </button>
-                                <div className="col-span-2">Status</div>
-                                <div className="col-span-2 text-right">Actions</div>
+                                <div className="col-span-2">Durum</div>
+                                <div className="col-span-2 text-right">İşlemler</div>
                             </div>
 
                             {/* Table Body */}
@@ -683,7 +683,7 @@ export default function SubscribersPage() {
                                             <span className="text-sm text-muted-foreground truncate">
                                                 {subscriber.city && subscriber.country
                                                     ? `${subscriber.city}, ${subscriber.country}`
-                                                    : subscriber.country || "Unknown"}
+                                                    : subscriber.country || "Bilinmiyor"}
                                             </span>
                                         </div>
 
@@ -696,11 +696,11 @@ export default function SubscribersPage() {
                                         <div className="md:col-span-2 flex items-center gap-2 flex-wrap">
                                             {subscriber.isActive ? (
                                                 <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium bg-green-500/10 text-green-600 dark:text-green-400 border border-green-500/20">
-                                                    Active
+                                                    Aktif
                                                 </span>
                                             ) : (
                                                 <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium bg-red-500/10 text-red-600 dark:text-red-400 border border-red-500/20">
-                                                    Unsub
+                                                    Ayrıldı
                                                 </span>
                                             )}
                                             {subscriber.receiveEventAlerts && (
@@ -716,7 +716,7 @@ export default function SubscribersPage() {
                                                 onClick={() => handleDelete(subscriber.id)}
                                                 disabled={deleting === subscriber.id}
                                                 className="p-2 rounded-lg text-red-500 hover:bg-red-50 dark:hover:bg-red-950 transition-colors"
-                                                title="Delete subscriber"
+                                                title="Aboneyi sil"
                                             >
                                                 {deleting === subscriber.id ? (
                                                     <Loader2 size={16} className="animate-spin" />
@@ -733,7 +733,7 @@ export default function SubscribersPage() {
                             {data.pagination.totalPages > 1 && (
                                 <div className="flex flex-col sm:flex-row items-center justify-between gap-3 px-4 py-3 border-t border-border bg-muted/30">
                                     <p className="text-sm text-muted-foreground">
-                                        {((page - 1) * limit) + 1} - {Math.min(page * limit, data.pagination.total)} of {data.pagination.total}
+                                        {((page - 1) * limit) + 1} - {Math.min(page * limit, data.pagination.total)} / {data.pagination.total}
                                     </p>
                                     <div className="flex items-center gap-2">
                                         <button

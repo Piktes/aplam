@@ -174,7 +174,7 @@ async function addTrack(formData: FormData) {
   const path = await import("path");
 
   const title = formData.get("title") as string;
-  const artist = formData.get("artist") as string || "Heiraza";
+  const artist = formData.get("artist") as string || "Begüm Atak";
   const externalLink = formData.get("externalLink") as string;
   const audioFile = formData.get("audioFile") as File | null;
   const coverImageData = formData.get("coverImage") as string;
@@ -537,7 +537,7 @@ export default async function AdminDashboard() {
     redirect("/admin/login");
   }
 
-  const artistName = "Heiraza"; // Hardcoded for single-artist site
+  const artistName = "Begüm Atak"; // Hardcoded for single-artist site
   const [stats, videos, tracks, galleryImages, siteSettings] = await Promise.all([
     getStats(), getAllVideos(), getAllTracks(), getAllGalleryImages(), getSiteSettings(),
   ]);
@@ -554,16 +554,16 @@ export default async function AdminDashboard() {
         <main className="flex-1 space-y-8 pt-6">
           <div className="mb-8">
             <h1 className="font-display text-display-sm tracking-wider uppercase">
-              Welcome back, {username}
+              Tekrar hoş geldiniz, {username}
             </h1>
-            <p className="text-muted-foreground mt-2">Here's what's happening today.</p>
+            <p className="text-muted-foreground mt-2">Bugün neler olduğuna göz atın.</p>
           </div>
 
           <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
             {/* TODAY'S OVERVIEW (Featured Card) */}
             <div className="col-span-2 lg:col-span-5 glass-card p-6 flex flex-col sm:flex-row items-center justify-around gap-6 text-center sm:text-left">
               <Link href="/admin/messages" className="flex flex-col items-center sm:items-start gap-1 p-4 -m-4 rounded-xl hover:bg-white/5 transition-colors group cursor-pointer w-full sm:w-auto">
-                <span className="text-muted-foreground text-xs uppercase tracking-widest group-hover:text-white transition-colors">Today's Unread</span>
+                <span className="text-muted-foreground text-xs uppercase tracking-widest group-hover:text-white transition-colors">Bugünkü Okunmamış</span>
                 <div className="flex items-center justify-center sm:justify-start gap-3">
                   <div className="p-3 rounded-full bg-accent-coral/10 text-accent-coral group-hover:scale-110 transition-transform">
                     <Mail size={24} />
@@ -575,7 +575,7 @@ export default async function AdminDashboard() {
               <div className="hidden sm:block w-px h-12 bg-white/10" />
 
               <Link href="/admin/visitors" className="flex flex-col items-center sm:items-start gap-1 p-4 -m-4 rounded-xl hover:bg-white/5 transition-colors group cursor-pointer w-full sm:w-auto">
-                <span className="text-muted-foreground text-xs uppercase tracking-widest group-hover:text-white transition-colors">Today's Visitors</span>
+                <span className="text-muted-foreground text-xs uppercase tracking-widest group-hover:text-white transition-colors">Bugünkü Ziyaretçiler</span>
                 <div className="flex items-center justify-center sm:justify-start gap-3">
                   <div className="p-3 rounded-full bg-blue-500/10 text-blue-500 group-hover:scale-110 transition-transform">
                     <Users size={24} />
@@ -587,7 +587,7 @@ export default async function AdminDashboard() {
               <div className="hidden sm:block w-px h-12 bg-white/10" />
 
               <Link href="/admin/subscribers" className="flex flex-col items-center sm:items-start gap-1 p-4 -m-4 rounded-xl hover:bg-white/5 transition-colors group cursor-pointer w-full sm:w-auto">
-                <span className="text-muted-foreground text-xs uppercase tracking-widest group-hover:text-white transition-colors">Today's Subscribers</span>
+                <span className="text-muted-foreground text-xs uppercase tracking-widest group-hover:text-white transition-colors">Bugünkü Aboneler</span>
                 <div className="flex items-center justify-center sm:justify-start gap-3">
                   <div className="p-3 rounded-full bg-emerald-500/10 text-emerald-500 group-hover:scale-110 transition-transform">
                     <Bell size={24} />
@@ -601,65 +601,65 @@ export default async function AdminDashboard() {
             <Link href="#tracks" className="glass-card p-4 sm:p-5 hover-lift transition-all group overflow-hidden min-w-0 w-full">
               <div className="flex justify-between items-start mb-2">
                 <Music2 className="text-accent-coral group-hover:scale-110 transition-transform" size={20} />
-                <span className="text-[9px] sm:text-[10px] text-muted-foreground uppercase tracking-widest">Active</span>
+                <span className="text-[9px] sm:text-[10px] text-muted-foreground uppercase tracking-widest">Aktif</span>
               </div>
               <div className="font-display text-2xl sm:text-3xl">{stats.tracksCount}</div>
-              <p className="text-muted-foreground text-sm mt-1">Tracks</p>
+              <p className="text-muted-foreground text-sm mt-1">Parça</p>
             </Link>
 
             <Link href="#videos" className="glass-card p-4 sm:p-5 hover-lift transition-all group overflow-hidden min-w-0 w-full">
               <div className="flex justify-between items-start mb-2">
                 <Youtube className="text-red-500 group-hover:scale-110 transition-transform" size={20} />
-                <span className="text-[9px] sm:text-[10px] text-muted-foreground uppercase tracking-widest">Active</span>
+                <span className="text-[9px] sm:text-[10px] text-muted-foreground uppercase tracking-widest">Aktif</span>
               </div>
               <div className="font-display text-2xl sm:text-3xl">{stats.videosCount}</div>
-              <p className="text-muted-foreground text-sm mt-1">Videos</p>
+              <p className="text-muted-foreground text-sm mt-1">Video</p>
             </Link>
 
             <Link href="/admin/events" className="glass-card p-4 sm:p-5 hover-lift transition-all group overflow-hidden min-w-0 w-full">
               <div className="flex justify-between items-start mb-2">
                 <Calendar className="text-accent-coral group-hover:scale-110 transition-transform" size={20} />
-                <span className="text-[9px] sm:text-[10px] text-muted-foreground uppercase tracking-widest">Active</span>
+                <span className="text-[9px] sm:text-[10px] text-muted-foreground uppercase tracking-widest">Aktif</span>
               </div>
               <div className="font-display text-2xl sm:text-3xl">{stats.eventsCount}</div>
-              <p className="text-muted-foreground text-sm mt-1">Events</p>
+              <p className="text-muted-foreground text-sm mt-1">Etkinlik</p>
             </Link>
 
             {siteSettings?.isShopVisible && (
               <Link href="/admin/products/new" className="glass-card p-4 sm:p-5 hover-lift transition-all group overflow-hidden min-w-0 w-full">
                 <div className="flex justify-between items-start mb-2">
                   <Package className="text-accent-coral group-hover:scale-110 transition-transform" size={20} />
-                  <span className="text-[9px] sm:text-[10px] text-muted-foreground uppercase tracking-widest">Active</span>
+                  <span className="text-[9px] sm:text-[10px] text-muted-foreground uppercase tracking-widest">Aktif</span>
                 </div>
                 <div className="font-display text-2xl sm:text-3xl">{stats.productsCount}</div>
-                <p className="text-muted-foreground text-sm mt-1">Products</p>
+                <p className="text-muted-foreground text-sm mt-1">Ürün</p>
               </Link>
             )}
 
             <Link href="#gallery" className="glass-card p-4 sm:p-5 hover-lift transition-all group overflow-hidden min-w-0 w-full">
               <div className="flex justify-between items-start mb-2">
                 <ImageIcon className="text-accent-coral group-hover:scale-110 transition-transform" size={20} />
-                <span className="text-[9px] sm:text-[10px] text-muted-foreground uppercase tracking-widest">Active</span>
+                <span className="text-[9px] sm:text-[10px] text-muted-foreground uppercase tracking-widest">Aktif</span>
               </div>
               <div className="font-display text-2xl sm:text-3xl">{stats.galleryCount}</div>
-              <p className="text-muted-foreground text-sm mt-1">Gallery</p>
+              <p className="text-muted-foreground text-sm mt-1">Galeri</p>
             </Link>
 
             <Link href="/admin/social-media" className="glass-card p-4 sm:p-5 hover-lift transition-all group overflow-hidden min-w-0 w-full">
               <div className="flex justify-between items-start mb-2">
                 <Share2 className="text-accent-coral group-hover:scale-110 transition-transform" size={20} />
-                <span className="text-[9px] sm:text-[10px] text-muted-foreground uppercase tracking-widest">Visible</span>
+                <span className="text-[9px] sm:text-[10px] text-muted-foreground uppercase tracking-widest">Görünür</span>
               </div>
               <div className="font-display text-2xl sm:text-3xl">{stats.socialCount}</div>
-              <p className="text-muted-foreground text-sm mt-1">Socials</p>
+              <p className="text-muted-foreground text-sm mt-1">Sosyal Medya</p>
             </Link>
           </div>
 
           <DashboardSection
             id="tracks"
             icon={<Music2 size={24} />}
-            title="Audio Player Tracks"
-            subtitle={`${tracks.filter(t => t.isActive).length} active / ${tracks.length} total`}
+            title="Ses Çalar Parçaları"
+            subtitle={`${tracks.filter(t => t.isActive).length} aktif / ${tracks.length} toplam`}
           >
             <TrackManager
               tracks={tracks}
@@ -675,8 +675,8 @@ export default async function AdminDashboard() {
           <DashboardSection
             id="videos"
             icon={<Youtube size={24} className="text-red-500" />}
-            title="YouTube Videos"
-            subtitle={`${videos.filter(v => v.isActive).length} active / ${videos.length} total`}
+            title="YouTube Videoları"
+            subtitle={`${videos.filter(v => v.isActive).length} aktif / ${videos.length} toplam`}
           >
             <VideoManager videos={videos} onAdd={addVideo} onToggle={toggleVideoActive} onDelete={deleteVideo} onReorder={reorderVideos} />
           </DashboardSection>
@@ -684,8 +684,8 @@ export default async function AdminDashboard() {
           <DashboardSection
             id="gallery"
             icon={<ImageIcon size={24} />}
-            title="Photo Gallery"
-            subtitle={`${galleryImages.filter(i => i.isActive).length} active / ${galleryImages.length} total`}
+            title="Fotoğraf Galerisi"
+            subtitle={`${galleryImages.filter(i => i.isActive).length} aktif / ${galleryImages.length} toplam`}
           >
             <GalleryManager images={galleryImages} onAdd={addGalleryImage} onAddMultiple={addMultipleGalleryImages} onToggle={toggleGalleryImageActive} onDelete={deleteGalleryImage} onMove={moveGalleryImage} />
           </DashboardSection>
@@ -693,8 +693,8 @@ export default async function AdminDashboard() {
           <DashboardSection
             id="settings"
             icon={<Settings size={24} />}
-            title="Site Settings"
-            subtitle="Control visibility of sections across your website"
+            title="Site Ayarları"
+            subtitle="Sitenizdeki bölümlerin görünürlüğünü yönetin"
           >
             <SiteSettingsManager settings={siteSettings} onToggle={toggleSetting} />
           </DashboardSection>

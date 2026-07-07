@@ -167,7 +167,7 @@ export function YouTubeCarousel({
               shadow-lg
               ${isHovered ? "opacity-100" : "opacity-0"}
             `}
-            aria-label="Previous videos"
+            aria-label="Önceki videolar"
           >
             <ChevronLeft size={24} className="text-white drop-shadow-md" />
           </button>
@@ -185,7 +185,7 @@ export function YouTubeCarousel({
               shadow-lg
               ${isHovered ? "opacity-100" : "opacity-0"}
             `}
-            aria-label="Next videos"
+            aria-label="Sonraki videolar"
           >
             <ChevronRight size={24} className="text-white drop-shadow-md" />
           </button>
@@ -250,7 +250,7 @@ function VideoFacade({ video, isPlaying, onPlay, onClose, index = 0 }: VideoFaca
             <div className="relative w-full h-full">
               <iframe
                 src={`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`}
-                title={video.title || "YouTube video"}
+                title={video.title || "YouTube videosu"}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
                 className="absolute inset-0 w-full h-full"
@@ -268,7 +268,7 @@ function VideoFacade({ video, isPlaying, onPlay, onClose, index = 0 }: VideoFaca
                   transition-all duration-300 
                   shadow-lg
                 "
-                aria-label="Close video"
+                aria-label="Videoyu kapat"
               >
                 <X size={20} className="text-white" />
               </button>
@@ -282,7 +282,7 @@ function VideoFacade({ video, isPlaying, onPlay, onClose, index = 0 }: VideoFaca
               {thumbnailSrc && (
                 <img
                   src={thumbnailSrc}
-                  alt={video.title || "Video thumbnail"}
+                  alt={video.title || "Video küçük resmi"}
                   className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover/card:scale-105"
                   onError={() => setThumbnailError(true)}
                   loading="lazy"
@@ -298,7 +298,7 @@ function VideoFacade({ video, isPlaying, onPlay, onClose, index = 0 }: VideoFaca
               <button
                 onClick={onPlay}
                 className="absolute inset-0 flex items-center justify-center group/play"
-                aria-label={`Play ${video.title || "video"}`}
+                aria-label={`${video.title || "videoyu"} oynat`}
               >
                 {/* Outer Glow Ring (appears on hover) */}
                 <div className="absolute w-24 h-24 rounded-full bg-white/10 scale-0 group-hover/play:scale-100 transition-transform duration-500 blur-xl" />
@@ -421,7 +421,7 @@ function MobileVideoCarousel({ videos, playingVideoId, onPlay, onClose }: Mobile
         <button
           onClick={prevVideo}
           className="w-10 h-10 rounded-full glass flex items-center justify-center"
-          aria-label="Previous video"
+          aria-label="Önceki video"
         >
           <ChevronLeft size={20} />
         </button>
@@ -436,7 +436,7 @@ function MobileVideoCarousel({ videos, playingVideoId, onPlay, onClose }: Mobile
                 ? "bg-accent-coral w-4"
                 : "bg-foreground/30 hover:bg-foreground/50"
                 }`}
-              aria-label={`View video ${idx + 1}`}
+              aria-label={`${idx + 1}. videoyu görüntüle`}
             />
           ))}
         </div>
@@ -444,7 +444,7 @@ function MobileVideoCarousel({ videos, playingVideoId, onPlay, onClose }: Mobile
         <button
           onClick={nextVideo}
           className="w-10 h-10 rounded-full glass flex items-center justify-center"
-          aria-label="Next video"
+          aria-label="Sonraki video"
         >
           <ChevronRight size={20} />
         </button>
@@ -461,10 +461,10 @@ function SectionHeader() {
     <div className="text-center mb-12">
       <span className="inline-flex items-center gap-2 text-sm font-medium tracking-[0.2em] uppercase text-accent-coral mb-4">
         <Youtube size={16} />
-        Watch
+        İzle
       </span>
       <h2 className="font-display text-display-lg tracking-wider uppercase">
-        Featured Videos
+        Öne Çıkan Videolar
       </h2>
     </div>
   );

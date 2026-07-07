@@ -66,10 +66,10 @@ export function BioSection({ artist, bioImages = [], className }: BioSectionProp
                 {/* Section Header */}
                 <div className="text-center mb-8 sm:mb-12">
                     <span className="text-sm font-medium tracking-[0.2em] uppercase text-accent-coral mb-3 block">
-                        The Artist
+                        Sanatçı
                     </span>
                     <h2 className="font-display text-display-md sm:text-display-lg tracking-wider uppercase">
-                        About
+                        Hakkında
                     </h2>
                 </div>
 
@@ -103,14 +103,14 @@ export function BioSection({ artist, bioImages = [], className }: BioSectionProp
                                         <button
                                             onClick={prevImage}
                                             className="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 rounded-full glass flex items-center justify-center opacity-70 sm:opacity-0 group-hover:opacity-100 transition-opacity"
-                                            aria-label="Previous image"
+                                            aria-label="Önceki görsel"
                                         >
                                             <ChevronLeft size={18} className="sm:w-5 sm:h-5" />
                                         </button>
                                         <button
                                             onClick={nextImage}
                                             className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 rounded-full glass flex items-center justify-center opacity-70 sm:opacity-0 group-hover:opacity-100 transition-opacity"
-                                            aria-label="Next image"
+                                            aria-label="Sonraki görsel"
                                         >
                                             <ChevronRight size={18} className="sm:w-5 sm:h-5" />
                                         </button>
@@ -125,7 +125,7 @@ export function BioSection({ artist, bioImages = [], className }: BioSectionProp
                                                         ? "bg-white w-3 sm:w-4"
                                                         : "bg-white/50 hover:bg-white/70"
                                                         }`}
-                                                    aria-label={`View image ${idx + 1}`}
+                                                    aria-label={`${idx + 1}. görseli görüntüle`}
                                                 />
                                             ))}
                                         </div>
@@ -159,7 +159,7 @@ export function BioSection({ artist, bioImages = [], className }: BioSectionProp
                                     onClick={() => setIsExpanded(!isExpanded)}
                                     className="mt-4 text-accent-coral hover:text-accent-coral/80 font-medium text-sm transition-colors inline-flex items-center gap-1.5"
                                 >
-                                    {isExpanded ? "Show Less" : "Read More"}
+                                    {isExpanded ? "Daha Az Göster" : "Devamını Oku"}
                                     <span className={`transition-transform duration-300 ${isExpanded ? "rotate-180" : ""}`}>↓</span>
                                 </button>
                             )}

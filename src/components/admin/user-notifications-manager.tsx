@@ -212,9 +212,9 @@ export function UserNotificationsManager({
 
     const getPreviewTitle = () => {
         switch (previewType) {
-            case "reminder": return "Reminder Email";
-            case "soldout": return "Sold Out Alert";
-            case "announcement": return "Announcement Email";
+            case "reminder": return "Hatırlatma E-postası";
+            case "soldout": return "Tükenme Bildirimi";
+            case "announcement": return "Duyuru E-postası";
             default: return "";
         }
     };
@@ -226,11 +226,11 @@ export function UserNotificationsManager({
                 <div className="flex items-center gap-3 mb-2">
                     <ImageIcon className="text-accent-coral" size={24} />
                     <h2 className="font-display text-xl tracking-wide">
-                        Email Logo
+                        E-posta Logosu
                     </h2>
                 </div>
                 <p className="text-muted-foreground text-sm mb-6">
-                    This logo will appear at the bottom of all notification emails.
+                    Bu logo tüm bildirim e-postalarının altında görünecektir.
                 </p>
 
                 {logoUrl ? (
@@ -247,7 +247,7 @@ export function UserNotificationsManager({
                             className="btn-ghost text-red-500 flex items-center gap-2"
                         >
                             <Trash2 size={16} />
-                            Remove
+                            Kaldır
                         </button>
                     </div>
                 ) : (
@@ -264,10 +264,10 @@ export function UserNotificationsManager({
                             className="btn-secondary flex items-center gap-2"
                         >
                             <Upload size={16} />
-                            Upload Logo
+                            Logo Yükle
                         </button>
                         <p className="text-xs text-muted-foreground mt-2">
-                            Recommended: PNG or SVG with transparent background (min 600x240px)
+                            Önerilen: Şeffaf arkaplanlı PNG veya SVG (min 600x240px)
                         </p>
                     </div>
                 )}
@@ -279,7 +279,7 @@ export function UserNotificationsManager({
                     <div className="flex items-center gap-3">
                         <Clock className="text-accent-coral" size={24} />
                         <h2 className="font-display text-xl tracking-wide">
-                            Reminder Template
+                            Hatırlatma Şablonu
                         </h2>
                     </div>
                     <button
@@ -291,7 +291,7 @@ export function UserNotificationsManager({
                     </button>
                 </div>
                 <p className="text-muted-foreground text-sm mb-6">
-                    Sent automatically <strong>1 week before</strong> an event to subscribers who opted in for event alerts.
+                    Etkinlik uyarılarına abone olan kullanıcılara etkinlikten <strong>1 hafta önce</strong> otomatik gönderilir.
                 </p>
                 <EmailTemplateEditor
                     value={reminderTemplate}
@@ -306,7 +306,7 @@ export function UserNotificationsManager({
                     <div className="flex items-center gap-3">
                         <AlertTriangle className="text-orange-500" size={24} />
                         <h2 className="font-display text-xl tracking-wide">
-                            Sold Out Template
+                            Tükenme Şablonu
                         </h2>
                     </div>
                     <button
@@ -318,7 +318,7 @@ export function UserNotificationsManager({
                     </button>
                 </div>
                 <p className="text-muted-foreground text-sm mb-6">
-                    Sent immediately when an event is marked as <strong>sold out</strong>.
+                    Bir etkinlik <strong>tükenmiş</strong> olarak işaretlendiğinde anında gönderilir.
                 </p>
                 <EmailTemplateEditor
                     value={soldOutTemplate}
@@ -333,7 +333,7 @@ export function UserNotificationsManager({
                     <div className="flex items-center gap-3">
                         <Megaphone className="text-green-500" size={24} />
                         <h2 className="font-display text-xl tracking-wide">
-                            Announcement Template
+                            Duyuru Şablonu
                         </h2>
                     </div>
                     <button
@@ -345,7 +345,7 @@ export function UserNotificationsManager({
                     </button>
                 </div>
                 <p className="text-muted-foreground text-sm mb-6">
-                    Sent when you create a <strong>new event</strong> and choose to announce it.
+                    <strong>Yeni bir etkinlik</strong> oluşturduğunuzda ve duyurmayı seçtiğinizde gönderilir.
                 </p>
                 <EmailTemplateEditor
                     value={announcementTemplate}
@@ -364,17 +364,17 @@ export function UserNotificationsManager({
                     {isPending ? (
                         <>
                             <Loader2 size={18} className="animate-spin" />
-                            Saving...
+                            Kaydediliyor...
                         </>
                     ) : saved ? (
                         <>
                             <CheckCircle size={18} />
-                            Saved!
+                            Kaydedildi!
                         </>
                     ) : (
                         <>
                             <Save size={18} />
-                            Save All Templates
+                            Tüm Şablonları Kaydet
                         </>
                     )}
                 </button>
@@ -385,7 +385,7 @@ export function UserNotificationsManager({
                 <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 animate-in slide-in-from-bottom-4 fade-in duration-300">
                     <div className="flex items-center gap-3 px-6 py-4 bg-emerald-500/90 dark:bg-emerald-600/90 backdrop-blur-md text-white rounded-2xl shadow-lg shadow-emerald-500/20">
                         <CheckCircle size={22} className="text-white" />
-                        <span className="font-medium">All templates saved successfully!</span>
+                        <span className="font-medium">Tüm şablonlar başarıyla kaydedildi!</span>
                     </div>
                 </div>
             )}

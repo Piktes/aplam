@@ -26,27 +26,27 @@ export function SidebarNav({ unreadCount, onLinkClick }: SidebarNavProps) {
     const pathname = usePathname();
 
     const navItems: NavItem[] = [
-        { href: "/admin", icon: Home, label: "Dashboard" },
-        { href: "/admin", icon: Music2, label: "Audio Tracks", sectionId: "tracks" },
-        { href: "/admin", icon: Youtube, label: "Videos", sectionId: "videos" },
-        { href: "/admin", icon: ImagePlus, label: "Gallery", sectionId: "gallery" },
-        { href: "/admin", icon: Settings, label: "Settings", sectionId: "settings" },
-        { href: "/admin/events", icon: Calendar, label: "Events" },
-        { href: "/admin/products/new", icon: Package, label: "Add Product" },
-        { href: "/admin/hero", icon: ImageIcon, label: "Hero Editor" },
-        { href: "/admin/bio-editor", icon: FileText, label: "Bio Editor" },
-        { href: "/admin/popups", icon: Bell, label: "Popups" },
-        { href: "/admin/social-media", icon: Share2, label: "Social Media" },
-        { href: "/admin/auto-reply", icon: MessageSquare, label: "Auto Reply" },
-        { href: "/admin/user-notifications", icon: Mail, label: "User Notifications" },
-        { href: "/admin/email-signature", icon: PenTool, label: "Email Signature" },
-        { href: "/admin/visitors", icon: Eye, label: "Visitors" },
-        { href: "/admin/subscribers", icon: Users, label: "Subscribers" },
-        { href: "/admin/messages", icon: MessageSquare, label: "Messages", badge: unreadCount > 0 ? unreadCount : undefined },
-        { href: "/admin/press-kit", icon: Newspaper, label: "Press Kit" },
+        { href: "/admin", icon: Home, label: "Panel" },
+        { href: "/admin", icon: Music2, label: "Ses Parçaları", sectionId: "tracks" },
+        { href: "/admin", icon: Youtube, label: "Videolar", sectionId: "videos" },
+        { href: "/admin", icon: ImagePlus, label: "Galeri", sectionId: "gallery" },
+        { href: "/admin", icon: Settings, label: "Ayarlar", sectionId: "settings" },
+        { href: "/admin/events", icon: Calendar, label: "Etkinlikler" },
+        { href: "/admin/products/new", icon: Package, label: "Ürün Ekle" },
+        { href: "/admin/hero", icon: ImageIcon, label: "Kapak Düzenleyici" },
+        { href: "/admin/bio-editor", icon: FileText, label: "Biyografi Düzenleyici" },
+        { href: "/admin/popups", icon: Bell, label: "Açılır Pencereler" },
+        { href: "/admin/social-media", icon: Share2, label: "Sosyal Medya" },
+        { href: "/admin/auto-reply", icon: MessageSquare, label: "Otomatik Yanıt" },
+        { href: "/admin/user-notifications", icon: Mail, label: "Kullanıcı Bildirimleri" },
+        { href: "/admin/email-signature", icon: PenTool, label: "E-posta İmzası" },
+        { href: "/admin/visitors", icon: Eye, label: "Ziyaretçiler" },
+        { href: "/admin/subscribers", icon: Users, label: "Aboneler" },
+        { href: "/admin/messages", icon: MessageSquare, label: "Mesajlar", badge: unreadCount > 0 ? unreadCount : undefined },
+        { href: "/admin/press-kit", icon: Newspaper, label: "Basın Kiti" },
         // System section with divider
-        { href: "/admin/users", icon: Shield, label: "System Users", dividerBefore: true },
-        { href: "/admin/logs", icon: ScrollText, label: "System Logs" },
+        { href: "/admin/users", icon: Shield, label: "Sistem Kullanıcıları", dividerBefore: true },
+        { href: "/admin/logs", icon: ScrollText, label: "Sistem Kayıtları" },
     ];
 
     const handleNavClick = (item: NavItem, e: React.MouseEvent) => {
@@ -80,7 +80,7 @@ export function SidebarNav({ unreadCount, onLinkClick }: SidebarNavProps) {
                         {item.dividerBefore && (
                             <div className="my-4 border-t border-border pt-4">
                                 <p className="px-4 text-xs font-medium text-muted-foreground uppercase tracking-wider mb-2">
-                                    System
+                                    Sistem
                                 </p>
                             </div>
                         )}

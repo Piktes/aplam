@@ -72,11 +72,11 @@ export function BioEditor({
             const formData = new FormData();
             formData.set("bio", bio);
             await saveBioAction(formData);
-            setToast({ type: "success", message: "Bio updated successfully!" });
+            setToast({ type: "success", message: "Biyografi başarıyla güncellendi!" });
             setIsEditing(false);
         } catch (error) {
             console.error("Failed to save bio:", error);
-            setToast({ type: "error", message: "Failed to save bio." });
+            setToast({ type: "error", message: "Biyografi kaydedilemedi." });
         } finally {
             setIsSaving(false);
         }
@@ -126,7 +126,7 @@ export function BioEditor({
             window.location.reload();
         } catch (error) {
             console.error("Error uploading images:", error);
-            setToast({ type: "error", message: "Failed to upload image." });
+            setToast({ type: "error", message: "Görsel yüklenemedi." });
         } finally {
             setIsSaving(false);
         }
@@ -192,7 +192,7 @@ export function BioEditor({
         const newPages = [...pages];
         newPages.splice(activePage, 1, ...chunks);
         setBio(newPages.join(PAGE_DELIMITER));
-        setToast({ type: "success", message: `Auto-split into ${chunks.length} pages!` });
+        setToast({ type: "success", message: `Otomatik olarak ${chunks.length} sayfaya bölündü!` });
     };
 
     // Protect against data loss: Disable limit if content is already too long, so user can edit/split manually
@@ -209,7 +209,7 @@ export function BioEditor({
                             {toast.type === "success" ? <CheckCircle size={20} /> : <XCircle size={20} />}
                         </div>
                         <div>
-                            <h4 className="font-medium text-sm">{toast.type === "success" ? "Success" : "Error"}</h4>
+                            <h4 className="font-medium text-sm">{toast.type === "success" ? "Başarılı" : "Hata"}</h4>
                             <p className="text-xs text-muted-foreground">{toast.message}</p>
                         </div>
                         <button onClick={() => setToast(null)} className="ml-4 p-1 hover:bg-muted rounded-full transition-colors">
@@ -224,7 +224,7 @@ export function BioEditor({
                 <div className="flex justify-between items-start mb-4">
                     <h3 className="font-medium flex items-center gap-2">
                         <span className="text-accent-coral">✎</span>
-                        Biography Text {pages.length > 1 && <span className="text-muted-foreground text-sm font-normal ml-2">(Page {activePage + 1} of {pages.length})</span>}
+                        Biography Text {pages.length > 1 && <span className="text-muted-foreground text-sm font-normal ml-2">(Sayfa {activePage + 1} / {pages.length})</span>}
                     </h3>
                     {!isEditing && (
                         <button
@@ -232,7 +232,7 @@ export function BioEditor({
                             className="btn-ghost text-sm flex items-center gap-2 hover:bg-accent-coral/10 hover:text-accent-coral"
                         >
                             <Edit2 size={14} />
-                            Edit Bio
+                            Biyografiyi Düzenle
                         </button>
                     )}
                 </div>
@@ -244,17 +244,17 @@ export function BioEditor({
                         disabled={activePage === 0}
                         className="btn-secondary text-xs px-2 py-1 disabled:opacity-30 flex-shrink-0"
                     >
-                        Prev Page
+                        Önceki Sayfa
                     </button>
                     <div className="flex-1 text-center text-xs font-mono text-muted-foreground min-w-[80px]">
-                        PAGE {activePage + 1} / {pages.length}
+                        SAYFA {activePage + 1} / {pages.length}
                     </div>
                     <button
                         onClick={goToNextPage}
                         disabled={activePage === pages.length - 1}
                         className="btn-secondary text-xs px-2 py-1 disabled:opacity-30 flex-shrink-0"
                     >
-                        Next Page
+                        Sonraki Sayfa
                     </button>
                     {isEditing && (
                         <>
@@ -264,14 +264,14 @@ export function BioEditor({
                                     onClick={addNewPage}
                                     className="btn-secondary text-xs px-2 py-1 bg-accent-coral/10 text-accent-coral hover:bg-accent-coral/20 border-accent-coral/20 flex-1 sm:flex-none"
                                 >
-                                    + Add Page
+                                    + Sayfa Ekle
                                 </button>
                                 {pages.length > 1 && (
                                     <button
                                         onClick={deleteCurrentPage}
                                         className="btn-secondary text-xs px-2 py-1 bg-red-500/10 text-red-500 hover:bg-red-500/20 border-red-500/20 ml-2 flex-1 sm:flex-none"
                                     >
-                                        Delete Page
+                                        Sayfayı Sil
                                     </button>
                                 )}
                             </div>
@@ -284,13 +284,13 @@ export function BioEditor({
                         {isOverLimit && (
                             <div className="mb-4 bg-yellow-500/10 border border-yellow-500/20 p-3 rounded-lg flex items-center justify-between">
                                 <span className="text-xs text-yellow-500">
-                                    Content exceeds 500 limit ({currentPageContent.length}/500). Editor limit disabled to prevent data loss.
+                                    İçerik 500 limitini aşıyor ({currentPageContent.length}/500). Veri kaybını önlemek için editör limiti devre dışı bırakıldı.
                                 </span>
                                 <button
                                     onClick={autoPaginate}
                                     className="text-xs bg-yellow-500 text-white px-3 py-1.5 rounded hover:bg-yellow-600 transition-colors"
                                 >
-                                    Auto-Split Pages
+                                    Otomatik Böl
                                 </button>
                             </div>
                         )}
@@ -298,12 +298,12 @@ export function BioEditor({
                             value={currentPageContent}
                             onChange={handlePageChange}
                             maxLength={effectiveMaxLength}
-                            placeholder={`Write content for page ${activePage + 1}...`}
+                            placeholder={`Sayfa ${activePage + 1} için içerik yazın...`}
                             className="min-h-[200px]"
                         />
                         <div className="flex justify-between items-center mt-4">
                             <span className="text-xs text-muted-foreground">
-                                * Edits are saved to "Page {activePage + 1}". Use navigation above to edit other pages.
+                                * Düzenlemeler "Sayfa {activePage + 1}"'e kaydedilir. Diğer sayfaları düzenlemek için yukarıdaki navigasyonu kullanın.
                             </span>
                             <div className="flex items-center gap-3">
                                 <button
@@ -311,7 +311,7 @@ export function BioEditor({
                                     disabled={isSaving}
                                     className="btn-secondary text-sm h-10 px-4 border border-border hover:border-accent-coral/50 hover:bg-muted/50 transition-colors"
                                 >
-                                    Cancel
+                                    İptal
                                 </button>
                                 <button
                                     onClick={handleSaveBio}
@@ -321,12 +321,12 @@ export function BioEditor({
                                     {toast?.type === 'success' && !isSaving ? (
                                         <>
                                             <CheckCircle size={18} />
-                                            Saved!
+                                            Kaydedildi!
                                         </>
                                     ) : (
                                         <>
                                             <Save size={18} />
-                                            {isSaving ? "Saving..." : "Save Bio"}
+                                            {isSaving ? "Kaydediliyor..." : "Biyografiyi Kaydet"}
                                         </>
                                     )}
                                 </button>
@@ -337,7 +337,7 @@ export function BioEditor({
                     <div className="animate-in fade-in duration-300">
                         <div
                             className="prose prose-sm dark:prose-invert max-w-none p-4 rounded-xl bg-muted/20 border border-border/50 min-h-[100px] max-h-[250px] overflow-y-auto custom-scrollbar"
-                            dangerouslySetInnerHTML={{ __html: currentPageContent || "<p class='text-muted-foreground italic'>No content on this page.</p>" }}
+                            dangerouslySetInnerHTML={{ __html: currentPageContent || "<p class='text-muted-foreground italic'>Bu sayfada içerik yok.</p>" }}
                         />
                     </div>
                 )}
@@ -349,7 +349,7 @@ export function BioEditor({
                 <div className="flex items-center justify-between mb-4">
                     <h3 className="font-medium flex items-center gap-2">
                         <ImageIcon size={18} className="text-accent-coral" />
-                        Bio Gallery Images
+                        Biyografi Galeri Görselleri
                     </h3>
                     <div>
                         <input
@@ -365,13 +365,13 @@ export function BioEditor({
                             className="btn-secondary text-sm py-1.5 px-3 h-8 flex items-center gap-2"
                         >
                             <Upload size={14} />
-                            Upload Images
+                            Görsel Yükle
                         </button>
                     </div>
                 </div>
 
                 <p className="text-sm text-muted-foreground mb-4">
-                    Upload multiple images for the bio slider. Drag to reorder.
+                    Biyografi slider'ı için birden fazla görsel yükleyin. Sıralamak için sürükleyin.
                 </p>
 
                 {images.length > 0 ? (
@@ -422,8 +422,8 @@ export function BioEditor({
                 ) : (
                     <div className="py-12 text-center text-muted-foreground border-2 border-dashed border-border rounded-xl">
                         <ImageIcon className="mx-auto mb-3" size={40} />
-                        <p>No bio images yet</p>
-                        <p className="text-sm">Upload images to display in your bio slider</p>
+                        <p>Henüz biyografi görseli yok</p>
+                        <p className="text-sm">Biyografi slider'ınızda göstermek için görsel yükleyin</p>
                     </div>
                 )}
             </div>

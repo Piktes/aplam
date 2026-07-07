@@ -84,11 +84,11 @@ export default function MessagesPage() {
             const res = await fetch(`/api/admin/messages?${params}`);
             const result = await res.json();
 
-            if (!res.ok) throw new Error(result.error || "Failed to fetch messages");
+            if (!res.ok) throw new Error(result.error || "Mesajlar yüklenemedi");
 
             setData(result);
         } catch (err) {
-            setError(err instanceof Error ? err.message : "Failed to fetch messages");
+            setError(err instanceof Error ? err.message : "Mesajlar yüklenemedi");
         } finally {
             setLoading(false);
         }
@@ -119,7 +119,7 @@ export default function MessagesPage() {
 
     const deleteAction = async (formData: FormData) => {
         const id = parseInt(formData.get("id") as string);
-        if (!confirm("Are you sure you want to delete this message?")) return;
+        if (!confirm("Bu mesajı silmek istediğinizden emin misiniz?")) return;
 
         await fetch("/api/admin/messages/delete", {
             method: "POST",
@@ -145,7 +145,7 @@ export default function MessagesPage() {
             const res = await fetch(`/api/admin/messages/export?${params}`);
             const result = await res.json();
 
-            if (!result.success) throw new Error("Export failed");
+            if (!result.success) throw new Error("Dışa aktarma başarısız");
 
             // Helper to normalize Turkish characters for PDF
             const normalizeText = (text: string) => {
@@ -161,15 +161,15 @@ export default function MessagesPage() {
 
             const doc = new jsPDF();
             doc.setFontSize(18);
-            doc.text("Messages Report", 14, 22);
+            doc.text("Mesaj Raporu", 14, 22);
             doc.setFontSize(10);
-            doc.text(`Generated: ${new Date().toLocaleDateString()}`, 14, 30);
-            doc.text(`Filter: ${filter}, Country: ${country || "All"}`, 14, 36);
-            doc.text(`Total: ${result.count} messages`, 14, 42);
+            doc.text(`Olusturulma: ${new Date().toLocaleDateString("tr-TR")}`, 14, 30);
+            doc.text(`Filtre: ${filter}, Ulke: ${country || "Tumu"}`, 14, 36);
+            doc.text(`Toplam: ${result.count} mesaj`, 14, 42);
 
             autoTable(doc, {
                 startY: 50,
-                head: [["Name", "Email", "Message", "Country", "Replied", "Reply", "Date"]],
+                head: [["Ad", "E-posta", "Mesaj", "Ulke", "Yanitlandi", "Yanit", "Tarih"]],
                 body: result.data.map((m: any) => [
                     normalizeText(m.name),
                     m.email,
@@ -195,7 +195,7 @@ export default function MessagesPage() {
             doc.save(`messages_${new Date().toISOString().split("T")[0]}.pdf`);
         } catch (err) {
             console.error("PDF export failed:", err);
-            alert("Export failed");
+            alert("Dışa aktarma başarısız");
         } finally {
             setExporting(null);
         }
@@ -212,21 +212,21 @@ export default function MessagesPage() {
             const res = await fetch(`/api/admin/messages/export?${params}`);
             const result = await res.json();
 
-            if (!result.success) throw new Error("Export failed");
+            if (!result.success) throw new Error("Dışa aktarma başarısız");
 
             const workbook = new ExcelJS.Workbook();
-            const worksheet = workbook.addWorksheet("Messages");
+            const worksheet = workbook.addWorksheet("Mesajlar");
 
             worksheet.columns = [
-                { header: "Name", key: "name", width: 20 },
-                { header: "Email", key: "email", width: 30 },
-                { header: "Message", key: "message", width: 40 },
-                { header: "Country", key: "country", width: 15 },
-                { header: "City", key: "city", width: 15 },
-                { header: "Replied", key: "replied", width: 10 },
-                { header: "Reply", key: "replyText", width: 30 },
-                { header: "Received", key: "receivedAt", width: 12 },
-                { header: "Replied At", key: "repliedAt", width: 12 },
+                { header: "Ad", key: "name", width: 20 },
+                { header: "E-posta", key: "email", width: 30 },
+                { header: "Mesaj", key: "message", width: 40 },
+                { header: "Ülke", key: "country", width: 15 },
+                { header: "Şehir", key: "city", width: 15 },
+                { header: "Yanıtlandı", key: "replied", width: 10 },
+                { header: "Yanıt", key: "replyText", width: 30 },
+                { header: "Alındı", key: "receivedAt", width: 12 },
+                { header: "Yanıt Tarihi", key: "repliedAt", width: 12 },
             ];
 
             worksheet.getRow(1).font = { bold: true };
@@ -248,7 +248,7 @@ export default function MessagesPage() {
             URL.revokeObjectURL(url);
         } catch (err) {
             console.error("Excel export failed:", err);
-            alert("Export failed");
+            alert("Dışa aktarma başarısız");
         } finally {
             setExporting(null);
         }
@@ -259,7 +259,7 @@ export default function MessagesPage() {
     return (
         <div className="min-h-screen overflow-x-hidden">
             {/* InfoBar */}
-            <InfoBar counter={unreadCount > 0 ? `${unreadCount} unread` : undefined} />
+            <InfoBar counter={unreadCount > 0 ? `${unreadCount} okunmamış` : undefined} />
 
             {/* Main Content */}
             <div className="max-w-7xl mx-auto px-4 pb-10">
@@ -268,10 +268,10 @@ export default function MessagesPage() {
                     <div>
                         <h1 className="font-display text-display-sm sm:text-display-md tracking-wider uppercase flex items-center gap-3">
                             <MessageSquare className="text-accent-coral" size={28} />
-                            Messages
+                            Mesajlar
                         </h1>
                         <p className="text-muted-foreground mt-1 text-sm">
-                            {data?.stats ? `${data.stats.total} total • ${data.stats.unanswered} unanswered` : "Loading..."}
+                            {data?.stats ? `${data.stats.total} toplam • ${data.stats.unanswered} yanıtlanmamış` : "Yükleniyor..."}
                         </p>
                     </div>
 
@@ -281,7 +281,7 @@ export default function MessagesPage() {
                             onClick={exportToPDF}
                             disabled={exporting !== null || !data?.stats?.total}
                             className="btn-secondary flex items-center gap-2 text-sm px-3 py-2"
-                            title="Export to PDF"
+                            title="PDF olarak dışa aktar"
                         >
                             {exporting === "pdf" ? <Loader2 size={16} className="animate-spin" /> : <FileText size={16} />}
                             <span className="hidden sm:inline">PDF</span>
@@ -290,7 +290,7 @@ export default function MessagesPage() {
                             onClick={exportToExcel}
                             disabled={exporting !== null || !data?.stats?.total}
                             className="btn-secondary flex items-center gap-2 text-sm px-3 py-2"
-                            title="Export to Excel"
+                            title="Excel olarak dışa aktar"
                         >
                             {exporting === "xlsx" ? <Loader2 size={16} className="animate-spin" /> : <FileSpreadsheet size={16} />}
                             <span className="hidden sm:inline">Excel</span>
@@ -301,14 +301,14 @@ export default function MessagesPage() {
                                 className="btn-secondary flex items-center gap-2 text-xs px-3 py-2 sm:text-sm"
                             >
                                 <Eye size={14} />
-                                <span className="hidden sm:inline">Mark All Read</span>
+                                <span className="hidden sm:inline">Tümünü Okundu İşaretle</span>
                             </button>
                         )}
                         <button
                             onClick={() => fetchMessages()}
                             disabled={loading}
                             className="p-2 rounded-lg hover:bg-muted transition-colors"
-                            title="Refresh"
+                            title="Yenile"
                         >
                             <RefreshCw size={18} className={loading ? "animate-spin" : ""} />
                         </button>
@@ -331,7 +331,7 @@ export default function MessagesPage() {
                                     <MessageSquare size={20} className="text-accent-coral sm:w-6 sm:h-6" />
                                 </div>
                                 <div>
-                                    <p className="text-xs sm:text-sm text-muted-foreground">Total</p>
+                                    <p className="text-xs sm:text-sm text-muted-foreground">Toplam</p>
                                     <p className="text-lg sm:text-2xl font-display">{data.stats.total}</p>
                                 </div>
                             </div>
@@ -350,7 +350,7 @@ export default function MessagesPage() {
                                     <MailX size={20} className="text-yellow-500 sm:w-6 sm:h-6" />
                                 </div>
                                 <div>
-                                    <p className="text-xs sm:text-sm text-muted-foreground">Unanswered</p>
+                                    <p className="text-xs sm:text-sm text-muted-foreground">Yanıtlanmamış</p>
                                     <p className="text-lg sm:text-2xl font-display">{data.stats.unanswered}</p>
                                 </div>
                             </div>
@@ -369,7 +369,7 @@ export default function MessagesPage() {
                                     <Users size={20} className="text-green-500 sm:w-6 sm:h-6" />
                                 </div>
                                 <div>
-                                    <p className="text-xs sm:text-sm text-muted-foreground">Subscribers</p>
+                                    <p className="text-xs sm:text-sm text-muted-foreground">Aboneler</p>
                                     <p className="text-lg sm:text-2xl font-display">{data.stats.fromSubscribers}</p>
                                 </div>
                             </div>
@@ -388,7 +388,7 @@ export default function MessagesPage() {
                                     <MailCheck size={20} className="text-blue-500 sm:w-6 sm:h-6" />
                                 </div>
                                 <div>
-                                    <p className="text-xs sm:text-sm text-muted-foreground">Replied</p>
+                                    <p className="text-xs sm:text-sm text-muted-foreground">Yanıtlandı</p>
                                     <p className="text-lg sm:text-2xl font-display">{data.stats.replied}</p>
                                 </div>
                             </div>
@@ -401,7 +401,7 @@ export default function MessagesPage() {
                     <div className="glass-card p-4 mb-6">
                         <div className="flex items-center gap-2 mb-3">
                             <Flag size={16} className="text-accent-coral" />
-                            <span className="font-medium text-sm">Top Countries</span>
+                            <span className="font-medium text-sm">En Çok Ülkeler</span>
                         </div>
                         <div className="grid grid-cols-3 gap-2 sm:gap-3">
                             {data.topCountries.map((c, idx) => (
@@ -414,7 +414,7 @@ export default function MessagesPage() {
                                 >
                                     <span className="text-2xl sm:text-3xl mb-1">{getCountryFlag(c.country)}</span>
                                     <p className="font-medium text-xs sm:text-sm truncate w-full">{c.country}</p>
-                                    <p className="text-muted-foreground text-xs">{c.count} messages</p>
+                                    <p className="text-muted-foreground text-xs">{c.count} mesaj</p>
                                 </div>
                             ))}
                         </div>
@@ -430,7 +430,7 @@ export default function MessagesPage() {
                                 type="text"
                                 value={search}
                                 onChange={(e) => setSearch(e.target.value)}
-                                placeholder="Search messages..."
+                                placeholder="Mesajlarda ara..."
                                 className="input-field pl-10 w-full text-sm"
                             />
                         </div>
@@ -440,10 +440,10 @@ export default function MessagesPage() {
                                 onChange={(e) => { setSortBy(e.target.value); setPage(1); }}
                                 className="input-field pr-8 text-sm flex-1 sm:flex-none"
                             >
-                                <option value="newest">Newest</option>
-                                <option value="oldest">Oldest</option>
-                                <option value="name">By Name</option>
-                                <option value="country">By Country</option>
+                                <option value="newest">En Yeni</option>
+                                <option value="oldest">En Eski</option>
+                                <option value="name">Ada Göre</option>
+                                <option value="country">Ülkeye Göre</option>
                             </select>
                             <div className="flex items-center gap-2">
                                 <Globe size={16} className="text-muted-foreground hidden sm:block" />
@@ -452,7 +452,7 @@ export default function MessagesPage() {
                                     onChange={(e) => { setCountry(e.target.value); setPage(1); }}
                                     className="px-3 py-2 rounded-lg bg-muted border-none text-sm font-medium focus:ring-2 focus:ring-accent-coral/20 max-w-[140px]"
                                 >
-                                    <option value="">All Countries</option>
+                                    <option value="">Tüm Ülkeler</option>
                                     {data?.availableCountries?.map((c) => (
                                         <option key={c} value={c}>
                                             {getCountryFlag(c)} {c}
@@ -462,7 +462,7 @@ export default function MessagesPage() {
                             </div>
                             <button type="submit" className="btn-primary flex items-center gap-2 text-xs sm:text-sm px-3 py-2">
                                 <Filter size={14} />
-                                Apply
+                                Uygula
                             </button>
                         </div>
                     </form>
@@ -481,11 +481,11 @@ export default function MessagesPage() {
                 ) : !data?.messages.length ? (
                     <div className="glass-card py-20 text-center text-muted-foreground">
                         <MessageSquare className="mx-auto mb-4" size={48} />
-                        <p className="text-lg">No messages found</p>
+                        <p className="text-lg">Mesaj bulunamadı</p>
                         <p className="text-sm mt-1">
                             {search || country || filter !== "all"
-                                ? "Try adjusting your search or filters"
-                                : "Messages from your contact form will appear here"}
+                                ? "Arama veya filtrelerinizi değiştirmeyi deneyin"
+                                : "İletişim formundan gelen mesajlar burada görünecek"}
                         </p>
                     </div>
                 ) : (
@@ -505,7 +505,7 @@ export default function MessagesPage() {
                         {data.pagination.totalPages > 1 && (
                             <div className="flex flex-col sm:flex-row items-center justify-between gap-3 mt-6 glass-card px-4 py-3">
                                 <p className="text-sm text-muted-foreground">
-                                    {((page - 1) * limit) + 1} - {Math.min(page * limit, data.pagination.total)} of {data.pagination.total}
+                                    {((page - 1) * limit) + 1} - {Math.min(page * limit, data.pagination.total)} / {data.pagination.total}
                                 </p>
                                 <div className="flex items-center gap-2">
                                     <button

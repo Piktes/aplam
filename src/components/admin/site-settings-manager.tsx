@@ -39,50 +39,50 @@ export function SiteSettingsManager({ settings, onToggle }: SiteSettingsManagerP
     const settingItems = [
         {
             name: "isAudioPlayerVisible",
-            label: "Audio Player",
-            description: "Show/hide the hero audio player on the homepage",
+            label: "Ses Oynatıcı",
+            description: "Ana sayfadaki hero ses oynatıcıyı göster/gizle",
             icon: Music2,
             value: settings.isAudioPlayerVisible,
         },
         {
             name: "isShopVisible",
-            label: "Shop Section",
-            description: "Show/hide the shop/merch section on the homepage",
+            label: "Mağaza Bölümü",
+            description: "Ana sayfadaki mağaza/ürün bölümünü göster/gizle",
             icon: ShoppingBag,
             value: settings.isShopVisible,
         },
         {
             name: "isSocialLinksVisible",
-            label: "Social Links",
-            description: "Show/hide social media icons across the site",
+            label: "Sosyal Bağlantılar",
+            description: "Sitedeki sosyal medya ikonlarını göster/gizle",
             icon: Share2,
             value: settings.isSocialLinksVisible,
         },
         {
             name: "isYoutubeVisible",
-            label: "YouTube Videos",
-            description: "Show/hide the YouTube video carousel section",
+            label: "YouTube Videoları",
+            description: "YouTube video karusel bölümünü göster/gizle",
             icon: Youtube,
             value: settings.isYoutubeVisible,
         },
         {
             name: "youtubeAutoScroll",
-            label: "Auto-Scroll Videos",
-            description: "Automatically scroll through videos in the carousel",
+            label: "Otomatik Kaydırma",
+            description: "Karuseldeki videoları otomatik olarak kaydır",
             icon: Youtube,
             value: settings.youtubeAutoScroll,
         },
         {
             name: "heroSliderEnabled",
             label: "Hero Slider",
-            description: "Enable multiple sliding images in the hero section",
+            description: "Hero bölümünde birden fazla kayan görsel etkinleştir",
             icon: ImageIcon,
             value: settings.heroSliderEnabled,
         },
         {
             name: "heroKenBurnsEffect",
-            label: "Ken Burns Effect",
-            description: "Subtle zoom animation on hero background images",
+            label: "Ken Burns Efekti",
+            description: "Hero arka plan görsellerinde hafif yakınlaştırma animasyonu",
             icon: Sparkles,
             value: settings.heroKenBurnsEffect,
         },
@@ -94,7 +94,7 @@ export function SiteSettingsManager({ settings, onToggle }: SiteSettingsManagerP
             {isPending && (
                 <div className="mb-4 p-3 rounded-lg bg-accent-coral/10 border border-accent-coral/20 flex items-center gap-2 text-accent-coral">
                     <Loader2 size={16} className="animate-spin" />
-                    <span className="text-sm">Updating settings...</span>
+                    <span className="text-sm">Ayarlar güncelleniyor...</span>
                 </div>
             )}
 
@@ -136,11 +136,11 @@ export function SiteSettingsManager({ settings, onToggle }: SiteSettingsManagerP
 
             {/* Info Box */}
             <div className="mt-6 p-4 rounded-xl bg-muted/50 text-sm text-muted-foreground">
-                <p className="font-medium text-foreground mb-1">How it works:</p>
+                <p className="font-medium text-foreground mb-1">Nasıl çalışır:</p>
                 <ul className="list-disc list-inside space-y-1">
-                    <li>Toggles take effect immediately across the site</li>
-                    <li>Hidden sections won't appear in navigation or content</li>
-                    <li>Data is preserved when sections are hidden (not deleted)</li>
+                    <li>Değişiklikler site genelinde anında etkili olur</li>
+                    <li>Gizlenen bölümler navigasyonda ve içerikte görünmez</li>
+                    <li>Bölümler gizlendiğinde veriler korunur (silinmez)</li>
                 </ul>
             </div>
         </div>

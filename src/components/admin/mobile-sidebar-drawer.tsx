@@ -53,11 +53,11 @@ export function MobileSidebarDrawer({ unreadCount }: MobileSidebarDrawerProps) {
             >
                 {/* Header */}
                 <div className="flex items-center justify-between px-4 py-4 border-b border-border">
-                    <span className="font-display text-lg tracking-widest uppercase">Menu</span>
+                    <span className="font-display text-lg tracking-widest uppercase">Menü</span>
                     <button
                         onClick={close}
                         className="p-2 rounded-lg hover:bg-muted transition-colors"
-                        aria-label="Close menu"
+                        aria-label="Menüyü kapat"
                     >
                         <X size={20} />
                     </button>

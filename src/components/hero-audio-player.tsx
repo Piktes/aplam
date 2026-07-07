@@ -281,10 +281,10 @@ export function HeroAudioPlayer({ tracks, isVisible = true }: HeroAudioPlayerPro
             {/* Title & Artist */}
             <div className="mb-1 sm:mb-2">
               <p className="font-medium text-white text-[13px] sm:text-base truncate drop-shadow-md">
-                {currentTrack?.title || "No Track"}
+                {currentTrack?.title || "Parça Yok"}
               </p>
               <p className="text-[10px] sm:text-sm text-white/50 truncate">
-                {currentTrack?.artist || "Heiraza"}
+                {currentTrack?.artist || "Begüm Atak"}
               </p>
             </div>
 
@@ -315,7 +315,7 @@ export function HeroAudioPlayer({ tracks, isVisible = true }: HeroAudioPlayerPro
             {/* Time Display */}
             <div className="flex items-center justify-between text-[8px] sm:text-xs text-white/40 mb-1 sm:mb-2 font-mono">
               {isExternalOnly ? (
-                <span className="text-accent-coral">External Link</span>
+                <span className="text-accent-coral">Harici Bağlantı</span>
               ) : (
                 <>
                   <span>{formatTime(currentTime)}</span>
@@ -332,7 +332,7 @@ export function HeroAudioPlayer({ tracks, isVisible = true }: HeroAudioPlayerPro
               <button
                 onClick={toggleMute}
                 className={`p-1 sm:p-2 rounded-full hover:bg-white/10 transition-colors text-white/50 hover:text-white ${isExternalOnly ? 'invisible' : ''}`}
-                aria-label={isMuted ? "Unmute" : "Mute"}
+                aria-label={isMuted ? "Sesi aç" : "Sesi kapat"}
               >
                 {isMuted ? <VolumeX size={14} className="sm:w-4 sm:h-4" /> : <Volume2 size={14} className="sm:w-4 sm:h-4" />}
               </button>
@@ -344,7 +344,7 @@ export function HeroAudioPlayer({ tracks, isVisible = true }: HeroAudioPlayerPro
                   <button
                     onClick={prevTrack}
                     className="p-1 sm:p-2 rounded-full hover:bg-white/10 transition-colors text-white/60 hover:text-white"
-                    aria-label="Previous track"
+                    aria-label="Önceki parça"
                   >
                     <SkipBack size={16} className="sm:w-[18px] sm:h-[18px]" />
                   </button>
@@ -367,7 +367,7 @@ export function HeroAudioPlayer({ tracks, isVisible = true }: HeroAudioPlayerPro
                     disabled:opacity-50 disabled:cursor-not-allowed
                     shadow-lg
                   "
-                  aria-label={isPlaying ? "Pause" : (isExternalOnly ? "Open Link" : "Play")}
+                  aria-label={isPlaying ? "Duraklat" : (isExternalOnly ? "Bağlantıyı aç" : "Oynat")}
                 >
                   {isExternalOnly ? (
                     // External Link Icon (Custom SVG to avoid import issues for now if needed, but I'll use a known one or simple arrow)
@@ -386,7 +386,7 @@ export function HeroAudioPlayer({ tracks, isVisible = true }: HeroAudioPlayerPro
                   <button
                     onClick={nextTrack}
                     className="p-1 sm:p-2 rounded-full hover:bg-white/10 transition-colors text-white/60 hover:text-white"
-                    aria-label="Next track"
+                    aria-label="Sonraki parça"
                   >
                     <SkipForward size={16} className="sm:w-[18px] sm:h-[18px]" />
                   </button>

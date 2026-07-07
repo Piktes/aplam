@@ -3,11 +3,11 @@ import { MetadataRoute } from "next";
 
 export default function robots(): MetadataRoute.Robots {
     // HARDCODED fallback - LiteSpeed sends duplicate headers
-    let baseUrl = "https://heiraza.com";
+    let baseUrl = "https://begumatak.com";
 
     try {
         const headersList = headers();
-        const host = (headersList.get("host") || "").split(',')[0].trim() || "heiraza.com";
+        const host = (headersList.get("host") || "").split(',')[0].trim() || "begumatak.com";
         const proto = (headersList.get("x-forwarded-proto") || "").split(',')[0].trim() || "https";
         baseUrl = `${proto}://${host}`;
     } catch (e) {

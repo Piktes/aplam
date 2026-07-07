@@ -195,7 +195,7 @@ export function PopupManager({
 
     // Format date for display
     const formatDate = (date: Date) => {
-        return new Date(date).toLocaleDateString("en-US", {
+        return new Date(date).toLocaleDateString("tr-TR", {
             month: "short",
             day: "numeric",
             year: "numeric",
@@ -215,7 +215,7 @@ export function PopupManager({
                     <div className="flex items-center gap-3">
                         <Plus className="text-accent-coral" size={20} />
                         <h2 className="font-display text-xl tracking-wide">
-                            {editingPopup ? "Edit Popup" : "Create Popup"}
+                            {editingPopup ? "Açılır Pencereyi Düzenle" : "Açılır Pencere Oluştur"}
                         </h2>
                     </div>
                     <span className="text-sm text-muted-foreground">
@@ -229,13 +229,13 @@ export function PopupManager({
                         className="w-full p-6 border-2 border-dashed border-border rounded-2xl text-muted-foreground hover:border-accent-coral/50 hover:text-foreground transition-colors flex items-center justify-center gap-2"
                     >
                         <Plus size={20} />
-                        <span>Add New Popup</span>
+                        <span>Yeni Açılır Pencere Ekle</span>
                     </button>
                 ) : (
                     <div className="space-y-5">
                         {/* Publish Mode Selector */}
                         <div>
-                            <label className="block text-sm font-medium mb-3">Publish Mode</label>
+                            <label className="block text-sm font-medium mb-3">Yayınlama Modu</label>
                             <div className="grid grid-cols-2 gap-3">
                                 <button
                                     type="button"
@@ -247,8 +247,8 @@ export function PopupManager({
                                 >
                                     <Zap size={20} />
                                     <div className="text-left">
-                                        <p className="font-medium">Publish Now</p>
-                                        <p className="text-xs text-muted-foreground">Goes live immediately</p>
+                                        <p className="font-medium">Şimdi Yayınla</p>
+                                        <p className="text-xs text-muted-foreground">Hemen canlıya geçer</p>
                                     </div>
                                 </button>
                                 <button
@@ -261,8 +261,8 @@ export function PopupManager({
                                 >
                                     <Clock size={20} />
                                     <div className="text-left">
-                                        <p className="font-medium">Schedule</p>
-                                        <p className="text-xs text-muted-foreground">Set start & end dates</p>
+                                        <p className="font-medium">Zamanla</p>
+                                        <p className="text-xs text-muted-foreground">Başlangıç ve bitiş tarihi belirle</p>
                                     </div>
                                 </button>
                             </div>
@@ -270,17 +270,17 @@ export function PopupManager({
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
-                                <label className="block text-sm font-medium mb-2">Title *</label>
+                                <label className="block text-sm font-medium mb-2">Başlık *</label>
                                 <input
                                     type="text"
                                     value={title}
                                     onChange={(e) => setTitle(e.target.value)}
-                                    placeholder="Special Offer!"
+                                    placeholder="Özel Teklif!"
                                     className="input-field"
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium mb-2">Image (Optional)</label>
+                                <label className="block text-sm font-medium mb-2">Görsel (İsteğe Bağlı)</label>
                                 <input
                                     ref={fileInputRef}
                                     type="file"
@@ -295,7 +295,7 @@ export function PopupManager({
                                             {/* Native img for base64 preview */}
                                             <img src={imagePreview} alt="Preview" className="w-full h-full object-cover" />
                                         </div>
-                                        <span className="text-sm text-muted-foreground">New image</span>
+                                        <span className="text-sm text-muted-foreground">Yeni görsel</span>
                                         <button onClick={() => { setImagePreview(null); if (fileInputRef.current) fileInputRef.current.value = ""; }} className="text-red-500 hover:text-red-600">
                                             <X size={16} />
                                         </button>
@@ -306,26 +306,26 @@ export function PopupManager({
                                             {/* Native img for /uploads/ images */}
                                             <img src={editingPopup.imageUrl} alt="Current" className="w-full h-full object-cover" />
                                         </div>
-                                        <span className="text-sm text-muted-foreground">Current image</span>
+                                        <span className="text-sm text-muted-foreground">Mevcut görsel</span>
                                         <button onClick={() => setKeepExistingImage(false)} className="text-red-500 hover:text-red-600 text-xs">
-                                            Remove
+                                            Kaldır
                                         </button>
                                     </div>
                                 ) : (
                                     <label htmlFor="popup-image" className="input-field cursor-pointer flex items-center gap-2 text-muted-foreground">
                                         <Upload size={16} />
-                                        <span>Choose image</span>
+                                        <span>Görsel seç</span>
                                     </label>
                                 )}
                             </div>
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium mb-2">Message *</label>
+                            <label className="block text-sm font-medium mb-2">Mesaj *</label>
                             <textarea
                                 value={message}
                                 onChange={(e) => setMessage(e.target.value)}
-                                placeholder="Get 20% off all merchandise this weekend!"
+                                placeholder="Bu hafta sonu tüm ürünlerde %20 indirim!"
                                 rows={3}
                                 className="input-field resize-none"
                             />
@@ -333,7 +333,7 @@ export function PopupManager({
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
-                                <label className="block text-sm font-medium mb-2">Link URL (Optional)</label>
+                                <label className="block text-sm font-medium mb-2">Bağlantı URL (İsteğe Bağlı)</label>
                                 <input
                                     type="url"
                                     value={linkUrl}
@@ -343,12 +343,12 @@ export function PopupManager({
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium mb-2">Link Text</label>
+                                <label className="block text-sm font-medium mb-2">Bağlantı Metni</label>
                                 <input
                                     type="text"
                                     value={linkText}
                                     onChange={(e) => setLinkText(e.target.value)}
-                                    placeholder="Shop Now"
+                                    placeholder="Hemen Alışveriş Yap"
                                     className="input-field"
                                 />
                             </div>
@@ -358,7 +358,7 @@ export function PopupManager({
                         {publishMode === "scheduled" && (
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 rounded-xl bg-muted/50">
                                 <div>
-                                    <label className="block text-sm font-medium mb-2">Start Date *</label>
+                                    <label className="block text-sm font-medium mb-2">Başlangıç Tarihi *</label>
                                     <input
                                         type="datetime-local"
                                         value={startDate}
@@ -367,7 +367,7 @@ export function PopupManager({
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium mb-2">End Date *</label>
+                                    <label className="block text-sm font-medium mb-2">Bitiş Tarihi *</label>
                                     <input
                                         type="datetime-local"
                                         value={endDate}
@@ -387,17 +387,17 @@ export function PopupManager({
                                 {isPending ? (
                                     <>
                                         <Loader2 size={16} className="animate-spin" />
-                                        {editingPopup ? "Updating..." : "Creating..."}
+                                        {editingPopup ? "Güncelleniyor..." : "Oluşturuluyor..."}
                                     </>
                                 ) : (
                                     <>
                                         {editingPopup ? <Edit2 size={16} /> : <Plus size={16} />}
-                                        {editingPopup ? "Update Popup" : "Create Popup"}
+                                        {editingPopup ? "Pencereyi Güncelle" : "Pencere Oluştur"}
                                     </>
                                 )}
                             </button>
                             <button onClick={resetForm} className="btn-secondary">
-                                Cancel
+                                İptal
                             </button>
                         </div>
                     </div>
@@ -410,7 +410,7 @@ export function PopupManager({
             <div className="glass-card p-6">
                 <div className="flex items-center gap-3 mb-6">
                     <Bell className="text-accent-coral" size={20} />
-                    <h2 className="font-display text-xl tracking-wide">All Popups</h2>
+                    <h2 className="font-display text-xl tracking-wide">Tüm Açılır Pencereler</h2>
                 </div>
 
                 {isPending && (
@@ -454,12 +454,12 @@ export function PopupManager({
                                         <p className="font-medium truncate">{popup.title}</p>
                                         {isLive(popup) && (
                                             <span className="px-2 py-0.5 text-xs font-medium bg-green-500 text-white rounded-full shrink-0">
-                                                LIVE
+                                                CANLI
                                             </span>
                                         )}
                                         {isForever(popup.endDate) && popup.isActive && (
                                             <span className="px-2 py-0.5 text-xs font-medium bg-accent-coral/20 text-accent-coral rounded-full shrink-0">
-                                                Always On
+                                                Her Zaman Açık
                                             </span>
                                         )}
                                     </div>
@@ -468,7 +468,7 @@ export function PopupManager({
                                         <span className="flex items-center gap-1">
                                             <Calendar size={12} />
                                             {isForever(popup.endDate)
-                                                ? `Since ${formatDate(popup.startDate)}`
+                                                ? `${formatDate(popup.startDate)} tarihinden beri`
                                                 : `${formatDate(popup.startDate)} - ${formatDate(popup.endDate)}`
                                             }
                                         </span>
@@ -487,7 +487,7 @@ export function PopupManager({
                                     <button
                                         onClick={() => setPreviewPopup(popup)}
                                         className="p-2 rounded-lg hover:bg-muted transition-colors"
-                                        title="Preview"
+                                        title="Önizleme"
                                     >
                                         <ExternalLink size={18} className="text-muted-foreground" />
                                     </button>
@@ -496,7 +496,7 @@ export function PopupManager({
                                     <button
                                         onClick={() => openEditForm(popup)}
                                         className="p-2 rounded-lg hover:bg-muted transition-colors"
-                                        title="Edit"
+                                        title="Düzenle"
                                     >
                                         <Edit2 size={18} className="text-muted-foreground" />
                                     </button>
@@ -509,7 +509,7 @@ export function PopupManager({
                                             ? "hover:bg-muted text-accent-coral"
                                             : "hover:bg-muted text-muted-foreground"
                                             }`}
-                                        title={popup.isActive ? "Deactivate" : "Activate"}
+                                        title={popup.isActive ? "Devre dışı bırak" : "Etkinleştir"}
                                     >
                                         {popup.isActive ? <Eye size={18} /> : <EyeOff size={18} />}
                                     </button>
@@ -519,7 +519,7 @@ export function PopupManager({
                                         onClick={() => handleDelete(popup.id)}
                                         disabled={isPending}
                                         className="p-2 rounded-lg hover:bg-red-50 dark:hover:bg-red-950 transition-colors"
-                                        title="Delete"
+                                        title="Sil"
                                     >
                                         <Trash2 size={18} className="text-red-500" />
                                     </button>
@@ -530,8 +530,8 @@ export function PopupManager({
                 ) : (
                     <div className="text-center py-10 text-muted-foreground">
                         <Bell className="mx-auto mb-4" size={40} />
-                        <p>No popups yet</p>
-                        <p className="text-sm mt-1">Create a popup above to get started</p>
+                        <p>Henüz açılır pencere yok</p>
+                        <p className="text-sm mt-1">Başlamak için yukarıdan bir açılır pencere oluşturun</p>
                     </div>
                 )}
             </div>
@@ -566,7 +566,7 @@ export function PopupManager({
                             variant="default"
                         />
                         <p className="text-center text-xs text-white/60 mt-4">
-                            Preview mirrors homepage exactly
+                            Önizleme ana sayfadakiyle birebir aynıdır
                         </p>
                     </div>
                 </div>
@@ -574,12 +574,12 @@ export function PopupManager({
 
             {/* Info Box */}
             <div className="p-6 rounded-xl bg-muted/50 text-sm text-muted-foreground">
-                <p className="font-medium text-foreground mb-2">How Popups Work:</p>
+                <p className="font-medium text-foreground mb-2">Açılır Pencereler Nasıl Çalışır:</p>
                 <ul className="list-disc list-inside space-y-1">
-                    <li><strong>Publish Now:</strong> Popup goes live immediately and stays forever</li>
-                    <li><strong>Schedule:</strong> Popup appears between Start and End dates</li>
-                    <li>Green "LIVE" badge = currently showing on website</li>
-                    <li>"Always On" = published immediately with no end date</li>
+                    <li><strong>Şimdi Yayınla:</strong> Pencere hemen canlıya geçer ve süresiz kalır</li>
+                    <li><strong>Zamanla:</strong> Pencere Başlangıç ve Bitiş tarihleri arasında görünür</li>
+                    <li>Yeşil "CANLI" rozeti = şu anda web sitesinde gösteriliyor</li>
+                    <li>"Her Zaman Açık" = hemen yayınlandı, bitiş tarihi yok</li>
                 </ul>
             </div>
         </div>

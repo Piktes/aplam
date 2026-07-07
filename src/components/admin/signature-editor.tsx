@@ -53,9 +53,9 @@ export function SignatureEditor({
 
         try {
             await saveAction(formData);
-            setNotification({ type: "success", message: "Signature saved successfully!" });
+            setNotification({ type: "success", message: "İmza başarıyla kaydedildi!" });
         } catch (error) {
-            setNotification({ type: "error", message: "Failed to save signature. Please try again." });
+            setNotification({ type: "error", message: "İmza kaydedilemedi. Lütfen tekrar deneyin." });
         } finally {
             setIsSaving(false);
         }
@@ -84,7 +84,7 @@ export function SignatureEditor({
             <div className="glass-card p-6">
                 <h3 className="font-medium mb-4 flex items-center gap-2">
                     <ImageIcon size={18} className="text-accent-coral" />
-                    Logo (Optional)
+                    Logo (İsteğe Bağlı)
                 </h3>
 
                 {logoUrl ? (
@@ -103,7 +103,7 @@ export function SignatureEditor({
                             className="btn-ghost text-red-500 flex items-center gap-2"
                         >
                             <Trash2 size={16} />
-                            Remove
+                            Kaldır
                         </button>
                     </div>
                 ) : (
@@ -121,10 +121,10 @@ export function SignatureEditor({
                             className="btn-secondary flex items-center gap-2"
                         >
                             <Upload size={16} />
-                            Upload Logo
+                            Logo Yükle
                         </button>
                         <p className="text-xs text-muted-foreground mt-2">
-                            Recommended: PNG or SVG with transparent background
+                            Önerilen: Şeffaf arkaplanlı PNG veya SVG
                         </p>
                     </div>
                 )}
@@ -132,14 +132,14 @@ export function SignatureEditor({
 
             {/* Signature Content */}
             <div className="glass-card p-6">
-                <h3 className="font-medium mb-4">Signature Content</h3>
+                <h3 className="font-medium mb-4">İmza İçeriği</h3>
                 <RichTextEditor
                     value={content}
                     onChange={setContent}
-                    placeholder="Enter your signature content..."
+                    placeholder="İmza içeriğinizi girin..."
                 />
                 <p className="text-xs text-muted-foreground mt-2">
-                    Format your signature using the toolbar above. The logo (if uploaded) will be added above this content.
+                    İmzanızı yukarıdaki araç çubuğunu kullanarak biçimlendirin. Logo (yüklenmişse) bu içeriğin üstüne eklenecektir.
                 </p>
             </div>
 
@@ -151,12 +151,12 @@ export function SignatureEditor({
                     className="flex items-center gap-2 font-medium mb-4"
                 >
                     <Eye size={18} className="text-accent-coral" />
-                    {showPreview ? "Hide Preview" : "Show Preview"}
+                    {showPreview ? "Önizlemeyi Gizle" : "Önizlemeyi Göster"}
                 </button>
 
                 {showPreview && (
                     <div className="bg-white dark:bg-gray-900 rounded-lg p-6 border border-border">
-                        <p className="text-muted-foreground text-sm mb-4 italic">Preview of your signature:</p>
+                        <p className="text-muted-foreground text-sm mb-4 italic">İmzanızın önizlemesi:</p>
                         <hr className="mb-4 border-gray-200 dark:border-gray-700" />
 
                         {logoUrl && (
@@ -172,7 +172,7 @@ export function SignatureEditor({
                         {content ? (
                             <div dangerouslySetInnerHTML={{ __html: content }} />
                         ) : (
-                            <p className="text-muted-foreground italic">No content yet</p>
+                            <p className="text-muted-foreground italic">Henüz içerik yok</p>
                         )}
                     </div>
                 )}
@@ -186,7 +186,7 @@ export function SignatureEditor({
                     className="btn-primary flex items-center gap-2"
                 >
                     <Save size={16} />
-                    {isSaving ? "Saving..." : "Save Signature"}
+                    {isSaving ? "Kaydediliyor..." : "İmzayı Kaydet"}
                 </button>
             </div>
         </form>

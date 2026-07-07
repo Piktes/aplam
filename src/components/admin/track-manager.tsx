@@ -118,7 +118,7 @@ function SortableTrackItem({
       {/* Info */}
       <div className="flex-1 min-w-0">
         <p className="font-medium truncate">{track.title}</p>
-        <p className="text-sm text-muted-foreground truncate">{track.artist || "Heiraza"}</p>
+        <p className="text-sm text-muted-foreground truncate">{track.artist || "Begüm Atak"}</p>
         <p className="text-xs text-muted-foreground/60 truncate">{getAudioSrc()}</p>
       </div>
 
@@ -128,7 +128,7 @@ function SortableTrackItem({
           type="button"
           onClick={() => onEditStart(track)}
           className="p-2 rounded-lg hover:bg-muted text-muted-foreground transition-colors"
-          title="Edit track"
+          title="Parçayı düzenle"
         >
           <Pencil size={18} />
         </button>
@@ -140,14 +140,14 @@ function SortableTrackItem({
             ? "hover:bg-muted text-accent-coral"
             : "hover:bg-muted text-muted-foreground"
             }`}
-          title={track.isActive ? "Deactivate track" : "Activate track"}
+          title={track.isActive ? "Parçayı pasifleştir" : "Parçayı aktifleştir"}
         >
           {track.isActive ? <Eye size={18} /> : <EyeOff size={18} />}
         </button>
 
         <form action={onDelete}>
           <input type="hidden" name="id" value={track.id} />
-          <button type="submit" className="p-2 rounded-lg hover:bg-red-50 dark:hover:bg-red-950 transition-colors" title="Delete track">
+          <button type="submit" className="p-2 rounded-lg hover:bg-red-50 dark:hover:bg-red-950 transition-colors" title="Parçayı sil">
             <Trash2 size={18} className="text-red-500" />
           </button>
         </form>
@@ -161,7 +161,7 @@ export function TrackManager({ tracks, onAdd, onToggle, onDelete, onMove, onReor
   const [editingTrack, setEditingTrack] = useState<Track | null>(null);
   const [inputMethod, setInputMethod] = useState<"upload" | "url">("url");
   const [newTitle, setNewTitle] = useState("");
-  const [newArtist, setNewArtist] = useState("Heiraza");
+  const [newArtist, setNewArtist] = useState("Begüm Atak");
   const [newUrl, setNewUrl] = useState("");
   const [coverPreview, setCoverPreview] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -173,7 +173,7 @@ export function TrackManager({ tracks, onAdd, onToggle, onDelete, onMove, onReor
   const handleEditStart = (track: Track) => {
     setEditingTrack(track);
     setNewTitle(track.title);
-    setNewArtist(track.artist || "Heiraza");
+    setNewArtist(track.artist || "Begüm Atak");
     setNewUrl(track.externalLink || "");
     setInputMethod(track.fileUrl ? "upload" : "url");
     setCoverPreview(track.coverImage || null);
@@ -257,7 +257,7 @@ export function TrackManager({ tracks, onAdd, onToggle, onDelete, onMove, onReor
 
     const formData = new FormData();
     formData.set("title", newTitle);
-    formData.set("artist", newArtist || "Heiraza");
+    formData.set("artist", newArtist || "Begüm Atak");
 
     if (inputMethod === "url") {
       formData.set("externalLink", newUrl);
@@ -287,7 +287,7 @@ export function TrackManager({ tracks, onAdd, onToggle, onDelete, onMove, onReor
     // Small delay to show 100%
     setTimeout(() => {
       setNewTitle("");
-      setNewArtist("Heiraza");
+      setNewArtist("Begüm Atak");
       setNewUrl("");
       setCoverPreview(null);
       setSelectedFileName(null);
@@ -334,7 +334,7 @@ export function TrackManager({ tracks, onAdd, onToggle, onDelete, onMove, onReor
             className="btn-primary flex items-center gap-2 text-sm"
           >
             <Plus size={16} />
-            Add Track
+            Parça Ekle
           </button>
         </div>
       )}
@@ -343,7 +343,7 @@ export function TrackManager({ tracks, onAdd, onToggle, onDelete, onMove, onReor
       {isAdding && (
         <div className="p-6 rounded-xl border border-accent-coral/30 bg-accent-coral/5 mb-8">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="font-medium text-lg">{editingTrack ? "Edit Track" : "Add New Track"}</h3>
+            <h3 className="font-medium text-lg">{editingTrack ? "Parçayı Düzenle" : "Yeni Parça Ekle"}</h3>
             <button onClick={resetForm} className="p-1 hover:bg-muted rounded">
               <X size={18} />
             </button>
@@ -352,29 +352,29 @@ export function TrackManager({ tracks, onAdd, onToggle, onDelete, onMove, onReor
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium mb-2">Track Title *</label>
+                <label className="block text-sm font-medium mb-2">Parça Adı *</label>
                 <input
                   type="text"
                   value={newTitle}
                   onChange={(e) => setNewTitle(e.target.value)}
-                  placeholder="Song name..."
+                  placeholder="Parça adı..."
                   className="input-field"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-2">Artist</label>
+                <label className="block text-sm font-medium mb-2">Sanatçı</label>
                 <input
                   type="text"
                   value={newArtist}
                   onChange={(e) => setNewArtist(e.target.value)}
-                  placeholder="Heiraza"
+                  placeholder="Begüm Atak"
                   className="input-field"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-2">Audio Source *</label>
+                <label className="block text-sm font-medium mb-2">Ses Kaynağı *</label>
                 <div className="flex gap-2 mb-3">
                   <button
                     type="button"
@@ -382,7 +382,7 @@ export function TrackManager({ tracks, onAdd, onToggle, onDelete, onMove, onReor
                     className={`flex-1 py-2 px-4 rounded-lg text-sm font-medium transition-colors flex items-center justify-center gap-2 ${inputMethod === "url" ? "bg-accent-coral text-white" : "bg-muted hover:bg-muted/80"}`}
                   >
                     <LinkIcon size={16} />
-                    External URL
+                    Harici URL
                   </button>
                   <button
                     type="button"
@@ -390,7 +390,7 @@ export function TrackManager({ tracks, onAdd, onToggle, onDelete, onMove, onReor
                     className={`flex-1 py-2 px-4 rounded-lg text-sm font-medium transition-colors flex items-center justify-center gap-2 ${inputMethod === "upload" ? "bg-accent-coral text-white" : "bg-muted hover:bg-muted/80"}`}
                   >
                     <Upload size={16} />
-                    Upload MP3
+                    MP3 Yükle
                   </button>
                 </div>
 
@@ -416,8 +416,8 @@ export function TrackManager({ tracks, onAdd, onToggle, onDelete, onMove, onReor
                       <Upload size={20} className="text-muted-foreground" />
                       <span className="text-sm text-muted-foreground">
                         {editingTrack && editingTrack.fileUrl && !selectedFileName
-                          ? "Click to replace current file"
-                          : "Click to upload MP3"}
+                          ? "Mevcut dosyayı değiştirmek için tıklayın"
+                          : "MP3 yüklemek için tıklayın"}
                       </span>
                     </label>
 
@@ -433,13 +433,13 @@ export function TrackManager({ tracks, onAdd, onToggle, onDelete, onMove, onReor
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-2">Cover Art (Optional)</label>
+              <label className="block text-sm font-medium mb-2">Kapak Görseli (İsteğe Bağlı)</label>
               <input ref={coverFileRef} type="file" accept="image/*" onChange={handleCoverSelect} className="hidden" id="cover-upload" />
 
               {coverPreview ? (
                 <div className="relative aspect-square max-w-[200px] rounded-xl overflow-hidden bg-neutral-800">
                   {/* Native img for base64 preview */}
-                  <img src={coverPreview} alt="Cover preview" className="absolute inset-0 w-full h-full object-cover" />
+                  <img src={coverPreview} alt="Kapak önizleme" className="absolute inset-0 w-full h-full object-cover" />
                   <button
                     onClick={() => { setCoverPreview(null); if (coverFileRef.current) coverFileRef.current.value = ""; }}
                     className="absolute top-2 right-2 w-8 h-8 rounded-full bg-black/50 flex items-center justify-center hover:bg-black/70 transition-colors"
@@ -450,8 +450,8 @@ export function TrackManager({ tracks, onAdd, onToggle, onDelete, onMove, onReor
               ) : (
                 <label htmlFor="cover-upload" className="flex flex-col items-center justify-center aspect-square max-w-[200px] border-2 border-dashed border-border rounded-xl cursor-pointer hover:border-accent-coral/50 hover:bg-accent-coral/5 transition-colors bg-neutral-100 dark:bg-neutral-800">
                   <Music2 size={40} className="text-muted-foreground mb-2" />
-                  <span className="text-sm text-muted-foreground">Upload cover art</span>
-                  <span className="text-xs text-muted-foreground/60 mt-1">Square image recommended</span>
+                  <span className="text-sm text-muted-foreground">Kapak görseli yükle</span>
+                  <span className="text-xs text-muted-foreground/60 mt-1">Kare görsel önerilir</span>
                 </label>
               )}
             </div>
@@ -462,7 +462,7 @@ export function TrackManager({ tracks, onAdd, onToggle, onDelete, onMove, onReor
             {isSubmitting && (
               <div className="w-full space-y-1">
                 <div className="flex justify-between text-xs text-muted-foreground">
-                  <span>Uploading...</span>
+                  <span>Yükleniyor...</span>
                   <span>{uploadProgress}%</span>
                 </div>
                 <div className="w-full h-2 bg-muted rounded-full overflow-hidden">
@@ -483,16 +483,16 @@ export function TrackManager({ tracks, onAdd, onToggle, onDelete, onMove, onReor
                 {isSubmitting ? (
                   <>
                     <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                    Adding...
+                    Ekleniyor...
                   </>
                 ) : (
                   <>
                     {editingTrack ? <Pencil size={16} /> : <Plus size={16} />}
-                    {editingTrack ? "Update Track" : "Add Track"}
+                    {editingTrack ? "Parçayı Güncelle" : "Parça Ekle"}
                   </>
                 )}
               </button>
-              <button onClick={resetForm} className="btn-secondary text-sm">Cancel</button>
+              <button onClick={resetForm} className="btn-secondary text-sm">İptal</button>
             </div>
           </div>
         </div>
@@ -526,18 +526,18 @@ export function TrackManager({ tracks, onAdd, onToggle, onDelete, onMove, onReor
       ) : (
         <div className="text-center py-10 text-muted-foreground">
           <Music2 className="mx-auto mb-4" size={40} />
-          <p>No tracks yet</p>
-          <p className="text-sm mt-1">Add your first track above</p>
+          <p>Henüz parça yok</p>
+          <p className="text-sm mt-1">Yukarıdan ilk parçanızı ekleyin</p>
         </div>
       )}
 
       {/* Tips */}
       <div className="mt-6 p-4 rounded-xl bg-muted/50 text-sm text-muted-foreground">
-        <p className="font-medium text-foreground mb-1">Tips:</p>
+        <p className="font-medium text-foreground mb-1">İpuçları:</p>
         <ul className="list-disc list-inside space-y-1">
-          <li>Tracks with <Eye size={12} className="inline text-accent-coral" /> are visible on the homepage</li>
-          <li><strong>Drag handles</strong> to reorder tracks</li>
-          <li>Changes are saved automatically after reordering</li>
+          <li><Eye size={12} className="inline text-accent-coral" /> işaretli parçalar ana sayfada görünür</li>
+          <li>Parçaları yeniden sıralamak için <strong>tutamaçları sürükleyin</strong></li>
+          <li>Sıralama sonrası değişiklikler otomatik kaydedilir</li>
         </ul>
       </div>
     </div>

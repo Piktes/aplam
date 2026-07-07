@@ -1,11 +1,11 @@
 "use client";
 
-import { FaSpotify, FaFacebook, FaInstagram, FaYoutube, FaSoundcloud, FaApple } from "react-icons/fa6";
+import { FaSpotify, FaFacebook, FaInstagram, FaYoutube, FaSoundcloud, FaApple, FaImdb } from "react-icons/fa6";
 import { RiTwitterXFill } from "react-icons/ri";
 import { SiTiktok } from "react-icons/si";
 
 interface SocialIconProps {
-  platform: "facebook" | "instagram" | "tiktok" | "youtube" | "spotify" | "twitter" | "x" | "soundcloud" | "appleMusic" | string;
+  platform: "facebook" | "instagram" | "tiktok" | "youtube" | "spotify" | "twitter" | "x" | "soundcloud" | "appleMusic" | "imdb" | string;
   size?: number;
   className?: string;
 }
@@ -33,6 +33,8 @@ export function SocialIcon({ platform, size = 20, className = "" }: SocialIconPr
       return <FaSoundcloud {...iconProps} />;
     case normalizedKey.includes("applemusic") || normalizedKey.includes("apple"):
       return <FaApple {...iconProps} />;
+    case normalizedKey.includes("imdb"):
+      return <FaImdb {...iconProps} />;
     default:
       return null;
   }
@@ -58,7 +60,8 @@ export function SocialLink({ href, platform, size = 18, className = "" }: Social
     x: "hover:text-foreground",
     soundcloud: "hover:text-[#FF5500]",
     applemusic: "hover:text-[#FA243C]", // lowercase key for safety
-    appleMusic: "hover:text-[#FA243C]"
+    appleMusic: "hover:text-[#FA243C]",
+    imdb: "hover:text-[#F5C518]"
   };
 
   // Safe color lookup
@@ -95,6 +98,7 @@ interface ArtistSocials {
   twitterUrl?: string | null;
   soundcloudUrl?: string | null;
   appleMusicUrl?: string | null;
+  imdbUrl?: string | null;
   [key: string]: string | null | undefined;
 }
 
@@ -121,6 +125,7 @@ export function SocialLinksRow({ links, artist, size = 18, className = "" }: Soc
       { key: "twitterUrl", platform: "twitter" },
       { key: "facebookUrl", platform: "facebook" },
       { key: "soundcloudUrl", platform: "soundcloud" },
+      { key: "imdbUrl", platform: "imdb" },
     ];
 
     displayLinks = platforms

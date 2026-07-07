@@ -8,7 +8,7 @@ async function seedSocialMediaOnly() {
     // Önce mevcut sosyal medya kayıtlarını sil
     await prisma.socialMedia.deleteMany();
 
-    // 8 platform ekle (URL'ler boş, admin panelden doldurulacak)
+    // 9 platform ekle (URL'ler boş, admin panelden doldurulacak)
     const platforms = [
         { platform: 'facebook', url: '', isVisible: true, sortOrder: 0 },
         { platform: 'instagram', url: '', isVisible: true, sortOrder: 1 },
@@ -18,13 +18,14 @@ async function seedSocialMediaOnly() {
         { platform: 'appleMusic', url: '', isVisible: true, sortOrder: 5 },
         { platform: 'soundcloud', url: '', isVisible: true, sortOrder: 6 },
         { platform: 'x', url: '', isVisible: true, sortOrder: 7 },
+        { platform: 'imdb', url: '', isVisible: true, sortOrder: 8 },
     ];
 
     for (const p of platforms) {
         await prisma.socialMedia.create({ data: p });
     }
 
-    console.log("✅ 8 sosyal medya kaydı eklendi!");
+    console.log("✅ 9 sosyal medya kaydı eklendi!");
     console.log("💡 Admin panelden gerçek linkleri girebilirsin.");
 }
 

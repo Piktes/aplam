@@ -96,7 +96,7 @@ export default function AdminVisitorsPage() {
 
     const formatDate = (dateStr: string) => {
         const date = new Date(dateStr);
-        return date.toLocaleString("en-US", {
+        return date.toLocaleString("tr-TR", {
             month: "short",
             day: "numeric",
             year: "numeric",
@@ -203,15 +203,15 @@ export default function AdminVisitorsPage() {
     return (
         <div className="min-h-screen overflow-x-hidden">
             {/* InfoBar */}
-            <InfoBar counter={data?.stats ? `${data.stats.uniqueVisitors} unique visitors` : undefined} />
+            <InfoBar counter={data?.stats ? `${data.stats.uniqueVisitors} tekil ziyaretçi` : undefined} />
 
             {/* Main Content */}
             <div className="max-w-7xl mx-auto px-4 pb-10">
                 {/* Page Header */}
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
                     <div>
-                        <h1 className="font-display text-display-md tracking-wider uppercase">Visitors</h1>
-                        <p className="text-muted-foreground mt-2 text-sm">Privacy-compliant visitor analytics</p>
+                        <h1 className="font-display text-display-md tracking-wider uppercase">Ziyaretçiler</h1>
+                        <p className="text-muted-foreground mt-2 text-sm">Gizlilik uyumlu ziyaretçi analizleri</p>
                     </div>
 
                     <div className="flex items-center gap-2">
@@ -272,7 +272,7 @@ export default function AdminVisitorsPage() {
                                         : "bg-muted hover:bg-muted/80"
                                         }`}
                                 >
-                                    {p === "today" ? "Today" : p === "week" ? "Weekly" : p === "month" ? "Monthly" : "Yearly"}
+                                    {p === "today" ? "Bugün" : p === "week" ? "Haftalık" : p === "month" ? "Aylık" : "Yıllık"}
                                 </button>
                             ))}
                         </div>
@@ -285,7 +285,7 @@ export default function AdminVisitorsPage() {
                                 onChange={(e) => { setCountry(e.target.value); setPage(1); }}
                                 className="px-3 py-2 rounded-lg bg-muted border-none text-sm font-medium focus:ring-2 focus:ring-accent-coral/20 max-w-[160px]"
                             >
-                                <option value="">All Countries</option>
+                                <option value="">Tüm Ülkeler</option>
                                 {data?.availableCountries?.map((c) => (
                                     <option key={c} value={c}>
                                         {getCountryFlag(c)} {c}
@@ -302,9 +302,9 @@ export default function AdminVisitorsPage() {
                         <div className="flex items-center gap-2 mb-3">
                             <Flag size={16} className="text-accent-coral" />
                             <span className="font-medium text-sm">
-                                Top Countries
+                                En Çok Ziyaret Edilen Ülkeler
                                 <span className="text-muted-foreground ml-2 text-xs">
-                                    ({engagementFilter === "all" ? "All" : engagementFilter === "subscribers" ? "Subscribers" : "Messaged"})
+                                    ({engagementFilter === "all" ? "Tüm" : engagementFilter === "subscribers" ? "Aboneler" : "Mesaj Gönderenler"})
                                 </span>
                             </span>
                         </div>
@@ -319,7 +319,7 @@ export default function AdminVisitorsPage() {
                                 >
                                     <span className="text-2xl sm:text-3xl mb-1">{getCountryFlag(c.country)}</span>
                                     <p className="font-medium text-xs sm:text-sm truncate w-full">{c.country}</p>
-                                    <p className="text-muted-foreground text-xs">{c.count} visitors</p>
+                                    <p className="text-muted-foreground text-xs">{c.count} ziyaretçi</p>
                                 </div>
                             ))}
                         </div>
@@ -343,7 +343,7 @@ export default function AdminVisitorsPage() {
                                 </div>
                                 <div className="min-w-0">
                                     <p className="text-lg sm:text-2xl font-display">{data.stats.totalVisits}</p>
-                                    <p className="text-xs sm:text-sm text-muted-foreground truncate">Total Visits</p>
+                                    <p className="text-xs sm:text-sm text-muted-foreground truncate">Toplam Ziyaret</p>
                                 </div>
                             </div>
                         </button>
@@ -356,7 +356,7 @@ export default function AdminVisitorsPage() {
                                 </div>
                                 <div className="min-w-0">
                                     <p className="text-lg sm:text-2xl font-display">{data.stats.uniqueVisitors}</p>
-                                    <p className="text-xs sm:text-sm text-muted-foreground truncate">Unique</p>
+                                    <p className="text-xs sm:text-sm text-muted-foreground truncate">Tekil</p>
                                 </div>
                             </div>
                         </div>
@@ -375,7 +375,7 @@ export default function AdminVisitorsPage() {
                                 </div>
                                 <div className="min-w-0">
                                     <p className="text-lg sm:text-2xl font-display">{data.stats.conversionRate}%</p>
-                                    <p className="text-xs sm:text-sm text-muted-foreground truncate">Subscribed</p>
+                                    <p className="text-xs sm:text-sm text-muted-foreground truncate">Abone</p>
                                 </div>
                             </div>
                         </button>
@@ -394,7 +394,7 @@ export default function AdminVisitorsPage() {
                                 </div>
                                 <div className="min-w-0">
                                     <p className="text-lg sm:text-2xl font-display">{data.stats.messagesCount}</p>
-                                    <p className="text-xs sm:text-sm text-muted-foreground truncate">Messaged</p>
+                                    <p className="text-xs sm:text-sm text-muted-foreground truncate">Mesaj Gönderen</p>
                                 </div>
                             </div>
                         </button>
@@ -415,22 +415,22 @@ export default function AdminVisitorsPage() {
                     ) : !data?.visitors.length ? (
                         <div className="text-center py-20 text-muted-foreground">
                             <Eye size={32} className="mx-auto mb-4 opacity-50" />
-                            <p className="text-lg">No visitors found</p>
+                            <p className="text-lg">Ziyaretçi bulunamadı</p>
                             <p className="text-sm mt-1">
                                 {country || engagementFilter !== "all"
-                                    ? "Try adjusting your filters"
-                                    : "Visitors will appear here once tracking is active"}
+                                    ? "Filtreleri değiştirmeyi deneyin"
+                                    : "Takip aktif olduğunda ziyaretçiler burada görünecek"}
                             </p>
                         </div>
                     ) : (
                         <>
                             {/* Table Header - Desktop only */}
                             <div className="hidden md:grid grid-cols-12 gap-4 px-4 py-3 bg-muted/50 border-b border-border text-sm font-medium text-muted-foreground">
-                                <div className="col-span-3">Visitor ID</div>
-                                <div className="col-span-3">Location</div>
-                                <div className="col-span-2">Last Visit</div>
-                                <div className="col-span-1">Visits</div>
-                                <div className="col-span-3">Engagement</div>
+                                <div className="col-span-3">Ziyaretçi ID</div>
+                                <div className="col-span-3">Konum</div>
+                                <div className="col-span-2">Son Ziyaret</div>
+                                <div className="col-span-1">Ziyaret</div>
+                                <div className="col-span-3">Etkileşim</div>
                             </div>
 
                             {/* Table Body */}
@@ -452,7 +452,7 @@ export default function AdminVisitorsPage() {
                                             <span className="text-sm truncate">
                                                 {visitor.city && visitor.country
                                                     ? `${visitor.city}, ${visitor.country}`
-                                                    : visitor.country || "Unknown"}
+                                                    : visitor.country || "Bilinmiyor"}
                                             </span>
                                         </div>
 
@@ -471,13 +471,13 @@ export default function AdminVisitorsPage() {
                                             {visitor.isSubscriber && (
                                                 <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium bg-green-500/10 text-green-600 dark:text-green-400 border border-green-500/20">
                                                     <Users size={12} />
-                                                    Subscriber
+                                                    Abone
                                                 </span>
                                             )}
                                             {visitor.hasMessaged && (
                                                 <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20">
                                                     <MessageSquare size={12} />
-                                                    Messaged
+                                                    Mesaj Gönderdi
                                                 </span>
                                             )}
                                             {!visitor.isSubscriber && !visitor.hasMessaged && (
@@ -521,11 +521,11 @@ export default function AdminVisitorsPage() {
 
                 {/* Info Box */}
                 <div className="mt-6 p-4 rounded-xl bg-muted/50 text-sm text-muted-foreground">
-                    <p className="font-medium text-foreground mb-2">🔒 Privacy-Compliant Tracking:</p>
+                    <p className="font-medium text-foreground mb-2">🔒 Gizlilik Uyumlu Takip:</p>
                     <ul className="list-disc list-inside space-y-1">
-                        <li>IP addresses are <strong>hashed</strong> using SHA-256 - raw IPs are never stored</li>
-                        <li><span className="text-green-500">Subscriber</span> and <span className="text-blue-500">Messaged</span> status captured at visit time</li>
-                        <li>Geolocation (country/city) is stored for analytics</li>
+                        <li>IP adresleri SHA-256 ile <strong>hashlenmiştir</strong> - ham IP'ler hiçbir zaman saklanmaz</li>
+                        <li><span className="text-green-500">Abone</span> ve <span className="text-blue-500">Mesaj Gönderen</span> durumu ziyaret anında kaydedilir</li>
+                        <li>Coğrafi konum (ülke/şehir) analiz için saklanır</li>
                     </ul>
                 </div>
             </div>

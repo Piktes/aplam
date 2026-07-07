@@ -41,7 +41,7 @@ export default async function HeroEditorPage() {
 
             <main className="max-w-5xl mx-auto px-4 pb-10">
                 <div className="mb-8">
-                    <h1 className="font-display text-display-md tracking-wider uppercase">Hero Editor</h1>
+                    <h1 className="font-display text-display-md tracking-wider uppercase">Kapak Editörü</h1>
                     <p className="text-muted-foreground mt-2">Manage hero slider images. Drag to reorder or use arrows.</p>
                 </div>
 

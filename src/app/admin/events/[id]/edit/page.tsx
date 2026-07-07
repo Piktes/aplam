@@ -231,7 +231,7 @@ export default function EditEventPage() {
 
             <main className="max-w-4xl mx-auto px-4 pb-10">
                 <div className="mb-8">
-                    <h1 className="font-display text-display-md tracking-wider uppercase">Edit Event</h1>
+                    <h1 className="font-display text-display-md tracking-wider uppercase">Etkinliği Düzenle</h1>
                     <p className="text-muted-foreground mt-2">Update event details</p>
                 </div>
 

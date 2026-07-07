@@ -31,12 +31,12 @@ const inter = Inter({
 import { headers } from "next/headers";
 
 const baseMetadata: Metadata = {
-  title: "HEIRAZA | Official Website",
-  description: "Welcome to the official website of HEIRAZA.",
-  keywords: ["Heiraza", "Music Artist", "Sonic Architect", "Concerts", "Live Shows", "Merch", "Tour Dates", "Events", "Electronic Music"],
-  authors: [{ name: "Heiraza" }],
-  creator: "Heiraza",
-  publisher: "Heiraza",
+  title: "Begüm Atak | Resmi Web Sitesi",
+  description: "Tiyatro ve dizi oyuncusu Begüm Atak'ın resmi web sitesi. Biyografi, oyunlar, diziler, etkinlikler ve iletişim.",
+  keywords: ["Begüm Atak", "Oyuncu", "Tiyatro", "Dizi", "İnci Taneleri", "Bizim Evin Halleri", "Adı Mutluluk", "Etkinlikler", "Oyunlar"],
+  authors: [{ name: "Begüm Atak" }],
+  creator: "Begüm Atak",
+  publisher: "Begüm Atak",
   robots: {
     index: true,
     follow: true,
@@ -50,17 +50,17 @@ const baseMetadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon.png", type: "image/png" },
     ],
     apple: "/apple-touch-icon.png",
-    shortcut: "/favicon.svg",
+    shortcut: "/favicon.png",
   },
   manifest: "/site.webmanifest",
 };
 
 export async function generateMetadata(): Promise<Metadata> {
   // HARDCODED fallback - LiteSpeed sends duplicate headers causing URL parse errors
-  const FALLBACK_URL = "https://heiraza.com";
+  const FALLBACK_URL = "https://begumatak.com";
 
   let metadataBase: URL;
 
@@ -70,7 +70,7 @@ export async function generateMetadata(): Promise<Metadata> {
     const rawHost = headersList.get("host") || "";
     const rawProto = headersList.get("x-forwarded-proto") || "";
 
-    const host = rawHost.split(',')[0].trim() || "heiraza.com";
+    const host = rawHost.split(',')[0].trim() || "begumatak.com";
     const proto = rawProto.split(',')[0].trim() || "https";
     const baseUrl = `${proto}://${host}`;
 
@@ -85,25 +85,25 @@ export async function generateMetadata(): Promise<Metadata> {
     ...baseMetadata,
     metadataBase,
     openGraph: {
-      title: "HEIRAZA | Official Website",
-      description: "Welcome to the official website of HEIRAZA.",
+      title: "Begüm Atak | Resmi Web Sitesi",
+      description: "Tiyatro ve dizi oyuncusu Begüm Atak'ın resmi web sitesi. Biyografi, oyunlar, diziler, etkinlikler ve iletişim.",
       url: "/",
-      siteName: "Heiraza",
+      siteName: "Begüm Atak",
       type: "website",
-      locale: "en_US",
+      locale: "tr_TR",
       images: [
         {
           url: "/og-image.png",
           width: 1200,
           height: 630,
-          alt: "Heiraza - Official Website",
+          alt: "Begüm Atak - Resmi Web Sitesi",
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: "HEIRAZA | Official Website",
-      description: "Welcome to the official website of HEIRAZA.",
+      title: "Begüm Atak | Resmi Web Sitesi",
+      description: "Tiyatro ve dizi oyuncusu Begüm Atak'ın resmi web sitesi. Biyografi, oyunlar, diziler, etkinlikler ve iletişim.",
       images: ["/og-image.png"],
     },
   };
@@ -115,7 +115,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="tr" suppressHydrationWarning>
       <body className={`${cinzel.variable} ${playfair.variable} ${inter.variable} font-sans antialiased`}>
         <AuthProvider>
           <ThemeProvider

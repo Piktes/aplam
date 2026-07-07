@@ -274,7 +274,7 @@ function MusicHighlightsSection({ tracks }: { tracks: MusicHighlight[] }) {
                                 <span className="text-accent-coral">{getPlatformIcon(platform)}</span>
                                 <span className="font-medium">{getPlatformDisplayName(platform)}</span>
                                 <span className="text-xs bg-accent-coral/20 text-accent-coral px-2 py-0.5 rounded-full">
-                                    {trackCount} {trackCount === 1 ? 'track' : 'tracks'}
+                                    {trackCount} parça
                                 </span>
                             </div>
                             {isExpanded ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
@@ -511,7 +511,7 @@ export function PressKitClientContent({
             URL.revokeObjectURL(url);
         } catch (error) {
             console.error("Failed to create ZIP:", error);
-            alert("Failed to download photos. Please try again.");
+            alert("Fotoğraflar indirilemedi. Lütfen tekrar deneyin.");
         }
         setDownloading(false);
     };
@@ -575,12 +575,12 @@ export function PressKitClientContent({
                         {allOpen ? (
                             <>
                                 <ChevronUp size={16} />
-                                Collapse All
+                                Tümünü Kapat
                             </>
                         ) : (
                             <>
                                 <ChevronDown size={16} />
-                                Expand All
+                                Tümünü Aç
                             </>
                         )}
                     </button>
@@ -589,7 +589,7 @@ export function PressKitClientContent({
                 {/* Bio Section */}
                 {hasBio && (
                     <CollapsibleSection
-                        title="About"
+                        title="Hakkında"
                         id="bio"
                         isOpen={sectionStates.bio}
                         onToggle={() => toggleSection('bio')}
@@ -598,7 +598,7 @@ export function PressKitClientContent({
                             {/* Short Bio */}
                             {bio.showShortBio && bio.shortBio && (
                                 <div className="p-6 bg-accent-coral/5 rounded-2xl border border-accent-coral/20">
-                                    <h3 className="text-sm font-medium text-accent-coral uppercase tracking-wider mb-3">Short Bio</h3>
+                                    <h3 className="text-sm font-medium text-accent-coral uppercase tracking-wider mb-3">Kısa Biyografi</h3>
                                     <div
                                         className="prose prose-lg dark:prose-invert max-w-none"
                                         dangerouslySetInnerHTML={{ __html: bio.shortBio }}
@@ -609,7 +609,7 @@ export function PressKitClientContent({
                             {/* Long Bio with Read More - renders HTML from rich text editor */}
                             {bio.showLongBio && bio.longBio && (
                                 <div>
-                                    <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-3">Full Biography</h3>
+                                    <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-3">Tam Biyografi</h3>
                                     <div
                                         className={`prose prose-lg dark:prose-invert max-w-none overflow-hidden transition-all duration-300 ${showFullBio ? '' : 'max-h-32'}`}
                                         dangerouslySetInnerHTML={{ __html: bio.longBio }}
@@ -620,9 +620,9 @@ export function PressKitClientContent({
                                             className="mt-4 text-accent-coral hover:underline flex items-center gap-2"
                                         >
                                             {showFullBio ? (
-                                                <>Show Less <ChevronUp size={16} /></>
+                                                <>Daha Az Göster <ChevronUp size={16} /></>
                                             ) : (
-                                                <>Read More <ChevronDown size={16} /></>
+                                                <>Devamını Oku <ChevronDown size={16} /></>
                                             )}
                                         </button>
                                     )}
@@ -635,7 +635,7 @@ export function PressKitClientContent({
                 {/* Music Highlights - Grouped by Platform */}
                 {hasMusic && (
                     <CollapsibleSection
-                        title="Featured Music"
+                        title="Öne Çıkan Müzikler"
                         id="music"
                         isOpen={sectionStates.music}
                         onToggle={() => toggleSection('music')}
@@ -647,7 +647,7 @@ export function PressKitClientContent({
                 {/* Videos - 2 columns */}
                 {hasVideos && (
                     <CollapsibleSection
-                        title="Videos"
+                        title="Videolar"
                         id="videos"
                         isOpen={sectionStates.videos}
                         onToggle={() => toggleSection('videos')}
@@ -671,7 +671,7 @@ export function PressKitClientContent({
                                         ) : (
                                             <div className="aspect-video flex items-center justify-center bg-muted">
                                                 <a href={video.videoUrl} target="_blank" rel="noopener noreferrer" className="btn-primary">
-                                                    Watch Video
+                                                    Videoyu İzle
                                                 </a>
                                             </div>
                                         )}
@@ -688,7 +688,7 @@ export function PressKitClientContent({
                 {/* Photos - 4 columns desktop, 2 mobile */}
                 {hasPhotos && (
                     <CollapsibleSection
-                        title="Press Photos"
+                        title="Basın Fotoğrafları"
                         id="photos"
                         isOpen={sectionStates.photos}
                         onToggle={() => toggleSection('photos')}
@@ -702,9 +702,9 @@ export function PressKitClientContent({
                                         className="btn-primary flex items-center gap-2"
                                     >
                                         {downloading ? (
-                                            <><Loader2 size={16} className="animate-spin" /> Preparing...</>
+                                            <><Loader2 size={16} className="animate-spin" /> Hazırlanıyor...</>
                                         ) : (
-                                            <><Download size={16} /> Download All</>
+                                            <><Download size={16} /> Tümünü İndir</>
                                         )}
                                     </button>
                                 )}
@@ -722,7 +722,7 @@ export function PressKitClientContent({
                                                 <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
                                                     <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                                                 </svg>
-                                                Featured
+                                                Öne Çıkan
                                             </div>
                                         )}
                                         <img
@@ -733,7 +733,7 @@ export function PressKitClientContent({
                                         />
                                         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center">
                                             <span className="text-white opacity-0 group-hover:opacity-100 transition-opacity text-sm font-medium">
-                                                View
+                                                Görüntüle
                                             </span>
                                         </div>
                                     </button>
@@ -746,7 +746,7 @@ export function PressKitClientContent({
                 {/* Press Quotes */}
                 {hasQuotes && (
                     <CollapsibleSection
-                        title="Press"
+                        title="Basında"
                         id="quotes"
                         isOpen={sectionStates.quotes}
                         onToggle={() => toggleSection('quotes')}
@@ -762,7 +762,7 @@ export function PressKitClientContent({
                                                     <div className="mb-3">
                                                         <img
                                                             src={quote.imageUrl}
-                                                            alt={`${quote.sourceName} article`}
+                                                            alt={`${quote.sourceName} haberi`}
                                                             className="h-16 w-auto max-w-[200px] object-contain rounded-lg"
                                                         />
                                                     </div>
@@ -790,7 +790,7 @@ export function PressKitClientContent({
                 {/* Contact */}
                 {hasContact && (
                     <CollapsibleSection
-                        title="Contact"
+                        title="İletişim"
                         id="contact"
                         isOpen={sectionStates.contact}
                         onToggle={() => toggleSection('contact')}
@@ -807,7 +807,7 @@ export function PressKitClientContent({
                                         </svg>
                                     </div>
                                     <div>
-                                        <p className="text-sm text-muted-foreground">Booking</p>
+                                        <p className="text-sm text-muted-foreground">Menajerlik</p>
                                         <p className="font-medium">{contact.bookingEmail}</p>
                                     </div>
                                 </a>
@@ -823,7 +823,7 @@ export function PressKitClientContent({
                                         </svg>
                                     </div>
                                     <div>
-                                        <p className="text-sm text-muted-foreground">Press</p>
+                                        <p className="text-sm text-muted-foreground">Basın</p>
                                         <p className="font-medium">{contact.pressEmail}</p>
                                     </div>
                                 </a>
@@ -837,7 +837,7 @@ export function PressKitClientContent({
                                         </svg>
                                     </div>
                                     <div>
-                                        <p className="text-sm text-muted-foreground">Based in</p>
+                                        <p className="text-sm text-muted-foreground">Konum</p>
                                         <p className="font-medium">{contact.baseLocation}</p>
                                     </div>
                                 </div>

@@ -92,7 +92,7 @@ export default function SystemUsersPage() {
   };
 
   const handleDeleteUser = async (userId: number, username: string) => {
-    if (!confirm(`Are you sure you want to delete user "${username}"? This action cannot be undone.`)) {
+    if (!confirm(`"${username}" kullanıcısını silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.`)) {
       return;
     }
 
@@ -138,8 +138,8 @@ export default function SystemUsersPage() {
   };
 
   const formatDate = (dateStr: string | null) => {
-    if (!dateStr) return "Never";
-    return new Date(dateStr).toLocaleString("en-US", {
+    if (!dateStr) return "Hiç";
+    return new Date(dateStr).toLocaleString("tr-TR", {
       month: "short",
       day: "numeric",
       year: "numeric",
@@ -151,15 +151,15 @@ export default function SystemUsersPage() {
   return (
     <div className="min-h-screen">
       {/* InfoBar */}
-      <InfoBar counter={`${users.length} users`} />
+      <InfoBar counter={`${users.length} kullanıcı`} />
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 pb-10">
         {/* Page Header */}
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h1 className="font-display text-display-md tracking-wider uppercase">System Users</h1>
-            <p className="text-muted-foreground mt-2">Manage admin accounts</p>
+            <h1 className="font-display text-display-md tracking-wider uppercase">Sistem Kullanıcıları</h1>
+            <p className="text-muted-foreground mt-2">Yönetici hesaplarını yönet</p>
           </div>
 
           <button
@@ -167,7 +167,7 @@ export default function SystemUsersPage() {
             className="flex items-center gap-2 px-4 py-2 rounded-lg bg-accent-coral hover:bg-accent-coral/90 text-white transition-colors"
           >
             <Plus size={18} />
-            <span>Add User</span>
+            <span>Kullanıcı Ekle</span>
           </button>
         </div>
 
@@ -176,7 +176,7 @@ export default function SystemUsersPage() {
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
             <div className="glass-card p-6 rounded-2xl w-full max-w-md">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="font-display text-xl">Add New User</h2>
+                <h2 className="font-display text-xl">Yeni Kullanıcı Ekle</h2>
                 <button
                   onClick={() => setShowAddForm(false)}
                   className="p-2 rounded-lg hover:bg-muted"
@@ -195,13 +195,13 @@ export default function SystemUsersPage() {
               {submitSuccess && (
                 <div className="mb-4 p-3 rounded-lg bg-green-500/10 border border-green-500/20 text-green-500 text-sm flex items-center gap-2">
                   <CheckCircle size={16} />
-                  User created successfully!
+                  Kullanıcı başarıyla oluşturuldu!
                 </div>
               )}
 
               <form onSubmit={handleAddUser} className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium mb-2">Username *</label>
+                  <label className="block text-sm font-medium mb-2">Kullanıcı Adı *</label>
                   <div className="relative">
                     <User size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
                     <input
@@ -209,14 +209,14 @@ export default function SystemUsersPage() {
                       value={newUsername}
                       onChange={(e) => setNewUsername(e.target.value)}
                       className="w-full pl-10 pr-4 py-2 rounded-lg bg-muted border border-border focus:border-accent-coral outline-none"
-                      placeholder="Enter username"
+                      placeholder="Kullanıcı adı girin"
                       required
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2">Password *</label>
+                  <label className="block text-sm font-medium mb-2">Şifre *</label>
                   <div className="relative">
                     <Shield size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
                     <input
@@ -224,7 +224,7 @@ export default function SystemUsersPage() {
                       value={newPassword}
                       onChange={(e) => setNewPassword(e.target.value)}
                       className="w-full pl-10 pr-12 py-2 rounded-lg bg-muted border border-border focus:border-accent-coral outline-none"
-                      placeholder="Enter password"
+                      placeholder="Şifre girin"
                       required
                       minLength={8}
                     />
@@ -236,11 +236,11 @@ export default function SystemUsersPage() {
                       {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                     </button>
                   </div>
-                  <p className="text-xs text-muted-foreground mt-1">Minimum 8 characters</p>
+                  <p className="text-xs text-muted-foreground mt-1">En az 8 karakter</p>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2">Email (Optional)</label>
+                  <label className="block text-sm font-medium mb-2">E-posta (İsteğe Bağlı)</label>
                   <div className="relative">
                     <Mail size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
                     <input
@@ -248,7 +248,7 @@ export default function SystemUsersPage() {
                       value={newEmail}
                       onChange={(e) => setNewEmail(e.target.value)}
                       className="w-full pl-10 pr-4 py-2 rounded-lg bg-muted border border-border focus:border-accent-coral outline-none"
-                      placeholder="Enter email"
+                      placeholder="E-posta girin"
                     />
                   </div>
                 </div>
@@ -262,12 +262,12 @@ export default function SystemUsersPage() {
                     {submitting ? (
                       <>
                         <Loader2 size={18} className="animate-spin" />
-                        Creating...
+                        Oluşturuluyor...
                       </>
                     ) : (
                       <>
                         <Plus size={18} />
-                        Create User
+                        Kullanıcı Oluştur
                       </>
                     )}
                   </button>
@@ -276,7 +276,7 @@ export default function SystemUsersPage() {
                     onClick={() => setShowAddForm(false)}
                     className="px-6 py-3 rounded-lg bg-muted hover:bg-muted/80 transition-colors"
                   >
-                    Cancel
+                    İptal
                   </button>
                 </div>
               </form>
@@ -288,8 +288,8 @@ export default function SystemUsersPage() {
         <div className="glass-card rounded-xl overflow-hidden">
           <div className="px-4 py-3 border-b border-border bg-muted/30 flex items-center gap-2">
             <Users size={18} className="text-accent-coral" />
-            <span className="font-medium">Admin Users</span>
-            <span className="text-sm text-muted-foreground ml-auto">{users.length} users</span>
+            <span className="font-medium">Yönetici Kullanıcılar</span>
+            <span className="text-sm text-muted-foreground ml-auto">{users.length} kullanıcı</span>
           </div>
 
           {loading ? (
@@ -304,7 +304,7 @@ export default function SystemUsersPage() {
           ) : users.length === 0 ? (
             <div className="text-center py-20 text-muted-foreground">
               <Users size={32} className="mx-auto mb-4 opacity-50" />
-              <p>No users found</p>
+              <p>Kullanıcı bulunamadı</p>
             </div>
           ) : (
             <div className="divide-y divide-border">
@@ -328,7 +328,7 @@ export default function SystemUsersPage() {
                       </span>
                       {!user.isActive && (
                         <span className="px-2 py-0.5 rounded-full text-xs bg-red-500/10 text-red-500">
-                          Disabled
+                          Devre Dışı
                         </span>
                       )}
                     </div>
@@ -341,7 +341,7 @@ export default function SystemUsersPage() {
                       )}
                       <span className="flex items-center gap-1">
                         <Clock size={12} />
-                        Last login: {formatDate(user.lastLoginAt)}
+                        Son giriş: {formatDate(user.lastLoginAt)}
                       </span>
                     </div>
                   </div>
@@ -354,14 +354,14 @@ export default function SystemUsersPage() {
                         ? "hover:bg-yellow-500/10 text-yellow-500"
                         : "hover:bg-green-500/10 text-green-500"
                         }`}
-                      title={user.isActive ? "Disable user" : "Enable user"}
+                      title={user.isActive ? "Kullanıcıyı devre dışı bırak" : "Kullanıcıyı etkinleştir"}
                     >
                       {user.isActive ? <EyeOff size={18} /> : <Eye size={18} />}
                     </button>
                     <button
                       onClick={() => handleDeleteUser(user.id, user.username)}
                       className="p-2 rounded-lg hover:bg-red-500/10 text-red-500 transition-colors"
-                      title="Delete user"
+                      title="Kullanıcıyı sil"
                     >
                       <Trash2 size={18} />
                     </button>
@@ -374,13 +374,13 @@ export default function SystemUsersPage() {
 
         {/* Info Box */}
         <div className="mt-6 p-4 rounded-xl bg-muted/50 text-sm text-muted-foreground">
-          <p className="font-medium text-foreground mb-2">About System Users:</p>
+          <p className="font-medium text-foreground mb-2">Sistem Kullanıcıları Hakkında:</p>
           <ul className="list-disc list-inside space-y-1">
-            <li>All admin users can access the full dashboard</li>
-            <li>Passwords are securely hashed with bcrypt</li>
-            <li>Disabled users cannot log in until re-enabled</li>
-            <li>You cannot delete your own account</li>
-            <li>The last active admin account cannot be deleted</li>
+            <li>Tüm yönetici kullanıcılar panelin tamamına erişebilir</li>
+            <li>Şifreler bcrypt ile güvenli şekilde hashlenmiştir</li>
+            <li>Devre dışı bırakılan kullanıcılar tekrar etkinleştirilene kadar giriş yapamaz</li>
+            <li>Kendi hesabınızı silemezsiniz</li>
+            <li>Son aktif yönetici hesabı silinemez</li>
           </ul>
         </div>
       </div>

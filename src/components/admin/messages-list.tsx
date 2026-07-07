@@ -77,19 +77,19 @@ export function MessagesList({
                                     </a>
                                     {!msg.isRead && (
                                         <span className="bg-accent-coral text-white text-xs px-2 py-0.5 rounded-full flex-shrink-0">
-                                            New
+                                            Yeni
                                         </span>
                                     )}
                                     {msg.replied && (
                                         <span className="bg-green-500/10 text-green-600 dark:text-green-400 text-xs px-2 py-0.5 rounded-full flex items-center gap-1 flex-shrink-0">
                                             <Check size={12} />
-                                            Replied
+                                            Yanıtlandı
                                         </span>
                                     )}
                                     {msg.isSubscriber && (
                                         <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-green-500/10 text-green-600 dark:text-green-400 border border-green-500/20 flex-shrink-0">
                                             <Users size={12} />
-                                            Subscriber
+                                            Abone
                                         </span>
                                     )}
                                 </div>
@@ -104,7 +104,7 @@ export function MessagesList({
                                             className="flex items-center gap-2 text-sm text-green-600 dark:text-green-400 hover:underline w-full"
                                         >
                                             <Check size={14} />
-                                            <span>Your reply</span>
+                                            <span>Yanıtınız</span>
                                             <span className="text-xs text-muted-foreground ml-1">
                                                 ({new Date(msg.repliedAt!).toLocaleDateString()})
                                             </span>
@@ -144,7 +144,7 @@ export function MessagesList({
                                         ? "hover:bg-green-500/10 text-green-500"
                                         : "hover:bg-accent-coral/10 text-accent-coral"
                                         }`}
-                                    title={msg.replied ? "Reply again" : "Reply to message"}
+                                    title={msg.replied ? "Tekrar yanıtla" : "Mesajı yanıtla"}
                                 >
                                     <Reply size={18} />
                                 </button>
@@ -156,7 +156,7 @@ export function MessagesList({
                                     <button
                                         type="submit"
                                         className="p-2 rounded-lg hover:bg-muted transition-colors"
-                                        title={msg.isRead ? "Mark as unread" : "Mark as read"}
+                                        title={msg.isRead ? "Okunmadı olarak işaretle" : "Okundu olarak işaretle"}
                                     >
                                         {msg.isRead ? (
                                             <EyeOff size={18} className="text-muted-foreground" />
@@ -172,7 +172,7 @@ export function MessagesList({
                                     <button
                                         type="submit"
                                         className="p-2 rounded-lg hover:bg-red-50 dark:hover:bg-red-950 transition-colors"
-                                        title="Delete message"
+                                        title="Mesajı sil"
                                     >
                                         <Trash2 size={18} className="text-red-500" />
                                     </button>

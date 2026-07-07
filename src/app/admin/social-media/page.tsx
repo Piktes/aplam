@@ -15,17 +15,19 @@ interface SocialLinks {
     appleMusicUrl: string;
     soundcloudUrl: string;
     twitterUrl: string;
+    imdbUrl: string;
 }
 
 const PLATFORMS = [
-    { key: "facebookUrl", label: "Facebook", platform: "facebook" as const, placeholder: "https://facebook.com/yourpage" },
-    { key: "instagramUrl", label: "Instagram", platform: "instagram" as const, placeholder: "https://instagram.com/yourhandle" },
-    { key: "tiktokUrl", label: "TikTok", platform: "tiktok" as const, placeholder: "https://tiktok.com/@yourhandle" },
-    { key: "youtubeUrl", label: "YouTube", platform: "youtube" as const, placeholder: "https://youtube.com/c/yourchannel" },
+    { key: "facebookUrl", label: "Facebook", platform: "facebook" as const, placeholder: "https://facebook.com/sayfaniz" },
+    { key: "instagramUrl", label: "Instagram", platform: "instagram" as const, placeholder: "https://instagram.com/kullaniciadi" },
+    { key: "tiktokUrl", label: "TikTok", platform: "tiktok" as const, placeholder: "https://tiktok.com/@kullaniciadi" },
+    { key: "youtubeUrl", label: "YouTube", platform: "youtube" as const, placeholder: "https://youtube.com/@kanaliniz" },
     { key: "spotifyUrl", label: "Spotify", platform: "spotify" as const, placeholder: "https://open.spotify.com/artist/..." },
     { key: "appleMusicUrl", label: "Apple Music", platform: "appleMusic" as const, placeholder: "https://music.apple.com/artist/..." },
-    { key: "soundcloudUrl", label: "SoundCloud", platform: "soundcloud" as const, placeholder: "https://soundcloud.com/yourname" },
-    { key: "twitterUrl", label: "Twitter / X", platform: "x" as const, placeholder: "https://twitter.com/yourhandle" },
+    { key: "soundcloudUrl", label: "SoundCloud", platform: "soundcloud" as const, placeholder: "https://soundcloud.com/kullaniciadi" },
+    { key: "twitterUrl", label: "Twitter / X", platform: "x" as const, placeholder: "https://twitter.com/kullaniciadi" },
+    { key: "imdbUrl", label: "IMDb", platform: "imdb" as const, placeholder: "https://www.imdb.com/name/nm..." },
 ];
 
 export default function SocialMediaPage() {
@@ -45,6 +47,7 @@ export default function SocialMediaPage() {
         appleMusicUrl: "",
         soundcloudUrl: "",
         twitterUrl: "",
+        imdbUrl: "",
     });
 
     // Fetch current social links
@@ -68,6 +71,7 @@ export default function SocialMediaPage() {
                                 'appleMusic': 'appleMusicUrl',
                                 'soundcloud': 'soundcloudUrl',
                                 'x': 'twitterUrl',
+                                'imdb': 'imdbUrl',
                                 // Also handle if platform is stored differently
                                 'twitter': 'twitterUrl',
                             };
@@ -106,14 +110,14 @@ export default function SocialMediaPage() {
                 body: JSON.stringify({ updates }),
             });
             if (res.ok) {
-                setMessage({ type: "success", text: "Changes saved!" });
+                setMessage({ type: "success", text: "Değişiklikler kaydedildi!" });
                 setTimeout(() => setMessage(null), 2000);
                 router.refresh();
             } else {
-                setMessage({ type: "error", text: "Failed to save" });
+                setMessage({ type: "error", text: "Kaydedilemedi" });
             }
         } catch (error) {
-            setMessage({ type: "error", text: "Failed to save" });
+            setMessage({ type: "error", text: "Kaydedilemedi" });
         } finally {
             setIsSaving(false);
         }
@@ -184,12 +188,12 @@ export default function SocialMediaPage() {
     return (
         <div className="min-h-screen">
             {/* InfoBar */}
-            <InfoBar counter={`${activeCount}/8 active`} />
+            <InfoBar counter={`${activeCount}/9 aktif`} />
 
             <main className="max-w-4xl mx-auto px-4 pb-10">
                 <div className="mb-8">
-                    <h1 className="font-display text-display-md tracking-wider uppercase">Social Media</h1>
-                    <p className="text-muted-foreground mt-2">Manage your social media links. Active links appear on your website.</p>
+                    <h1 className="font-display text-display-md tracking-wider uppercase">Sosyal Medya</h1>
+                    <p className="text-muted-foreground mt-2">Sosyal medya bağlantılarınızı yönetin. Aktif bağlantılar web sitenizde görünür.</p>
                 </div>
 
                 {message && (
@@ -207,9 +211,9 @@ export default function SocialMediaPage() {
                         <div className="flex items-center gap-3">
                             <Share2 className="text-accent-coral" size={24} />
                             <div>
-                                <h2 className="font-display text-2xl tracking-wide">Platform Links</h2>
+                                <h2 className="font-display text-2xl tracking-wide">Platform Bağlantıları</h2>
                                 <p className="text-sm text-muted-foreground">
-                                    {activeCount} active / {8 - activeCount} inactive
+                                    {activeCount} aktif / {9 - activeCount} pasif
                                 </p>
                             </div>
                         </div>
@@ -265,7 +269,7 @@ export default function SocialMediaPage() {
                                             </div>
                                         ) : (
                                             <p className="text-sm text-muted-foreground truncate">
-                                                {isActive ? value : "No link added"}
+                                                {isActive ? value : "Bağlantı eklenmedi"}
                                             </p>
                                         )}
                                     </div>
@@ -276,7 +280,7 @@ export default function SocialMediaPage() {
                                             <button
                                                 onClick={() => startEdit(platform.key)}
                                                 className="p-2 rounded-lg hover:bg-muted transition-colors"
-                                                title="Edit link"
+                                                title="Bağlantıyı düzenle"
                                             >
                                                 <Edit2 size={18} className="text-muted-foreground" />
                                             </button>
@@ -287,7 +291,7 @@ export default function SocialMediaPage() {
                                                     ? "hover:bg-muted text-accent-coral"
                                                     : "hover:bg-muted text-muted-foreground"
                                                     }`}
-                                                title={isActive ? "Deactivate link" : "Activate link"}
+                                                title={isActive ? "Bağlantıyı pasifleştir" : "Bağlantıyı aktifleştir"}
                                             >
                                                 {isActive ? <Eye size={18} /> : <EyeOff size={18} />}
                                             </button>
@@ -298,7 +302,7 @@ export default function SocialMediaPage() {
                                                     ? "hover:bg-red-50 dark:hover:bg-red-950"
                                                     : "opacity-50 cursor-not-allowed"
                                                     }`}
-                                                title="Delete link"
+                                                title="Bağlantıyı sil"
                                                 disabled={!isActive}
                                             >
                                                 <Trash2 size={18} className="text-red-500" />
@@ -312,12 +316,12 @@ export default function SocialMediaPage() {
                 </div>
 
                 <div className="mt-8 p-6 rounded-xl bg-muted/50 text-sm text-muted-foreground">
-                    <p className="font-medium text-foreground mb-2">How it works:</p>
+                    <p className="font-medium text-foreground mb-2">Nasıl çalışır:</p>
                     <ul className="list-disc list-inside space-y-1">
-                        <li><Eye size={14} className="inline text-accent-coral" /> Active links appear as icons on your site</li>
-                        <li><EyeOff size={14} className="inline" /> Inactive/empty links are hidden</li>
-                        <li>Click <Edit2 size={14} className="inline" /> to edit or add a URL</li>
-                        <li>Click <Trash2 size={14} className="inline text-red-500" /> to remove a link</li>
+                        <li><Eye size={14} className="inline text-accent-coral" /> Aktif bağlantılar sitenizde ikon olarak görünür</li>
+                        <li><EyeOff size={14} className="inline" /> Pasif/boş bağlantılar gizlenir</li>
+                        <li>URL düzenlemek veya eklemek için <Edit2 size={14} className="inline" /> tıklayın</li>
+                        <li>Bağlantıyı kaldırmak için <Trash2 size={14} className="inline text-red-500" /> tıklayın</li>
                     </ul>
                 </div>
             </main>

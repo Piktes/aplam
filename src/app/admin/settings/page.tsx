@@ -26,7 +26,7 @@ interface SocialLink {
 
 // Default platforms to ensure UI shows all options
 const DEFAULT_PLATFORMS = [
-  'facebook', 'instagram', 'tiktok', 'youtube', 'spotify', 'appleMusic', 'soundcloud', 'twitter'
+  'facebook', 'instagram', 'tiktok', 'youtube', 'spotify', 'appleMusic', 'soundcloud', 'twitter', 'imdb'
 ];
 
 export default function SettingsPage() {
@@ -252,7 +252,7 @@ export default function SettingsPage() {
                   <div className="flex items-center justify-between mb-2">
                     <label className="flex items-center gap-2 text-sm font-medium capitalize">
                       <SocialIcon platform={link.platform as any} size={16} />
-                      {link.platform === 'appleMusic' ? 'Apple Music' : link.platform}
+                      {link.platform === 'appleMusic' ? 'Apple Music' : link.platform === 'imdb' ? 'IMDb' : link.platform}
                     </label>
 
                     {/* Toggle Visibility */}

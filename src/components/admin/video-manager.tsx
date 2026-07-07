@@ -121,7 +121,7 @@ function SortableVideoItem({
           target="_blank"
           rel="noopener noreferrer"
           className="p-2 rounded-lg hover:bg-muted transition-colors"
-          title="Open in YouTube"
+          title="YouTube'da aç"
         >
           <ExternalLink size={16} className="text-muted-foreground" />
         </a>
@@ -133,7 +133,7 @@ function SortableVideoItem({
             ? "hover:bg-muted text-accent-coral"
             : "hover:bg-muted text-muted-foreground"
             }`}
-          title={video.isActive ? "Hide video" : "Show video"}
+          title={video.isActive ? "Videoyu gizle" : "Videoyu göster"}
         >
           {video.isActive ? <Eye size={18} /> : <EyeOff size={18} />}
         </button>
@@ -143,7 +143,7 @@ function SortableVideoItem({
           <button
             type="submit"
             className="p-2 rounded-lg hover:bg-red-50 dark:hover:bg-red-950 transition-colors"
-            title="Delete video"
+            title="Videoyu sil"
           >
             <Trash2 size={18} className="text-red-500" />
           </button>
@@ -243,7 +243,7 @@ export function VideoManager({ videos, onAdd, onToggle, onDelete, onReorder }: V
             className="btn-primary flex items-center gap-2 text-sm"
           >
             <Plus size={16} />
-            Add Video
+            Video Ekle
           </button>
         </div>
       )}
@@ -251,7 +251,7 @@ export function VideoManager({ videos, onAdd, onToggle, onDelete, onReorder }: V
       {/* Add New Video Form */}
       {isAdding && (
         <div className="mb-6 p-4 rounded-xl border border-accent-coral/30 bg-accent-coral/5">
-          <h3 className="font-medium mb-4">Add New Video</h3>
+          <h3 className="font-medium mb-4">Yeni Video Ekle</h3>
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-medium mb-2">YouTube URL *</label>
@@ -264,12 +264,12 @@ export function VideoManager({ videos, onAdd, onToggle, onDelete, onReorder }: V
               />
             </div>
             <div>
-              <label className="block text-sm font-medium mb-2">Title (Optional)</label>
+              <label className="block text-sm font-medium mb-2">Başlık (İsteğe Bağlı)</label>
               <input
                 type="text"
                 value={newTitle}
                 onChange={(e) => setNewTitle(e.target.value)}
-                placeholder="Video title..."
+                placeholder="Video başlığı..."
                 className="input-field"
               />
             </div>
@@ -279,13 +279,13 @@ export function VideoManager({ videos, onAdd, onToggle, onDelete, onReorder }: V
                 disabled={!newUrl}
                 className="btn-primary text-sm disabled:opacity-50"
               >
-                Add Video
+                Video Ekle
               </button>
               <button
                 onClick={() => { setIsAdding(false); setNewUrl(""); setNewTitle(""); }}
                 className="btn-secondary text-sm"
               >
-                Cancel
+                İptal
               </button>
             </div>
           </div>
@@ -319,19 +319,19 @@ export function VideoManager({ videos, onAdd, onToggle, onDelete, onReorder }: V
       ) : (
         <div className="text-center py-10 text-muted-foreground">
           <Youtube className="mx-auto mb-4" size={40} />
-          <p>No videos yet</p>
-          <p className="text-sm mt-1">Add your first YouTube video above</p>
+          <p>Henüz video yok</p>
+          <p className="text-sm mt-1">Yukarıdan ilk YouTube videonuzu ekleyin</p>
         </div>
       )}
 
       {/* Info */}
       <div className="mt-6 p-4 rounded-xl bg-muted/50 text-sm text-muted-foreground">
-        <p className="font-medium text-foreground mb-1">Tips:</p>
+        <p className="font-medium text-foreground mb-1">İpuçları:</p>
         <ul className="list-disc list-inside space-y-1">
-          <li>Videos with <Eye size={12} className="inline text-accent-coral" /> are visible on the homepage</li>
-          <li><strong>Drag handles</strong> to reorder videos</li>
-          <li>Add 4+ videos to enable the infinite carousel</li>
-          <li>Carousel auto-scrolls every 2 seconds</li>
+          <li><Eye size={12} className="inline text-accent-coral" /> işaretli videolar ana sayfada görünür</li>
+          <li>Videoları yeniden sıralamak için <strong>tutamaçları sürükleyin</strong></li>
+          <li>Sonsuz kaydırma için 4+ video ekleyin</li>
+          <li>Kaydırma her 2 saniyede bir otomatik ilerler</li>
         </ul>
       </div>
     </div>

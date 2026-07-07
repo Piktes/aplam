@@ -4,7 +4,7 @@
  * This ensures the optimizer fetches from nginx instead of internal server
  */
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://test.heiraza.com';
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://begumatak.com';
 
 /**
  * Converts a relative image URL to an absolute URL

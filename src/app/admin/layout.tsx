@@ -53,31 +53,31 @@ function AdminLayoutContent({ children }: { children: React.ReactNode }) {
                             <button
                                 onClick={toggle}
                                 className="p-2 rounded-lg hover:bg-muted transition-colors lg:hidden"
-                                aria-label="Toggle menu"
+                                aria-label="Menüyü aç/kapat"
                             >
                                 <Menu size={20} />
                             </button>
 
                             <Link href="/admin" className="flex items-center gap-2">
                                 <Music2 size={20} className="text-accent-coral sm:w-6 sm:h-6" />
-                                <span className="font-display text-lg sm:text-xl tracking-widest uppercase hidden sm:inline">Heiraza</span>
-                                <span className="text-[10px] sm:text-xs font-medium tracking-wider uppercase text-muted-foreground px-1.5 sm:px-2 py-0.5 sm:py-1 bg-muted rounded-full">Admin</span>
+                                <span className="font-display text-lg sm:text-xl tracking-widest uppercase hidden sm:inline">Begüm Atak</span>
+                                <span className="text-[10px] sm:text-xs font-medium tracking-wider uppercase text-muted-foreground px-1.5 sm:px-2 py-0.5 sm:py-1 bg-muted rounded-full">Yönetim</span>
                             </Link>
                         </div>
 
                         {/* Right side - Actions */}
                         <div className="flex items-center gap-1 sm:gap-3">
                             <span className="text-sm text-muted-foreground hidden lg:block">
-                                Logged in as <span className="font-medium text-foreground">{username}</span>
+                                Giriş yapan: <span className="font-medium text-foreground">{username}</span>
                             </span>
                             <ThemeToggle />
                             <Link
                                 href="/"
                                 target="_blank"
                                 className="btn-ghost flex items-center gap-1 sm:gap-2 text-xs sm:text-sm px-2 sm:px-3 py-1.5 sm:py-2"
-                                title="View Site"
+                                title="Siteyi Görüntüle"
                             >
-                                <span className="hidden sm:inline">View Site</span>
+                                <span className="hidden sm:inline">Siteyi Görüntüle</span>
                                 <ArrowUpRight size={14} />
                             </Link>
                             <SignOutButton showText={false} className="px-2 sm:px-4 py-1.5 sm:py-2 hidden lg:flex" />

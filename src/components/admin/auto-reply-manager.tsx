@@ -89,7 +89,7 @@ function HeroPopupPreview({
                         onClick={onClose}
                         className="mt-8 btn-primary w-full"
                     >
-                        Continue
+                         Devam Et
                     </button>
                 </div>
             </div>
@@ -160,7 +160,7 @@ function PopupSection({
                 <div className="mb-6">
                     <label className="block text-sm font-medium mb-3 flex items-center gap-2">
                         <ImageIcon size={16} />
-                        Banner Image (16:9 Landscape)
+                        Banner Görsel (16:9 Yatay)
                     </label>
 
                     <input
@@ -204,15 +204,15 @@ function PopupSection({
                             className="w-full aspect-[16/9] rounded-xl border-2 border-dashed border-border hover:border-accent-coral/50 hover:bg-accent-coral/5 transition-colors flex flex-col items-center justify-center gap-3 text-muted-foreground"
                         >
                             <Upload size={32} />
-                            <span className="text-sm">Click to upload banner image</span>
-                            <span className="text-xs">Recommended: 800×450px (16:9)</span>
+                             <span className="text-sm">Banner görsel yüklemek için tıklayın</span>
+                             <span className="text-xs">Önerilen: 800×450px (16:9)</span>
                         </button>
                     )}
                 </div>
 
                 {/* Title Input */}
                 <div className="mb-6">
-                    <label className="block text-sm font-medium mb-2">Popup Title</label>
+                    <label className="block text-sm font-medium mb-2">Açılır Pencere Başlığı</label>
                     <input
                         type="text"
                         value={title}
@@ -224,7 +224,7 @@ function PopupSection({
 
                 {/* Message Textarea */}
                 <div className="mb-6">
-                    <label className="block text-sm font-medium mb-2">Popup Message</label>
+                    <label className="block text-sm font-medium mb-2">Açılır Pencere Mesajı</label>
                     <textarea
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
@@ -240,7 +240,7 @@ function PopupSection({
                     className="btn-secondary flex items-center gap-2"
                 >
                     <Eye size={18} />
-                    Preview Popup
+                     Açılır Pencereyi Önizle
                 </button>
             </div>
 
@@ -298,38 +298,38 @@ export function AutoReplyManager({
             {/* Contact Form Success Popup */}
             <PopupSection
                 icon={Mail}
-                sectionTitle="Message Success Popup"
-                description="Displayed after a user successfully submits the contact form."
+                sectionTitle="Mesaj Başarı Açılır Penceresi"
+                description="Kullanıcı iletişim formunu başarıyla gönderdikten sonra görüntülenir."
                 image={contactImage}
                 setImage={setContactImage}
                 title={contactTitle}
                 setTitle={setContactTitle}
                 message={contactMessage}
                 setMessage={setContactMessage}
-                defaultTitle="Message Sent!"
+                defaultTitle="Mesaj Gönderildi!"
                 defaultMessage="Mesajınız Heiraza'ya iletilmiştir."
             />
 
             {/* Divider */}
             <div className="flex items-center gap-4">
                 <div className="flex-1 h-px bg-border" />
-                <span className="text-xs text-muted-foreground uppercase tracking-wider">and</span>
+                <span className="text-xs text-muted-foreground uppercase tracking-wider">ve</span>
                 <div className="flex-1 h-px bg-border" />
             </div>
 
             {/* Newsletter Subscription Success Popup */}
             <PopupSection
                 icon={Bell}
-                sectionTitle="Subscription Success Popup"
-                description="Displayed after a user successfully subscribes to the newsletter."
+                sectionTitle="Abonelik Başarı Açılır Penceresi"
+                description="Kullanıcı bültene başarıyla abone olduktan sonra görüntülenir."
                 image={subscribeImage}
                 setImage={setSubscribeImage}
                 title={subscribeTitle}
                 setTitle={setSubscribeTitle}
                 message={subscribeMessage}
                 setMessage={setSubscribeMessage}
-                defaultTitle="Welcome Aboard!"
-                defaultMessage="Thanks for subscribing! You'll be the first to know about new releases and events."
+                defaultTitle="Hoş Geldiniz!"
+                defaultMessage="Abone olduğunuz için teşekkürler! Yeni çıkanlar ve etkinliklerden ilk siz haberdar olacaksınız."
             />
 
             {/* Save Button */}
@@ -342,17 +342,17 @@ export function AutoReplyManager({
                     {isPending ? (
                         <>
                             <Loader2 size={18} className="animate-spin" />
-                            Saving...
+                            Kaydediliyor...
                         </>
                     ) : saved ? (
                         <>
                             <CheckCircle size={18} />
-                            Saved!
+                            Kaydedildi!
                         </>
                     ) : (
                         <>
                             <Save size={18} />
-                            Save All Settings
+                            Tüm Ayarları Kaydet
                         </>
                     )}
                 </button>

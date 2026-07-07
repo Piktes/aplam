@@ -27,14 +27,14 @@ export default function AdminLoginPage() {
       });
 
       if (result?.error) {
-        setError("Invalid username or password");
+        setError("Geçersiz kullanıcı adı veya şifre");
         setIsLoading(false);
       } else {
         router.push("/admin");
         router.refresh();
       }
     } catch (err) {
-      setError("An error occurred. Please try again.");
+      setError("Bir hata oluştu. Lütfen tekrar deneyin.");
       setIsLoading(false);
     }
   };
@@ -59,10 +59,10 @@ export default function AdminLoginPage() {
               <Music2 size={32} className="text-accent-coral" />
             </div>
             <h1 className="font-display text-2xl tracking-widest uppercase">
-              Heiraza Admin
+              Begüm Atak Yönetim
             </h1>
             <p className="text-muted-foreground mt-2 text-sm">
-              Enter your credentials to access the dashboard
+              Panele erişmek için giriş bilgilerinizi girin
             </p>
           </div>
 
@@ -78,7 +78,7 @@ export default function AdminLoginPage() {
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Username Field */}
             <div>
-              <label className="block text-sm font-medium mb-2">Username</label>
+              <label className="block text-sm font-medium mb-2">Kullanıcı Adı</label>
               <div className="relative">
                 <div className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground">
                   <User size={18} />
@@ -88,7 +88,7 @@ export default function AdminLoginPage() {
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   className="w-full pl-12 pr-4 py-3 rounded-xl bg-muted/50 border border-border focus:border-accent-coral focus:ring-2 focus:ring-accent-coral/20 outline-none transition-all"
-                  placeholder="Enter username"
+                  placeholder="Kullanıcı adınızı girin"
                   required
                   autoComplete="username"
                 />
@@ -97,7 +97,7 @@ export default function AdminLoginPage() {
 
             {/* Password Field */}
             <div>
-              <label className="block text-sm font-medium mb-2">Password</label>
+              <label className="block text-sm font-medium mb-2">Şifre</label>
               <div className="relative">
                 <div className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground">
                   <Lock size={18} />
@@ -107,7 +107,7 @@ export default function AdminLoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="w-full pl-12 pr-12 py-3 rounded-xl bg-muted/50 border border-border focus:border-accent-coral focus:ring-2 focus:ring-accent-coral/20 outline-none transition-all"
-                  placeholder="Enter password"
+                  placeholder="Şifrenizi girin"
                   required
                   autoComplete="current-password"
                 />
@@ -131,10 +131,10 @@ export default function AdminLoginPage() {
               {isLoading ? (
                 <>
                   <Loader2 size={20} className="animate-spin" />
-                  Signing in...
+                  Giriş yapılıyor...
                 </>
               ) : (
-                "Sign In"
+                "Giriş Yap"
               )}
             </button>
           </form>
@@ -142,10 +142,10 @@ export default function AdminLoginPage() {
           {/* Footer */}
           <div className="mt-8 pt-6 border-t border-border">
             <p className="text-center text-xs text-muted-foreground">
-              Protected area. Unauthorized access is prohibited.
+              Korumalı alan. Yetkisiz erişim yasaktır.
             </p>
             <p className="text-center text-xs text-muted-foreground mt-2">
-              Session expires after 60 minutes of inactivity.
+              Oturum 60 dakika hareketsizlik sonrası sona erer.
             </p>
           </div>
         </div>

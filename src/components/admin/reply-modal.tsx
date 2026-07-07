@@ -29,7 +29,7 @@ export function ReplyModal({
     originalMessage,
     onSendSuccess,
 }: ReplyModalProps) {
-    const [subject, setSubject] = useState(`Re: Your message`);
+    const [subject, setSubject] = useState(`Re: Mesajınız`);
     const [body, setBody] = useState("");
     const [signature, setSignature] = useState<string>("");
     const [isSending, setIsSending] = useState(false);
@@ -55,7 +55,7 @@ export function ReplyModal({
     // Reset form when modal opens
     useEffect(() => {
         if (isOpen) {
-            setSubject(`Re: Your message`);
+            setSubject(`Re: Mesajınız`);
             setBody("");
             setSendResult(null);
             setShowPreview(false);
@@ -65,7 +65,7 @@ export function ReplyModal({
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!body.trim()) {
-            setSendResult({ success: false, message: "Please enter a message body" });
+            setSendResult({ success: false, message: "Lütfen bir mesaj içeriği girin" });
             return;
         }
 
@@ -87,17 +87,17 @@ export function ReplyModal({
             const data = await response.json();
 
             if (data.success) {
-                setSendResult({ success: true, message: "Email was sent successfully! ✓" });
+                setSendResult({ success: true, message: "E-posta başarıyla gönderildi! ✓" });
                 // Close after showing success message
                 setTimeout(() => {
                     onSendSuccess();
                     onClose();
                 }, 1500);
             } else {
-                setSendResult({ success: false, message: data.message || "Email could not be sent" });
+                setSendResult({ success: false, message: data.message || "E-posta gönderilemedi" });
             }
         } catch {
-            setSendResult({ success: false, message: "An error occurred while sending the email." });
+            setSendResult({ success: false, message: "E-posta gönderilirken bir hata oluştu." });
         } finally {
             setIsSending(false);
         }
@@ -117,7 +117,7 @@ export function ReplyModal({
             <div className="relative w-[95%] max-w-3xl glass-card p-0 overflow-hidden max-h-[90vh] flex flex-col">
                 {/* Header */}
                 <div className="flex items-center justify-between px-4 sm:px-6 py-4 border-b border-border flex-shrink-0">
-                    <h2 className="font-display text-lg sm:text-xl">Reply to Message</h2>
+                    <h2 className="font-display text-lg sm:text-xl">Mesajı Yanıtla</h2>
                     <button
                         onClick={onClose}
                         className="p-2 rounded-lg hover:bg-muted transition-colors"
@@ -132,10 +132,10 @@ export function ReplyModal({
                         <AlertTriangle size={20} className="text-yellow-500 flex-shrink-0" />
                         <div>
                             <p className="text-sm font-medium text-yellow-600 dark:text-yellow-400">
-                                Invalid email address detected
+                                Geçersiz e-posta adresi tespit edildi
                             </p>
                             <p className="text-xs text-muted-foreground">
-                                The email "{recipientEmail}" appears to be invalid. You can still try to send, but it may not be delivered.
+                                "{recipientEmail}" adresi geçersiz görünüyor. Yine de göndermeyi deneyebilirsiniz, ancak teslim edilemeyebilir.
                             </p>
                         </div>
                     </div>
@@ -148,7 +148,7 @@ export function ReplyModal({
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
                                 <label className="block text-sm font-medium text-muted-foreground mb-1">
-                                    From
+                                    Kimden
                                 </label>
                                 <input
                                     type="text"
@@ -161,7 +161,7 @@ export function ReplyModal({
                             {/* To */}
                             <div>
                                 <label className="block text-sm font-medium text-muted-foreground mb-1">
-                                    To
+                                    Kime
                                 </label>
                                 <input
                                     type="text"
@@ -175,7 +175,7 @@ export function ReplyModal({
                         {/* Subject */}
                         <div>
                             <label className="block text-sm font-medium text-muted-foreground mb-1">
-                                Subject
+                                Konu
                             </label>
                             <input
                                 type="text"
@@ -188,7 +188,7 @@ export function ReplyModal({
                         {/* Original Message (Reference) */}
                         <div>
                             <label className="block text-sm font-medium text-muted-foreground mb-1">
-                                Original Message
+                                Orijinal Mesaj
                             </label>
                             <div className="p-3 rounded-lg bg-muted text-sm text-muted-foreground max-h-20 overflow-y-auto">
                                 {originalMessage}
@@ -199,7 +199,7 @@ export function ReplyModal({
                         <div>
                             <div className="flex items-center justify-between mb-1">
                                 <label className="block text-sm font-medium text-muted-foreground">
-                                    Your Reply
+                                    Yanıtınız
                                 </label>
                                 <button
                                     type="button"
@@ -207,16 +207,16 @@ export function ReplyModal({
                                     className="flex items-center gap-1 text-sm text-accent-coral hover:underline"
                                 >
                                     <Eye size={14} />
-                                    {showPreview ? "Edit" : "Preview"}
+                                    {showPreview ? "Düzenle" : "Önizleme"}
                                 </button>
                             </div>
 
                             {showPreview ? (
                                 <div className="border border-border rounded-xl bg-white dark:bg-gray-900 p-4 min-h-[200px]">
-                                    <p className="text-xs text-muted-foreground mb-3 italic">Email Preview:</p>
+                                    <p className="text-xs text-muted-foreground mb-3 italic">E-posta Önizleme:</p>
                                     <div
                                         className="prose prose-sm dark:prose-invert max-w-none"
-                                        dangerouslySetInnerHTML={{ __html: body || "<p class='text-muted-foreground italic'>No content yet...</p>" }}
+                                        dangerouslySetInnerHTML={{ __html: body || "<p class='text-muted-foreground italic'>Henüz içerik yok...</p>" }}
                                     />
                                     <hr className="my-4 border-border" />
                                     <div dangerouslySetInnerHTML={{ __html: signature }} />
@@ -225,7 +225,7 @@ export function ReplyModal({
                                 <RichTextEditor
                                     value={body}
                                     onChange={setBody}
-                                    placeholder="Type your reply here..."
+                                    placeholder="Yanıtınızı buraya yazın..."
                                 />
                             )}
                         </div>
@@ -234,7 +234,7 @@ export function ReplyModal({
                         {!showPreview && signature && (
                             <div>
                                 <label className="block text-sm font-medium text-muted-foreground mb-1">
-                                    Signature (auto-attached)
+                                    İmza (otomatik eklenir)
                                 </label>
                                 <div
                                     className="p-3 rounded-lg bg-muted/50 border border-border text-sm max-h-24 overflow-y-auto"
@@ -260,11 +260,11 @@ export function ReplyModal({
                         <div className="text-xs text-muted-foreground">
                             {emailValid ? (
                                 <span className="flex items-center gap-1 text-green-600 dark:text-green-400">
-                                    <CheckCircle size={12} /> Valid email
+                                    <CheckCircle size={12} /> Geçerli e-posta
                                 </span>
                             ) : (
                                 <span className="flex items-center gap-1 text-yellow-600 dark:text-yellow-400">
-                                    <AlertTriangle size={12} /> Invalid email
+                                    <AlertTriangle size={12} /> Geçersiz e-posta
                                 </span>
                             )}
                         </div>
@@ -275,7 +275,7 @@ export function ReplyModal({
                                 className="btn-ghost text-sm"
                                 disabled={isSending}
                             >
-                                Cancel
+                                İptal
                             </button>
                             <button
                                 type="submit"
@@ -285,12 +285,12 @@ export function ReplyModal({
                                 {isSending ? (
                                     <>
                                         <Loader2 size={16} className="animate-spin" />
-                                        Sending...
+                                        Gönderiliyor...
                                     </>
                                 ) : (
                                     <>
                                         <Send size={16} />
-                                        Send Reply
+                                        Yanıt Gönder
                                     </>
                                 )}
                             </button>

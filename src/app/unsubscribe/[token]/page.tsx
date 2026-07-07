@@ -5,8 +5,8 @@ import { Music2, AlertTriangle, CheckCircle, HeartCrack } from "lucide-react";
 import { UnsubscribeForm } from "@/components/unsubscribe-form";
 
 export const metadata: Metadata = {
-    title: "Unsubscribe | Heiraza",
-    description: "Unsubscribe from our mailing list",
+    title: "Abonelikten Çık | Begüm Atak",
+    description: "E-posta listemizden abonelikten çıkın",
 };
 
 async function getSubscriber(token: string) {
@@ -28,11 +28,11 @@ async function processUnsubscribe(formData: FormData) {
     });
 
     if (!subscriber) {
-        return { success: false, error: "Invalid or expired unsubscribe link" };
+        return { success: false, error: "Geçersiz veya süresi dolmuş abonelikten çıkma bağlantısı" };
     }
 
     if (!subscriber.isActive) {
-        return { success: false, error: "You have already unsubscribed" };
+        return { success: false, error: "Zaten abonelikten çıkmışsınız" };
     }
 
     await prisma.subscriber.update({
@@ -62,15 +62,15 @@ export default async function UnsubscribePage({
             <div className="min-h-screen gradient-warm-bg grain flex items-center justify-center p-4">
                 <div className="glass-card p-8 max-w-md w-full text-center">
                     <AlertTriangle className="mx-auto mb-4 text-yellow-500" size={48} />
-                    <h1 className="font-display text-2xl mb-2">Invalid Link</h1>
+                    <h1 className="font-display text-2xl mb-2">Geçersiz Bağlantı</h1>
                     <p className="text-muted-foreground">
-                        This unsubscribe link is invalid or has expired.
+                        Bu abonelikten çıkma bağlantısı geçersiz veya süresi dolmuş.
                     </p>
                     <a
                         href="/"
                         className="inline-block mt-6 text-accent-coral hover:underline font-medium"
                     >
-                        Go to HEIRAZA homepage
+                        Ana sayfaya git
                     </a>
                 </div>
             </div>
@@ -83,21 +83,22 @@ export default async function UnsubscribePage({
             <div className="min-h-screen gradient-warm-bg grain flex items-center justify-center p-4">
                 <div className="glass-card p-8 max-w-md w-full text-center">
                     <CheckCircle className="mx-auto mb-4 text-green-500" size={48} />
-                    <h1 className="font-display text-2xl mb-2">Already Unsubscribed</h1>
+                    <h1 className="font-display text-2xl mb-2">Zaten Abonelikten Çıkmışsınız</h1>
                     <p className="text-muted-foreground mb-2">
-                        You have already unsubscribed from our mailing list.
+                        E-posta listemizden zaten abonelikten çıkmışsınız.
                     </p>
                     {subscriber.unsubscribedAt && (
                         <p className="text-xs text-muted-foreground">
-                            Unsubscribed on {new Date(subscriber.unsubscribedAt).toLocaleDateString()}
+                            Çıkış tarihi: {new Date(subscriber.unsubscribedAt).toLocaleDateString("tr-TR")}
                         </p>
                     )}
                     <div className="mt-6 p-4 rounded-xl bg-accent-coral/5 border border-accent-coral/10">
                         <p className="text-sm text-muted-foreground">
-                            Changed your mind? Subscribe again at{" "}
+                            Fikriniz mi değişti? İstediğiniz zaman{" "}
                             <a href="/" className="text-accent-coral hover:underline font-medium">
-                                heiraza.com
+                                ana sayfadan
                             </a>
+                            {" "}tekrar abone olabilirsiniz.
                         </p>
                     </div>
                 </div>
@@ -115,7 +116,7 @@ export default async function UnsubscribePage({
                         <Music2 className="relative mx-auto text-accent-coral" size={48} />
                     </div>
                     <h1 className="font-display text-2xl sm:text-3xl mb-2">
-                        We&apos;ll Miss You
+                        Sizi Özleyeceğiz
                     </h1>
                     <p className="text-muted-foreground">
                         <span className="font-medium text-foreground">{subscriber.email}</span>

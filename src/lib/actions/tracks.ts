@@ -38,7 +38,7 @@ export async function getAllTracks() {
 // ========================================
 export async function addTrack(formData: FormData) {
   const title = formData.get("title") as string;
-  const artist = formData.get("artist") as string || "Heiraza";
+  const artist = formData.get("artist") as string || "Begüm Atak";
   const fileUrl = formData.get("fileUrl") as string;
   const audioFile = formData.get("audioFile") as File | null;
   const coverImageData = formData.get("coverImage") as string;
@@ -115,7 +115,7 @@ export async function updateTrack(formData: FormData) {
 
   let updateData: any = {
     title,
-    artist: artist || "Heiraza",
+    artist: artist || "Begüm Atak",
     isActive,
   };
 
