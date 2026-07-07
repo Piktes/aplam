@@ -27,14 +27,14 @@ fi
 
 # 5. Restart pm2 gracefully
 echo "🔄 Restarting pm2..."
-pm2 restart heiraza --update-env
+pm2 restart aplam --update-env
 
 # 6. Wait for app to be ready
 echo "⏳ Waiting for app to start..."
 sleep 5
 
 # 7. Health check
-HEALTH_CHECK=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:3001/api/health || echo "000")
+HEALTH_CHECK=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:3002/api/health || echo "000")
 if [ "$HEALTH_CHECK" = "200" ]; then
     echo "✅ Deployment successful! Health check passed."
 else
@@ -44,7 +44,7 @@ fi
 # 8. Show current build info
 echo ""
 echo "📋 Current build info:"
-curl -s http://localhost:3001/api/health | head -c 500 || echo "Could not fetch health info"
+curl -s http://localhost:3002/api/health | head -c 500 || echo "Could not fetch health info"
 echo ""
 echo ""
 echo "🎉 Deployment complete!"
