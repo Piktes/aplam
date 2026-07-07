@@ -1,0 +1,445 @@
+// Prisma Schema for Heiraza Musician Website
+// Database: MySQL
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// ========================================
+// ADMIN USERS (Authentication)
+// ========================================
+model AdminUser {
+  id           Int       @id @default(autoincrement())
+  username     String    @unique @db.VarChar(100)
+  passwordHash String    @db.VarChar(255)  // bcrypt hashed
+  email        String?   @db.VarChar(255)
+  role         String    @default("admin") @db.VarChar(50)
+  lastLoginAt  DateTime?
+  isActive     Boolean   @default(true)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  
+  // Relations
+  logs         SystemLog[]
+}
+
+// ========================================
+// SYSTEM LOGS (Audit Trail)
+// ========================================
+model SystemLog {
+  id          Int       @id @default(autoincrement())
+  level       String    @db.VarChar(10)   // INFO, WARN, ERROR
+  action      String    @db.VarChar(100)  // LOGIN, UPDATE_BIO, DELETE_TRACK, etc.
+  userId      Int?
+  username    String    @db.VarChar(100)
+  details     String?   @db.Text
+  ipAddress   String?   @db.VarChar(45)   // IPv6 support
+  userAgent   String?   @db.VarChar(500)
+  timestamp   DateTime  @default(now())
+  
+  // Relations
+  user        AdminUser? @relation(fields: [userId], references: [id], onDelete: SetNull)
+  
+  @@index([timestamp])
+  @@index([action])
+  @@index([username])
+}
+
+// ========================================
+// SITE SETTINGS (Global Controls)
+// ========================================
+model SiteSettings {
+  id                    Int      @id @default(autoincrement())
+  
+  // Audio Player Settings
+  isAudioPlayerVisible  Boolean  @default(true)
+  
+  // Shop Section Settings
+  isShopVisible         Boolean  @default(true)
+  
+  // Social Links Toggle
+  isSocialLinksVisible  Boolean  @default(true)
+  
+  // YouTube Section Settings
+  isYoutubeVisible      Boolean  @default(true)
+  youtubeAutoScroll     Boolean  @default(true)
+  youtubeScrollInterval Int      @default(2000)
+  
+  // Hero Section Settings
+  heroSliderEnabled     Boolean  @default(true)
+  heroSliderInterval    Int      @default(5000)
+  heroKenBurnsEffect    Boolean  @default(true)
+  
+  // Auto Reply - Contact Form Success Popup
+  contactSuccessImage   String?  @db.LongText
+  contactSuccessTitle   String?  @db.VarChar(255)
+  contactSuccessMessage String?  @db.Text
+  
+  // Auto Reply - Newsletter Subscription Success Popup
+  subscribeSuccessImage   String?  @db.LongText
+  subscribeSuccessTitle   String?  @db.VarChar(255)
+  subscribeSuccessMessage String?  @db.Text
+  
+  // Email Templates for Event Notifications
+  reminderTemplate      String?  @db.LongText
+  soldOutTemplate       String?  @db.LongText
+  announcementTemplate  String?  @db.LongText
+  notificationLogoUrl   String?  @db.LongText  // Logo for notification emails
+  
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+}
+
+// ========================================
+// AUDIO TRACKS (Music Player)
+// ========================================
+model Track {
+  id           Int      @id @default(autoincrement())
+  title        String   @db.VarChar(255)
+  artist       String?  @db.VarChar(255)
+  fileUrl      String?  @db.VarChar(500)
+  externalLink String?  @db.VarChar(500)
+  coverImage   String?  @db.VarChar(500)
+  duration     Int?
+  sortOrder    Int      @default(0)
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+// ========================================
+// YOUTUBE VIDEOS
+// ========================================
+model Video {
+  id          Int      @id @default(autoincrement())
+  title       String?  @db.VarChar(255)
+  youtubeUrl  String   @db.VarChar(500)
+  sortOrder   Int      @default(0)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+
+// ========================================
+// HERO IMAGES (Multiple for Slider)
+// ========================================
+model HeroImage {
+  id        Int      @id @default(autoincrement())
+  imageUrl  String   @db.LongText
+  altText   String?  @db.VarChar(255)
+  sortOrder Int      @default(0)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+}
+
+// ========================================
+// BIO (Biography Content & Images)
+// ========================================
+model Bio {
+  id        Int      @id @default(autoincrement())
+  content   String?  @db.LongText     // Main bio text
+  imageUrl  String?  @db.LongText     // Bio image (Primary/Fallback)
+  caption   String?  @db.VarChar(255) // Optional caption
+  sortOrder Int      @default(0)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  // Relations
+  images    BioImage[]
+}
+
+model BioImage {
+  id        Int      @id @default(autoincrement())
+  bioId     Int
+  bio       Bio      @relation(fields: [bioId], references: [id], onDelete: Cascade)
+  imageUrl  String   @db.LongText
+  caption   String?  @db.VarChar(255)
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+}
+
+// ========================================
+// SOCIAL MEDIA (Links)
+// ========================================
+model SocialMedia {
+  id          Int      @id @default(autoincrement())
+  platform    String   @db.VarChar(50) // facebook, instagram, tiktok, etc.
+  url         String   @db.VarChar(500)
+  isVisible   Boolean  @default(true)
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// ========================================
+// SPECIAL EVENTS (Pop-up Announcements)
+// ========================================
+model SpecialEvent {
+  id          Int       @id @default(autoincrement())
+  title       String    @db.VarChar(255)
+  message     String    @db.Text
+  imageUrl    String?   @db.VarChar(500)
+  linkUrl     String?   @db.VarChar(500)
+  linkText    String?   @db.VarChar(100)
+  startDate   DateTime
+  endDate     DateTime
+  isActive    Boolean   @default(true)
+  showOnce    Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+// ========================================
+// GALLERY IMAGES
+// ========================================
+model GalleryImage {
+  id           Int      @id @default(autoincrement())
+  imageUrl     String   @db.LongText
+  thumbnailUrl String?  @db.LongText
+  title        String?  @db.VarChar(255)
+  caption      String?  @db.Text
+  category     String?  @db.VarChar(100)
+  sortOrder    Int      @default(0)
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+}
+
+// ========================================
+// EVENTS (Concerts/Shows)
+// ========================================
+model Event {
+  id           Int      @id @default(autoincrement())
+  title        String   @db.VarChar(255)
+  description  String?  @db.Text
+  date         DateTime
+  venue        String   @db.VarChar(255)
+  city         String   @db.VarChar(100)
+  country      String   @db.VarChar(100) @default("USA")
+  price        String?  @db.VarChar(50)
+  ticketUrl    String?  @db.VarChar(500)
+  imageUrl     String?  @db.VarChar(500)
+  isActive     Boolean  @default(true)
+  isFree       Boolean  @default(false)
+  isSoldOut    Boolean  @default(false)
+  autoReminder Boolean  @default(true)
+  autoSoldOut  Boolean  @default(true)
+  announcementSent   Boolean   @default(false)
+  announcementSentAt DateTime?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+// ========================================
+// PRODUCTS (Merch Shop)
+// ========================================
+model Product {
+  id          Int      @id @default(autoincrement())
+  name        String   @db.VarChar(255)
+  description String?  @db.Text
+  price       Decimal  @db.Decimal(10, 2)
+  image       String   @db.VarChar(500)
+  buyUrl      String   @db.VarChar(500)
+  stock       Int      @default(0)
+  category    String   @default("merch") @db.VarChar(50)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// ========================================
+// SUBSCRIBERS (Newsletter)
+// ========================================
+model Subscriber {
+  id                   Int       @id @default(autoincrement())
+  email                String    @unique @db.VarChar(255)
+  receiveEventAlerts   Boolean   @default(false)
+  joinedAt             DateTime  @default(now())
+  isActive             Boolean   @default(true)
+  
+  // Geolocation (from IP at signup)
+  ipAddress            String?   @db.VarChar(45)
+  country              String?   @db.VarChar(100)
+  city                 String?   @db.VarChar(100)
+  countryCode          String?   @db.VarChar(5)
+  
+  // Unsubscribe data
+  unsubscribeToken     String?   @unique @db.VarChar(64)
+  unsubscribeReason    String?   @db.Text
+  unsubscribedAt       DateTime?
+  
+  @@index([ipAddress])
+}
+
+// ========================================
+// MESSAGES (Contact Form)
+// ========================================
+model Message {
+  id          Int       @id @default(autoincrement())
+  name        String    @db.VarChar(255)
+  email       String    @db.VarChar(255)
+  message     String    @db.Text
+  ipAddress   String?   @db.VarChar(45)
+  country     String?   @db.VarChar(100)
+  city        String?   @db.VarChar(100)
+  countryCode String?   @db.VarChar(5)
+  createdAt   DateTime  @default(now())
+  isRead      Boolean   @default(false)
+  
+  // Reply tracking
+  replied     Boolean   @default(false)
+  replyText   String?   @db.Text
+  repliedAt   DateTime?
+  
+  @@index([ipAddress])
+}
+
+// ========================================
+// EMAIL SIGNATURE (for Reply System)
+// ========================================
+model EmailSignature {
+  id        Int      @id @default(autoincrement())
+  content   String   @db.Text
+  logoUrl   String?  @db.LongText
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ========================================
+// VISITOR LOGS (Site Analytics)
+// ========================================
+model VisitorLog {
+  id           Int      @id @default(autoincrement())
+  visitorHash  String?  @db.VarChar(64)  // SHA-256 hash of IP (privacy-compliant)
+  country      String?  @db.VarChar(100)
+  city         String?  @db.VarChar(100)
+  userAgent    String?  @db.VarChar(500)
+  visitedAt    DateTime @default(now())
+  isSubscriber Boolean  @default(false)  // Was a subscriber at time of visit
+  hasMessaged  Boolean  @default(false)  // Had sent a message at time of visit
+  
+  @@index([visitorHash])
+  @@index([visitedAt])
+}
+
+// ========================================
+// PRESS KIT: BIO (Singleton Config)
+// ========================================
+model PressKitBio {
+  id             Int      @id @default(autoincrement())
+  shortBio       String?  @db.Text
+  longBio        String?  @db.LongText    // Rich text
+  showShortBio   Boolean  @default(true)
+  showLongBio    Boolean  @default(true)
+  locale         String   @default("en") @db.VarChar(10)  // Future i18n
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+// ========================================
+// PRESS KIT: PHOTOS
+// ========================================
+model PressPhoto {
+  id               Int      @id @default(autoincrement())
+  imageUrl         String   @db.LongText
+  thumbnailUrl     String?  @db.LongText
+  altText          String   @db.VarChar(255)
+  photographerCredit String? @db.VarChar(255)
+  sortOrder        Int      @default(0)
+  isVisible        Boolean  @default(true)
+  isFeatured       Boolean  @default(false)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+// ========================================
+// PRESS KIT: MUSIC HIGHLIGHTS
+// ========================================
+model MusicHighlight {
+  id           Int      @id @default(autoincrement())
+  title        String   @db.VarChar(255)
+  platform     String   @db.VarChar(50)  // spotify, soundcloud, bandcamp, etc.
+  embedUrl     String   @db.VarChar(500)
+  sortOrder    Int      @default(0)
+  isVisible    Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+// ========================================
+// PRESS KIT: VIDEOS
+// ========================================
+model PressKitVideo {
+  id             Int      @id @default(autoincrement())
+  title          String   @db.VarChar(255)
+  videoUrl       String   @db.VarChar(500)  // YouTube/Vimeo URL
+  thumbnailUrl   String?  @db.LongText      // Auto or uploaded
+  sortOrder      Int      @default(0)
+  isVisible      Boolean  @default(true)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+// ========================================
+// PRESS KIT: QUOTE CATEGORIES
+// ========================================
+model PressQuoteCategory {
+  id           Int          @id @default(autoincrement())
+  name         String       @db.VarChar(100)
+  sortOrder    Int          @default(0)
+  isVisible    Boolean      @default(true)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  quotes       PressQuote[]
+}
+
+// ========================================
+// PRESS KIT: QUOTES
+// ========================================
+model PressQuote {
+  id           Int                @id @default(autoincrement())
+  quoteText    String             @db.Text
+  sourceName   String             @db.VarChar(255)
+  sourceUrl    String?            @db.VarChar(500)
+  imageUrl     String?            @db.LongText
+  categoryId   Int
+  category     PressQuoteCategory @relation(fields: [categoryId], references: [id])
+  sortOrder    Int                @default(0)
+  isVisible    Boolean            @default(true)
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
+
+  @@index([categoryId])
+}
+
+// ========================================
+// PRESS KIT: CONTACT/BOOKING INFO (Singleton)
+// ========================================
+model PressKitContact {
+  id             Int      @id @default(autoincrement())
+  bookingEmail   String?  @db.VarChar(255)
+  pressEmail     String?  @db.VarChar(255)
+  baseLocation   String?  @db.VarChar(255)
+  showBookingEmail Boolean @default(true)
+  showPressEmail   Boolean @default(true)
+  showBaseLocation Boolean @default(true)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+// ========================================
+// PRESS KIT: SETTINGS
+// ========================================
+model PressKitSettings {
+  id                    Int      @id @default(autoincrement())
+  allowPhotoDownload    Boolean  @default(true)
+  maxMusicTracks        Int      @default(5)
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+}
