@@ -72,9 +72,9 @@ async function main() {
 
 
   // ========================================
-  // ADMIN USER (with bcrypt hashed password)
+  // ADMIN USERS (with bcrypt hashed password)
   // ========================================
-  console.log("👤 Creating Admin User...");
+  console.log("👤 Creating Admin Users...");
   const passwordHash = await bcrypt.hash("Sahs2207$", 12);
   const adminUser = await prisma.adminUser.upsert({
     where: { username: "Sahadmin" },
@@ -91,6 +91,23 @@ async function main() {
   });
   console.log(`   ✓ Admin created: ${adminUser.username}`);
   console.log(`   ✓ Password: Sahs2207$ (hashed with bcrypt)\n`);
+
+  const begumPasswordHash = await bcrypt.hash("123456", 12);
+  const begumUser = await prisma.adminUser.upsert({
+    where: { username: "begum" },
+    update: {
+      passwordHash: begumPasswordHash,
+    },
+    create: {
+      username: "begum",
+      passwordHash: begumPasswordHash,
+      email: "begum@begumatak.com",
+      role: "admin",
+      isActive: true,
+    },
+  });
+  console.log(`   ✓ Admin created: ${begumUser.username}`);
+  console.log(`   ✓ Password: 123456 (hashed with bcrypt)\n`);
 
   // Log the seed action
   await prisma.systemLog.create({
