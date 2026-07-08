@@ -617,23 +617,23 @@
   --accent-rose: 242 207 196;        /* #F2CFC4 blush              */
 }
 
-/* ---------- KOYU TEMA DEĞERLERİ (sıcak, gri-mavi kayma yok) ---------- */
+/* ---------- KOYU TEMA DEĞERLERİ (gül kurusu / rosewood — siyaha kaçmayan) ---------- */
 .dark .public-v2 {
   color-scheme: dark;
-  --background: 17 19% 14%;          /* #2B211D */
-  --foreground: 22 49% 92%;          /* #F5E9E2 */
-  --card: 19 19% 17%;                /* #332823 */
+  --background: 0 13% 19%;           /* #382B2B rosewood   */
+  --foreground: 22 49% 92%;          /* #F5E9E2            */
+  --card: 0 14% 21%;                 /* #3E2F2F            */
   --card-foreground: 22 49% 92%;
-  --popover: 19 19% 17%;
+  --popover: 0 14% 21%;
   --popover-foreground: 22 49% 92%;
-  --primary: 17 48% 70%;             /* #D8A48F rose gold */
-  --primary-foreground: 17 19% 14%;
-  --secondary: 18 19% 18%;           /* #362A25 */
+  --primary: 17 48% 70%;             /* #D8A48F rose gold  */
+  --primary-foreground: 0 13% 19%;
+  --secondary: 0 13% 24%;            /* #443434            */
   --secondary-foreground: 22 49% 92%;
-  --muted: 17 22% 22%;               /* #45332C */
-  --muted-foreground: 22 22% 70%;    /* #C4AFA3 */
-  --border: 20 19% 24%;              /* #4A3A32 */
-  --input: 20 19% 24%;
+  --muted: 0 14% 25%;                /* #4A3838            */
+  --muted-foreground: 0 19% 75%;     /* #CBB3B3 pembemsi   */
+  --border: 0 13% 30%;               /* #574343            */
+  --input: 0 13% 30%;
   --ring: 17 48% 70%;
   --accent-coral: 216 164 143;       /* #D8A48F rose gold */
   --accent-peach: 232 196 176;       /* #E8C4B0           */
@@ -666,6 +666,21 @@
   font-weight: 600;
 }
 
+/* Section başlıklarında büyük harf zorlaması kalkar — Cormorant'ın
+   zarafeti küçük harfte görünür (eski Cinzel'den görsel ayrışma).
+   h1 (hero "BEGÜM ATAK", "BASIN KİTİ") marka olduğu için uppercase kalır. */
+.public-v2 h2,
+.public-v2 h3,
+.public-v2 h4,
+.public-v2 .section-title {
+  text-transform: none;
+  letter-spacing: 0.02em;
+}
+
+.public-v2 h2 {
+  font-weight: 600;
+}
+
 .public-v2 .font-serif {
   font-family: var(--font-cormorant-v2), "Cormorant Garamond", Georgia, serif;
   font-weight: 500;
@@ -679,30 +694,32 @@
 }
 
 /* ---------- ORTAK COMPONENT SINIFLARININ SCOPE OVERRIDE'LARI ---------- */
+/* Section blokları ana zemine yakın tutulur — şerit görüntüsü olmadan
+   hafif doku farkı (açık: #FDF8F4 ↔ #FBF3EE, koyu: #382B2B ↔ #443434) */
 .public-v2 .gradient-warm-bg,
 .public-v2.gradient-warm-bg {
-  background: #F9EDE7;
+  background: #FBF3EE;
 }
 
 .dark .public-v2 .gradient-warm-bg,
 .dark .public-v2.gradient-warm-bg {
-  background: #362A25;
+  background: #443434;
 }
 
 .public-v2 .gradient-hero {
   background: linear-gradient(180deg,
       transparent 0%,
-      rgba(249, 237, 231, 0.3) 30%,
-      rgba(249, 237, 231, 0.8) 70%,
-      #F9EDE7 100%);
+      rgba(251, 243, 238, 0.3) 30%,
+      rgba(251, 243, 238, 0.8) 70%,
+      #FBF3EE 100%);
 }
 
 .dark .public-v2 .gradient-hero {
   background: linear-gradient(180deg,
       transparent 0%,
-      rgba(54, 42, 37, 0.4) 30%,
-      rgba(54, 42, 37, 0.9) 70%,
-      #362A25 100%);
+      rgba(68, 52, 52, 0.4) 30%,
+      rgba(68, 52, 52, 0.9) 70%,
+      #443434 100%);
 }
 
 .public-v2 .glass {
@@ -714,7 +731,7 @@
 }
 
 .dark .public-v2 .glass {
-  background: rgba(43, 33, 29, 0.8);
+  background: rgba(56, 43, 43, 0.8);
   border-color: rgba(216, 164, 143, 0.15);
   box-shadow:
     0 4px 30px rgba(0, 0, 0, 0.2),
@@ -733,8 +750,8 @@
 
 .dark .public-v2 .glass-card {
   background: linear-gradient(135deg,
-      rgba(51, 40, 35, 0.92) 0%,
-      rgba(43, 33, 29, 0.72) 100%);
+      rgba(62, 47, 47, 0.92) 0%,
+      rgba(56, 43, 43, 0.72) 100%);
   border-color: rgba(216, 164, 143, 0.12);
   box-shadow:
     0 8px 32px rgba(0, 0, 0, 0.3),
@@ -757,7 +774,7 @@
 
 .dark .public-v2 .btn-primary {
   background-color: #D8A48F;
-  color: #2B211D;
+  color: #382B2B;
 }
 
 .dark .public-v2 .btn-primary:hover:not(:active) {
@@ -819,12 +836,12 @@
    mount olup observer kurulduktan sonra data-reveal="hidden" ile
    devreye girer; SSR çıktısında data-reveal="idle" → görünür. */
 .public-v2 [data-reveal] {
-  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+  transition: opacity 0.9s ease-out, transform 0.9s ease-out;
 }
 
 .public-v2 [data-reveal="hidden"] {
   opacity: 0;
-  transform: translateY(16px);
+  transform: translateY(28px);
 }
 
 /* ---------- PREFERS-REDUCED-MOTION: animasyonları kapat ---------- */

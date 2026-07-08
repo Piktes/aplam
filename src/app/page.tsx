@@ -143,7 +143,7 @@ export default async function Home() {
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 px-2 py-1 md:px-4 md:py-2 opacity-0 animate-fade-in">
         <div className="max-w-7xl mx-auto flex justify-center">
-          <div className="rounded-full px-6 py-1.5 md:px-8 md:py-2 flex items-center justify-between w-full max-w-5xl mx-auto bg-transparent border-none shadow-none md:backdrop-blur-xl md:border md:border-[#D8A48F]/25 md:bg-[#FDF8F4]/75 md:shadow-lg dark:md:bg-[#2B211D]/85 dark:md:border-[#D8A48F]/15 transition-all duration-300 relative">
+          <div className="rounded-full px-6 py-1.5 md:px-8 md:py-2 flex items-center justify-between w-full max-w-5xl mx-auto bg-transparent border-none shadow-none md:backdrop-blur-xl md:border md:border-[#D8A48F]/25 md:bg-[#FDF8F4]/75 md:shadow-lg dark:md:bg-[#382B2B]/85 dark:md:border-[#D8A48F]/15 transition-all duration-300 relative">
 
             <Link href="/" className="hover:opacity-70 transition-opacity flex items-center gap-2 sm:gap-3">
               <div className="relative w-8 h-8 rounded-full overflow-hidden border border-foreground/10 bg-white/50 flex items-center justify-center">
@@ -231,7 +231,8 @@ export default async function Home() {
           {events.length > 0 ? (
             <div className="space-y-4">
               {events.map((event, index) => (
-                <div key={event.id} className="glass-card p-6 md:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6 hover-lift opacity-0 animate-fade-in-up" style={{ animationDelay: `${index * 100}ms`, animationFillMode: "forwards" }}>
+                <ScrollReveal key={event.id} delay={index * 100}>
+                  <div className="glass-card p-6 md:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6 hover-lift">
                   <div className="flex items-center gap-6">
                     <div className="text-center min-w-[80px]">
                       <div className="font-display text-4xl md:text-5xl leading-none tracking-wide">{new Date(event.date).getDate()}</div>
@@ -258,7 +259,8 @@ export default async function Home() {
                       <a href={event.ticketUrl || "#"} target="_blank" rel="noopener noreferrer" className="btn-primary flex items-center gap-2">Bilet Al <ArrowRight size={16} /></a>
                     )}
                   </div>
-                </div>
+                  </div>
+                </ScrollReveal>
               ))}
             </div>
           ) : (
@@ -288,7 +290,8 @@ export default async function Home() {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
               {products.map((product, index) => (
-                <a key={product.id} href={product.buyUrl} target="_blank" rel="noopener noreferrer" className="group opacity-0 animate-fade-in-up" style={{ animationDelay: `${index * 100}ms`, animationFillMode: "forwards" }}>
+                <ScrollReveal key={product.id} delay={index * 100}>
+                  <a href={product.buyUrl} target="_blank" rel="noopener noreferrer" className="group block">
                   <div className="glass-card overflow-hidden hover-lift">
                     <div className="aspect-square relative img-zoom">
                       <Image src={product.image} alt={product.name} fill className="object-cover" />
@@ -305,7 +308,8 @@ export default async function Home() {
                       </div>
                     </div>
                   </div>
-                </a>
+                  </a>
+                </ScrollReveal>
               ))}
             </div>
           </ScrollReveal>
