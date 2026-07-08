@@ -96,7 +96,7 @@ export function MobileNav({ artistName = "Begüm Atak", showVideos = true, showS
                     </nav>
 
                     {/* Footer Info */}
-                    <div className="p-6 border-t border-black/5 dark:border-white/5 bg-[#FDF8F4] dark:bg-black/20">
+                    <div className="p-6 pt-10 bg-gradient-to-t from-[#FDF8F4]/90 via-[#FDF8F4]/40 to-transparent dark:from-[#382B2B]/90 dark:via-[#382B2B]/40 dark:to-transparent">
                         <p className="text-xs text-muted-foreground uppercase tracking-widest mb-1">{artistName}</p>
                         <p className="text-xs text-muted-foreground/50">Resmi Web Sitesi</p>
                     </div>

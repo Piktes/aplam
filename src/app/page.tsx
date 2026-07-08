@@ -143,7 +143,7 @@ export default async function Home() {
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 px-2 py-1 md:px-4 md:py-2 opacity-0 animate-fade-in">
         <div className="max-w-7xl mx-auto flex justify-center">
-          <div className="rounded-full px-6 py-1.5 md:px-8 md:py-2 flex items-center justify-between w-full max-w-5xl mx-auto bg-transparent border-none shadow-none md:backdrop-blur-xl md:border md:border-[#D8A48F]/25 md:bg-[#FDF8F4]/75 md:shadow-lg dark:md:bg-[#382B2B]/85 dark:md:border-[#D8A48F]/15 transition-all duration-300 relative">
+          <div className="rounded-full px-6 py-1.5 md:px-8 md:py-2 flex items-center justify-center w-full max-w-5xl mx-auto bg-transparent border-none shadow-none md:backdrop-blur-xl md:border md:border-[#D8A48F]/25 md:bg-[#FDF8F4]/75 md:shadow-lg dark:md:bg-[#382B2B]/85 dark:md:border-[#D8A48F]/15 transition-all duration-300 relative">
 
             <div className="hidden md:flex items-center gap-8">
               <Link href="#concerts" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Etkinlikler</Link>
@@ -153,7 +153,9 @@ export default async function Home() {
               <Link href="#contact" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">İletişim</Link>
               <Link href="/press-kit" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Basın Kiti</Link>
             </div>
-            <div className="flex items-center gap-2 ml-auto">
+            {/* transform kullanma: içindeki fixed hamburger/çekmece viewport yerine
+                bu kutuya bağlanır (transform'lu ata fixed'in çapası olur) */}
+            <div className="flex items-center gap-2 absolute right-2 md:right-4 inset-y-0">
               <div className="scale-75 md:scale-100 origin-right">
                 <ThemeToggle />
               </div>
