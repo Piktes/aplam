@@ -57,10 +57,10 @@ export default async function AutoReplyPage() {
                 <div className="mb-6">
                     <h1 className="font-display text-display-md tracking-wider uppercase flex items-center gap-3">
                         <MessageSquare className="text-accent-coral" size={32} />
-                        Auto Reply Settings
+                        Otomatik Yanıt Ayarları
                     </h1>
                     <p className="text-muted-foreground mt-2">
-                        Configure the success popups that appear after users submit the contact form or subscribe to the newsletter.
+                        Kullanıcılar iletişim formunu gönderdikten veya bültene abone olduktan sonra görüntülenecek başarı açılır pencerelerini yapılandırın.
                     </p>
                 </div>
 

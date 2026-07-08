@@ -314,7 +314,7 @@ export async function sendEventEmail(
                 `;
 
                 // Use custom SMTP transporter (same as message replies)
-                const smtpFrom = process.env.SMTP_FROM || "iletisim@begumatak.com";
+                const smtpFrom = process.env.SMTP_FROM || "info@begumatak.com";
                 const domain = smtpFrom.split("@")[1] || "begumatak.com";
 
                 // Generate unique Message-ID to prevent email threading
@@ -414,7 +414,7 @@ export async function sendTestEmail(
         const htmlContent = replaceVariables(template, variables);
 
         // Use custom SMTP transporter (same as message replies)
-        const smtpFrom = process.env.SMTP_FROM || "iletisim@begumatak.com";
+        const smtpFrom = process.env.SMTP_FROM || "info@begumatak.com";
         await smtpTransporter.sendMail({
             from: `"Begüm Atak" <${smtpFrom}>`,
             to,
@@ -591,7 +591,7 @@ export async function sendMessageReply(
         `;
 
         // Use custom SMTP transporter for message replies
-        const smtpFrom = process.env.SMTP_FROM || "iletisim@begumatak.com";
+        const smtpFrom = process.env.SMTP_FROM || "info@begumatak.com";
         await smtpTransporter.sendMail({
             from: `"Begüm Atak" <${smtpFrom}>`,
             to,

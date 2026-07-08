@@ -25,41 +25,41 @@ interface UserNotificationsManagerProps {
 }
 
 // Default templates with variables - BIGGER FONTS with email-safe fonts
-const DEFAULT_REMINDER = `<h2 style="font-family: Georgia, Times, serif; font-size: 28px; margin-bottom: 16px;">🎵 Event Reminder: {{event_title}}</h2>
-<p style="font-family: Georgia, Times, serif; font-size: 18px; line-height: 1.6;">Don't forget! You have an upcoming event in just <strong>1 week</strong>:</p>
-<p style="font-family: Georgia, Times, serif; font-size: 18px; line-height: 1.6;"><strong>📅 Date:</strong> {{event_date}} at {{event_time}}</p>
-<p style="font-family: Georgia, Times, serif; font-size: 18px; line-height: 1.6;"><strong>📍 Location:</strong> {{event_location}}</p>
-<p style="font-family: Georgia, Times, serif; font-size: 18px; line-height: 1.6;"><strong>💰 Price:</strong> {{event_price}}</p>
+const DEFAULT_REMINDER = `<h2 style="font-family: Georgia, Times, serif; font-size: 28px; margin-bottom: 16px;">🎵 Etkinlik Hatırlatıcısı: {{event_title}}</h2>
+<p style="font-family: Georgia, Times, serif; font-size: 18px; line-height: 1.6;">Unutmayın! Yaklaşan bir etkinliğiniz var, sadece <strong>1 hafta</strong> kaldı:</p>
+<p style="font-family: Georgia, Times, serif; font-size: 18px; line-height: 1.6;"><strong>📅 Tarih:</strong> {{event_date}} saat {{event_time}}</p>
+<p style="font-family: Georgia, Times, serif; font-size: 18px; line-height: 1.6;"><strong>📍 Konum:</strong> {{event_location}}</p>
+<p style="font-family: Georgia, Times, serif; font-size: 18px; line-height: 1.6;"><strong>💰 Ücret:</strong> {{event_price}}</p>
 <p style="font-family: Georgia, Times, serif; font-size: 18px; line-height: 1.6;">{{event_description}}</p>
-<p style="font-family: Georgia, Times, serif; font-size: 18px;"><a href="{{ticket_link}}" style="color: #E8795E; font-weight: bold;">Get Your Tickets Now →</a></p>`;
+<p style="font-family: Georgia, Times, serif; font-size: 18px;"><a href="{{ticket_link}}" style="color: #E8795E; font-weight: bold;">Biletleri Hemen Alın →</a></p>`;
 
-const DEFAULT_SOLDOUT = `<h2 style="font-family: Georgia, Times, serif; font-size: 28px; margin-bottom: 16px;">⚠️ SOLD OUT: {{event_title}}</h2>
-<p style="font-family: Georgia, Times, serif; font-size: 18px; line-height: 1.6;">We're sorry, but the following event is now <strong>sold out</strong>:</p>
-<p style="font-family: Georgia, Times, serif; font-size: 18px; line-height: 1.6;"><strong>📅 Date:</strong> {{event_date}} at {{event_time}}</p>
-<p style="font-family: Georgia, Times, serif; font-size: 18px; line-height: 1.6;"><strong>📍 Location:</strong> {{event_location}}</p>
-<p style="font-family: Georgia, Times, serif; font-size: 18px; line-height: 1.6;">Don't miss out on future events! Keep an eye on our website for new announcements.</p>`;
+const DEFAULT_SOLDOUT = `<h2 style="font-family: Georgia, Times, serif; font-size: 28px; margin-bottom: 16px;">⚠️ TÜKENDİ: {{event_title}}</h2>
+<p style="font-family: Georgia, Times, serif; font-size: 18px; line-height: 1.6;">Üzgünüz, ancak aşağıdaki etkinliğin biletleri <strong>tükenmiştir</strong>:</p>
+<p style="font-family: Georgia, Times, serif; font-size: 18px; line-height: 1.6;"><strong>📅 Tarih:</strong> {{event_date}} saat {{event_time}}</p>
+<p style="font-family: Georgia, Times, serif; font-size: 18px; line-height: 1.6;"><strong>📍 Konum:</strong> {{event_location}}</p>
+<p style="font-family: Georgia, Times, serif; font-size: 18px; line-height: 1.6;">Gelecek etkinlikleri kaçırmamak için web sitemizi takip etmeye devam edin.</p>`;
 
-const DEFAULT_ANNOUNCEMENT = `<h2 style="font-family: Georgia, Times, serif; font-size: 28px; margin-bottom: 16px;">🎉 New Event Announcement: {{event_title}}</h2>
-<p style="font-family: Georgia, Times, serif; font-size: 18px; line-height: 1.6;">We're excited to announce a brand new event!</p>
-<p style="font-family: Georgia, Times, serif; font-size: 18px; line-height: 1.6;"><strong>📅 Date:</strong> {{event_date}} at {{event_time}}</p>
-<p style="font-family: Georgia, Times, serif; font-size: 18px; line-height: 1.6;"><strong>📍 Location:</strong> {{event_location}}</p>
-<p style="font-family: Georgia, Times, serif; font-size: 18px; line-height: 1.6;"><strong>💰 Price:</strong> {{event_price}}</p>
+const DEFAULT_ANNOUNCEMENT = `<h2 style="font-family: Georgia, Times, serif; font-size: 28px; margin-bottom: 16px;">🎉 Yeni Etkinlik Duyurusu: {{event_title}}</h2>
+<p style="font-family: Georgia, Times, serif; font-size: 18px; line-height: 1.6;">Sizlere yepyeni bir etkinliği duyurmaktan heyecan duyuyoruz!</p>
+<p style="font-family: Georgia, Times, serif; font-size: 18px; line-height: 1.6;"><strong>📅 Tarih:</strong> {{event_date}} saat {{event_time}}</p>
+<p style="font-family: Georgia, Times, serif; font-size: 18px; line-height: 1.6;"><strong>📍 Konum:</strong> {{event_location}}</p>
+<p style="font-family: Georgia, Times, serif; font-size: 18px; line-height: 1.6;"><strong>💰 Ücret:</strong> {{event_price}}</p>
 <p style="font-family: Georgia, Times, serif; font-size: 18px; line-height: 1.6;">{{event_description}}</p>
-<p style="font-family: Georgia, Times, serif; font-size: 18px;"><a href="{{ticket_link}}" style="color: #E8795E; font-weight: bold;">Get Your Tickets Now →</a></p>
-<p style="font-family: Georgia, Times, serif; font-size: 18px; line-height: 1.6;">See you there! 🎶</p>`;
+<p style="font-family: Georgia, Times, serif; font-size: 18px;"><a href="{{ticket_link}}" style="color: #E8795E; font-weight: bold;">Biletleri Hemen Alın →</a></p>
+<p style="font-family: Georgia, Times, serif; font-size: 18px; line-height: 1.6;">Orada görüşmek üzere! 🎶</p>`;
 
 
 // Sample event data for preview
 const SAMPLE_EVENT = {
-    event_title: "Summer Music Festival 2026",
-    event_date: "Saturday, July 15, 2026",
-    event_time: "08:00 PM",
-    event_location: "Madison Square Garden, New York, USA",
+    event_title: "Yaz Müzik Festivali 2026",
+    event_date: "15 Temmuz 2026 Cumartesi",
+    event_time: "20:00",
+    event_location: "Madison Square Garden, New York, ABD",
     event_venue: "Madison Square Garden",
     event_city: "New York",
-    event_country: "USA",
-    event_price: "$75 - $150",
-    event_description: "Join us for an unforgettable night of live music featuring amazing performances!",
+    event_country: "ABD",
+    event_price: "75$ - 150$",
+    event_description: "Harika performansların yer alacağı unutulmaz bir canlı müzik gecesinde bize katılın!",
     event_image_url: "/uploads/events/sample-event.jpg",
     ticket_link: "https://example.com/tickets",
 };
@@ -98,7 +98,7 @@ function PreviewModal({
                 <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800">
                     <div className="flex items-center gap-3">
                         <Eye className="text-accent-coral" size={20} />
-                        <h3 className="font-semibold text-gray-900 dark:text-gray-100">{title} Preview</h3>
+                        <h3 className="font-semibold text-gray-900 dark:text-gray-100">{title} Önizlemesi</h3>
                     </div>
                     <button onClick={onClose} className="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
                         <X size={20} className="text-gray-600 dark:text-gray-400" />
@@ -110,7 +110,7 @@ function PreviewModal({
                     <div className="max-w-lg mx-auto rounded-lg shadow-lg overflow-hidden" style={{ backgroundColor: '#ffffff' }}>
                         {/* Sample Event Image */}
                         <div className="w-full h-48 bg-gradient-to-br from-accent-coral to-purple-600 flex items-center justify-center">
-                            <span className="text-white text-lg font-medium">📸 Event Image</span>
+                            <span className="text-white text-lg font-medium">📸 Etkinlik Görseli</span>
                         </div>
 
                         {/* Email Content - Force dark text on white background like real email */}
@@ -137,8 +137,8 @@ function PreviewModal({
 
                         {/* Footer */}
                         <div className="px-6 py-4 border-t text-center text-xs" style={{ backgroundColor: '#ffffff', borderColor: '#e5e7eb', color: '#6b7280' }}>
-                            <p>You're receiving this because you subscribed to event alerts.</p>
-                            <p><a href="#" style={{ color: '#6b7280', textDecoration: 'underline' }}>Unsubscribe</a> from future emails</p>
+                            <p>Bu e-postayı etkinlik bildirimlerine abone olduğunuz için alıyorsunuz.</p>
+                            <p>Gelecek e-postalardan <a href="#" style={{ color: '#6b7280', textDecoration: 'underline' }}>aboneliği iptal et</a></p>
                         </div>
                     </div>
                 </div>
@@ -287,7 +287,7 @@ export function UserNotificationsManager({
                         className="btn-ghost flex items-center gap-2 text-sm"
                     >
                         <Eye size={16} />
-                        Preview
+                        Önizleme
                     </button>
                 </div>
                 <p className="text-muted-foreground text-sm mb-6">
@@ -296,7 +296,7 @@ export function UserNotificationsManager({
                 <EmailTemplateEditor
                     value={reminderTemplate}
                     onChange={setReminderTemplate}
-                    placeholder="Design your reminder email..."
+                    placeholder="Hatırlatma e-postanızı tasarlayın..."
                 />
             </section>
 
@@ -314,7 +314,7 @@ export function UserNotificationsManager({
                         className="btn-ghost flex items-center gap-2 text-sm"
                     >
                         <Eye size={16} />
-                        Preview
+                        Önizleme
                     </button>
                 </div>
                 <p className="text-muted-foreground text-sm mb-6">
@@ -323,7 +323,7 @@ export function UserNotificationsManager({
                 <EmailTemplateEditor
                     value={soldOutTemplate}
                     onChange={setSoldOutTemplate}
-                    placeholder="Design your sold out alert email..."
+                    placeholder="Tükenme uyarı e-postanızı tasarlayın..."
                 />
             </section>
 
@@ -341,7 +341,7 @@ export function UserNotificationsManager({
                         className="btn-ghost flex items-center gap-2 text-sm"
                     >
                         <Eye size={16} />
-                        Preview
+                        Önizleme
                     </button>
                 </div>
                 <p className="text-muted-foreground text-sm mb-6">
@@ -350,7 +350,7 @@ export function UserNotificationsManager({
                 <EmailTemplateEditor
                     value={announcementTemplate}
                     onChange={setAnnouncementTemplate}
-                    placeholder="Design your announcement email..."
+                    placeholder="Duyuru e-postanızı tasarlayın..."
                 />
             </section>
 

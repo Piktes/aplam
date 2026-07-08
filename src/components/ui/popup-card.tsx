@@ -75,17 +75,28 @@ export function PopupCard({
                 </p>
 
                 {/* CTA Button */}
-                {linkUrl && (
-                    <a
-                        href={linkUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="btn-primary mt-4 py-2 text-sm inline-flex items-center gap-2"
-                    >
-                        {linkText || "Learn More"}
-                        <ExternalLink size={14} />
-                    </a>
-                )}
+                {linkUrl && (() => {
+                    const isSubscribe = linkText && /abone/i.test(linkText);
+                    const finalUrl = isSubscribe ? "/#newsletter" : linkUrl;
+                    const isAnchor = finalUrl.startsWith("#") || finalUrl.startsWith("/#");
+
+                    return (
+                        <div className="flex justify-center mt-4">
+                            <a
+                                href={finalUrl}
+                                target={isAnchor ? undefined : "_blank"}
+                                rel={isAnchor ? undefined : "noopener noreferrer"}
+                                onClick={() => {
+                                    if (onClose) onClose();
+                                }}
+                                className="btn-primary py-2 text-sm inline-flex items-center gap-2"
+                            >
+                                {linkText || "Learn More"}
+                                {!isAnchor && <ExternalLink size={14} />}
+                            </a>
+                        </div>
+                    );
+                })()}
             </div>
         </div>
     );

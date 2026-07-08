@@ -48,11 +48,11 @@ export default async function UserNotificationsPage() {
                 <div className="mb-6">
                     <h1 className="font-display text-display-md tracking-wider uppercase flex items-center gap-3">
                         <Bell className="text-accent-coral" size={32} />
-                        User Notifications
+                        Kullanıcı Bildirimleri
                     </h1>
                     <p className="text-muted-foreground mt-2">
-                        Design email templates for automated event notifications. Use variables like{" "}
-                        <code className="text-accent-coral bg-muted px-1 rounded">{"{{event_title}}"}</code> to insert dynamic content.
+                        Otomatik etkinlik bildirimleri için e-posta şablonları tasarlayın. Dinamik içerik eklemek için{" "}
+                        <code className="text-accent-coral bg-muted px-1 rounded">{"{{event_title}}"}</code> gibi değişkenleri kullanın.
                     </p>
                 </div>
 

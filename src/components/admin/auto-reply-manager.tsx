@@ -79,10 +79,10 @@ function HeroPopupPreview({
                 {/* Body Content */}
                 <div className="p-8 text-center">
                     <h3 className="font-display text-2xl md:text-3xl tracking-wide mb-4">
-                        {title || "Success!"}
+                        {title || "Başarılı!"}
                     </h3>
                     <p className="text-muted-foreground leading-relaxed">
-                        {message || "Your request has been processed successfully."}
+                        {message || "Talebiniz başarıyla işleme alındı."}
                     </p>
 
                     <button
@@ -307,7 +307,7 @@ export function AutoReplyManager({
                 message={contactMessage}
                 setMessage={setContactMessage}
                 defaultTitle="Mesaj Gönderildi!"
-                defaultMessage="Mesajınız Heiraza'ya iletilmiştir."
+                defaultMessage="Mesajınız Begüm ATAK'a iletilmiştir."
             />
 
             {/* Divider */}

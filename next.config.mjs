@@ -25,6 +25,18 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'test.heiraza.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'begumatak.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.begumatak.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'test.begumatak.com',
+      },
     ],
   },
   experimental: {
@@ -37,6 +49,10 @@ const nextConfig = {
         'www.test.heiraza.com',
         'heiraza.com',
         'www.heiraza.com',
+        'begumatak.com',
+        'www.begumatak.com',
+        'test.begumatak.com',
+        'www.test.begumatak.com',
         'localhost:3000',
       ],
     },

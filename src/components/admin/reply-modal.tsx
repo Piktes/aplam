@@ -152,7 +152,7 @@ export function ReplyModal({
                                 </label>
                                 <input
                                     type="text"
-                                    value={process.env.NEXT_PUBLIC_EMAIL_FROM || "heiraza@test.heiraza.com"}
+                                    value={process.env.NEXT_PUBLIC_EMAIL_FROM || "info@begumatak.com"}
                                     readOnly
                                     className="input-field w-full bg-muted cursor-not-allowed text-sm"
                                 />

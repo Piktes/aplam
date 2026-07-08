@@ -25,14 +25,14 @@ interface AnnouncementPreviewModalProps {
 }
 
 // Default announcement template (fallback)
-const DEFAULT_ANNOUNCEMENT = `<h2 style="font-size: 28px; margin-bottom: 16px;">🎉 New Event Announcement: {{event_title}}</h2>
-<p style="font-size: 18px; line-height: 1.6;">We're excited to announce a brand new event!</p>
-<p style="font-size: 18px; line-height: 1.6;"><strong>📅 Date:</strong> {{event_date}} at {{event_time}}</p>
-<p style="font-size: 18px; line-height: 1.6;"><strong>📍 Location:</strong> {{event_location}}</p>
-<p style="font-size: 18px; line-height: 1.6;"><strong>💰 Price:</strong> {{event_price}}</p>
+const DEFAULT_ANNOUNCEMENT = `<h2 style="font-size: 28px; margin-bottom: 16px;">🎉 Yeni Etkinlik Duyurusu: {{event_title}}</h2>
+<p style="font-size: 18px; line-height: 1.6;">Sizlere yepyeni bir etkinliği duyurmaktan heyecan duyuyoruz!</p>
+<p style="font-size: 18px; line-height: 1.6;"><strong>📅 Tarih:</strong> {{event_date}} saat {{event_time}}</p>
+<p style="font-size: 18px; line-height: 1.6;"><strong>📍 Konum:</strong> {{event_location}}</p>
+<p style="font-size: 18px; line-height: 1.6;"><strong>💰 Ücret:</strong> {{event_price}}</p>
 <p style="font-size: 18px; line-height: 1.6;">{{event_description}}</p>
-<p style="font-size: 18px;"><a href="{{ticket_link}}" style="color: #E8795E; font-weight: bold;">Get Your Tickets Now →</a></p>
-<p style="font-size: 18px; line-height: 1.6;">See you there! 🎶</p>`;
+<p style="font-size: 18px;"><a href="{{ticket_link}}" style="color: #E8795E; font-weight: bold;">Biletleri Hemen Alın →</a></p>
+<p style="font-size: 18px; line-height: 1.6;">Orada görüşmek üzere! 🎶</p>`;
 
 // Replace template variables with actual event data
 function replaceVariables(template: string, event: Event): string {
@@ -40,13 +40,13 @@ function replaceVariables(template: string, event: Event): string {
 
     const variables: Record<string, string> = {
         event_title: event.title,
-        event_date: eventDate.toLocaleDateString("en-US", {
+        event_date: eventDate.toLocaleDateString("tr-TR", {
             weekday: "long",
             month: "long",
             day: "numeric",
             year: "numeric",
         }),
-        event_time: eventDate.toLocaleTimeString("en-US", {
+        event_time: eventDate.toLocaleTimeString("tr-TR", {
             hour: "2-digit",
             minute: "2-digit",
         }),
@@ -54,7 +54,7 @@ function replaceVariables(template: string, event: Event): string {
         event_city: event.city,
         event_country: event.country,
         event_location: `${event.venue}, ${event.city}, ${event.country}`,
-        event_price: event.price || "TBA",
+        event_price: event.price || "Açıklanacak",
         event_description: event.description || "",
         event_image_url: event.imageUrl || "",
         ticket_link: event.ticketUrl || "#",
@@ -123,7 +123,7 @@ export function AnnouncementPreviewModal({
         try {
             await onSaveOnly();
         } catch (err) {
-            setError("Failed to save event");
+            setError("Etkinlik kaydedilemedi");
         } finally {
             setIsLoading(false);
         }
@@ -135,7 +135,7 @@ export function AnnouncementPreviewModal({
         try {
             await onConfirmAndSend();
         } catch (err) {
-            setError("Failed to send announcement");
+            setError("Duyuru gönderilemedi");
             setIsSending(false);
         }
     };
@@ -159,7 +159,7 @@ export function AnnouncementPreviewModal({
                 <div className="flex items-center justify-between p-6 border-b border-border flex-shrink-0">
                     <div className="flex items-center gap-3">
                         <Send className="text-accent-coral" size={24} />
-                        <h2 className="font-display text-xl tracking-wide">Send Announcement</h2>
+                        <h2 className="font-display text-xl tracking-wide">Duyuru Gönder</h2>
                     </div>
                     <button
                         onClick={onClose}
@@ -179,14 +179,14 @@ export function AnnouncementPreviewModal({
                                 {isLoading ? (
                                     <span className="flex items-center gap-2">
                                         <Loader2 size={16} className="animate-spin" />
-                                        Loading...
+                                        Yükleniyor...
                                     </span>
                                 ) : (
-                                    `This will be sent to ${subscriberCount || 0} subscribers`
+                                    `Bu duyuru ${subscriberCount || 0} aboneye gönderilecektir`
                                 )}
                             </p>
                             <p className="text-sm text-muted-foreground">
-                                Users who opted in for event alerts
+                                Etkinlik bildirimlerini almak isteyen kullanıcılar
                             </p>
                         </div>
                     </div>
@@ -194,7 +194,7 @@ export function AnnouncementPreviewModal({
                     {/* Event Preview - Now uses template */}
                     <div className="border border-border rounded-xl overflow-hidden">
                         <div className="bg-muted/50 px-4 py-2 text-sm font-medium text-muted-foreground">
-                            Email Preview
+                            E-posta Önizleme
                         </div>
                         <div className="bg-white dark:bg-gray-900">
                             {/* Event Image */}
@@ -226,23 +226,16 @@ export function AnnouncementPreviewModal({
 
                             {/* Footer */}
                             <div className="px-6 py-4 border-t border-gray-200 dark:border-gray-700 text-center text-xs text-gray-500 dark:text-gray-400">
-                                <p>You're receiving this because you subscribed to event alerts.</p>
-                                <p><span className="underline">Unsubscribe</span> from future emails</p>
+                                <p>Bu e-postayı etkinlik bildirimlerine abone olduğunuz için alıyorsunuz.</p>
+                                <p>Gelecek e-postalardan <span className="underline">aboneliği iptal et</span></p>
                             </div>
                         </div>
                     </div>
 
-                    {error && (
-                        <div className="flex items-center gap-2 p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-600">
-                            <AlertCircle size={18} />
-                            {error}
-                        </div>
-                    )}
-
                     {subscriberCount === 0 && !isLoading && (
                         <div className="flex items-center gap-2 p-4 rounded-xl bg-yellow-500/10 border border-yellow-500/20 text-yellow-700 dark:text-yellow-400">
                             <AlertCircle size={18} />
-                            <span>No subscribers have opted in for event alerts yet.</span>
+                            <span>Henüz hiçbir abone etkinlik bildirimlerini etkinleştirmedi.</span>
                         </div>
                     )}
                 </div>
@@ -254,7 +247,7 @@ export function AnnouncementPreviewModal({
                         className="w-full sm:w-auto btn-ghost h-10 text-sm px-4 text-muted-foreground"
                         disabled={isLoading || isSending}
                     >
-                        Cancel
+                        İptal
                     </button>
                     <button
                         onClick={handleSaveOnly}
@@ -266,7 +259,7 @@ export function AnnouncementPreviewModal({
                         ) : (
                             <Save size={16} />
                         )}
-                        Save Only
+                        Yalnızca Kaydet
                     </button>
                     <button
                         onClick={handleConfirmAndSend}
@@ -276,12 +269,12 @@ export function AnnouncementPreviewModal({
                         {isSending ? (
                             <>
                                 <Loader2 size={16} className="animate-spin" />
-                                Sending...
+                                Gönderiliyor...
                             </>
                         ) : (
                             <>
                                 <Send size={16} />
-                                Confirm & Send
+                                Onayla ve Gönder
                             </>
                         )}
                     </button>

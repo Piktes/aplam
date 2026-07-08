@@ -193,9 +193,9 @@ function BioSection() {
 
         const result = await updatePressKitBio(formData);
         if (result.success) {
-            toast.success("Bio updated successfully");
+            toast.success("Biyografi başarıyla güncellendi");
         } else {
-            toast.error("Failed to update bio");
+            toast.error("Biyografi güncellenemedi");
         }
         setSaving(false);
     };
@@ -375,7 +375,7 @@ function PhotosSection() {
 
     const handleUpload = async () => {
         if (!selectedFile || !newAltText.trim()) {
-            toast.error("Please select an image and provide alt text");
+            toast.error("Lütfen bir görsel seçin ve alternatif metin girin");
             return;
         }
 
@@ -392,16 +392,16 @@ function PhotosSection() {
 
             const result = await addPressPhoto(formData);
             if (result.success) {
-                toast.success("Photo added successfully");
+                toast.success("Fotoğraf başarıyla eklendi");
                 setNewAltText("");
                 setNewCredit("");
                 setSelectedFile(null);
                 loadPhotos();
             } else {
-                toast.error(result.error || "Failed to add photo");
+                toast.error(result.error || "Fotoğraf eklenemedi");
             }
         } catch (error) {
-            toast.error("Failed to process image");
+            toast.error("Görsel işlenemedi");
         }
         setUploading(false);
     };
@@ -411,7 +411,7 @@ function PhotosSection() {
         const formData = new FormData();
         formData.set("id", deleteModal.id.toString());
         await deletePressPhoto(formData);
-        toast.success("Photo deleted");
+        toast.success("Fotoğraf silindi");
         setDeleteModal({ open: false, id: null });
         loadPhotos();
     };
@@ -419,7 +419,7 @@ function PhotosSection() {
     const handleToggleVisibility = async (photo: PressPhoto) => {
         const formData = new FormData();
         formData.set("id", photo.id.toString());
-        formData.set("isVisible", photo.isVisible.toString());
+        formData.set("isVisible", (!photo.isVisible).toString());
         await togglePressPhotoVisibility(formData);
         loadPhotos();
     };
@@ -428,7 +428,7 @@ function PhotosSection() {
         const formData = new FormData();
         formData.set("id", id.toString());
         await setFeaturedPhoto(formData);
-        toast.success("Featured photo updated");
+        toast.success("Öne çıkarılan fotoğraf güncellendi");
         loadPhotos();
     };
 
@@ -440,9 +440,9 @@ function PhotosSection() {
         const order = newPhotos.map((p, i) => ({ id: p.id, sortOrder: i }));
         const formData = new FormData();
         formData.set("order", JSON.stringify(order));
-        await reorderPressPhotos(formData);
+        const result = await reorderPressPhotos(formData);
+        if (result.success) toast.success("Fotoğraf sırası güncellendi");
         setPhotos(newPhotos);
-        toast.success("Photo order updated");
     };
 
     const handleMoveDown = async (index: number) => {
@@ -453,9 +453,9 @@ function PhotosSection() {
         const order = newPhotos.map((p, i) => ({ id: p.id, sortOrder: i }));
         const formData = new FormData();
         formData.set("order", JSON.stringify(order));
-        await reorderPressPhotos(formData);
+        const result = await reorderPressPhotos(formData);
+        if (result.success) toast.success("Fotoğraf sırası güncellendi");
         setPhotos(newPhotos);
-        toast.success("Photo order updated");
     };
 
     // DnD Sensors
@@ -476,12 +476,10 @@ function PhotosSection() {
 
                 const newItems = arrayMove(items, oldIndex, newIndex);
 
-                // Updates State immediately for UI responsiveness
-                // Trigger Server Action in background
                 const order = newItems.map((p, i) => ({ id: p.id, sortOrder: i }));
                 const formData = new FormData();
                 formData.set("order", JSON.stringify(order));
-                reorderPressPhotos(formData).then(() => toast.success("Order updated"));
+                reorderPressPhotos(formData).then(() => toast.success("Sıralama güncellendi"));
 
                 return newItems;
             });
@@ -612,24 +610,20 @@ function MusicSection() {
     const handleToggleVisibility = async (highlight: MusicHighlight) => {
         const formData = new FormData();
         formData.set("id", highlight.id.toString());
-        formData.set("title", highlight.title);
-        formData.set("platform", highlight.platform);
-        formData.set("embedUrl", highlight.embedUrl);
         formData.set("isVisible", (!highlight.isVisible).toString());
 
         await updateMusicHighlight(formData);
-        toast.success(highlight.isVisible ? "Music hidden" : "Music visible");
+        toast.success(highlight.isVisible ? "Müzik gizlendi" : "Müzik görünür yapıldı");
         loadHighlights();
     };
 
     const handleAdd = async () => {
         if (!newTitle.trim() || !newEmbedUrl.trim()) {
-            toast.error("Please fill in title and embed URL");
+            toast.error("Lütfen başlığı ve yerleştirme bağlantısını doldurun");
             return;
         }
         setSaving(true);
 
-        // Extract proper embed URL from iframe code or share URL
         const processedUrl = extractEmbedUrl(newEmbedUrl);
 
         const formData = new FormData();
@@ -639,12 +633,12 @@ function MusicSection() {
 
         const result = await addMusicHighlight(formData);
         if (result.success) {
-            toast.success("Music highlight added");
+            toast.success("Öne çıkan müzik eklendi");
             setNewTitle("");
             setNewEmbedUrl("");
             loadHighlights();
         } else {
-            toast.error(result.error || "Failed to add");
+            toast.error(result.error || "Eklenemedi");
         }
         setSaving(false);
     };
@@ -654,7 +648,7 @@ function MusicSection() {
         const formData = new FormData();
         formData.set("id", deleteModal.id.toString());
         await deleteMusicHighlight(formData);
-        toast.success("Music highlight deleted");
+        toast.success("Öne çıkan müzik silindi");
         setDeleteModal({ open: false, id: null });
         loadHighlights();
     };
@@ -765,18 +759,16 @@ function VideosSection() {
     const handleToggleVisibility = async (video: PressKitVideo) => {
         const formData = new FormData();
         formData.set("id", video.id.toString());
-        formData.set("title", video.title);
-        formData.set("videoUrl", video.videoUrl);
         formData.set("isVisible", (!video.isVisible).toString());
 
         await updatePressKitVideo(formData);
-        toast.success(video.isVisible ? "Video hidden" : "Video visible");
+        toast.success(video.isVisible ? "Video gizlendi" : "Video görünür yapıldı");
         loadVideos();
     };
 
     const handleAdd = async () => {
         if (!newTitle.trim() || !newVideoUrl.trim()) {
-            toast.error("Please fill in title and video URL");
+            toast.error("Lütfen başlığı ve video bağlantısını doldurun");
             return;
         }
         setSaving(true);
@@ -786,12 +778,12 @@ function VideosSection() {
 
         const result = await addPressKitVideo(formData);
         if (result.success) {
-            toast.success("Video added");
+            toast.success("Video eklendi");
             setNewTitle("");
             setNewVideoUrl("");
             loadVideos();
         } else {
-            toast.error(result.error || "Failed to add");
+            toast.error(result.error || "Eklenemedi");
         }
         setSaving(false);
     };
@@ -801,7 +793,7 @@ function VideosSection() {
         const formData = new FormData();
         formData.set("id", deleteModal.id.toString());
         await deletePressKitVideo(formData);
-        toast.success("Video deleted");
+        toast.success("Video silindi");
         setDeleteModal({ open: false, id: null });
         loadVideos();
     };
@@ -905,21 +897,20 @@ function QuotesSection() {
     const handleToggleQuoteVisibility = async (quote: PressQuote) => {
         const formData = new FormData();
         formData.set("id", quote.id.toString());
-        formData.set("isVisible", quote.isVisible.toString());
+        formData.set("isVisible", (!quote.isVisible).toString());
 
         await toggleQuoteVisibility(formData);
-        toast.success(quote.isVisible ? "Quote hidden" : "Quote visible");
+        toast.success(quote.isVisible ? "Alıntı gizlendi" : "Alıntı görünür yapıldı");
         loadData();
     };
 
     const handleToggleCategoryVisibility = async (category: QuoteCategory) => {
         const formData = new FormData();
         formData.set("id", category.id.toString());
-        formData.set("name", category.name);
         formData.set("isVisible", (!category.isVisible).toString());
 
         await updateQuoteCategory(formData);
-        toast.success(category.isVisible ? "Category hidden" : "Category visible");
+        toast.success(category.isVisible ? "Kategori gizlendi" : "Kategori görünür yapıldı");
         loadData();
     };
 
@@ -930,7 +921,7 @@ function QuotesSection() {
         formData.set("name", newCategoryName);
         const result = await addQuoteCategory(formData);
         if (result.success) {
-            toast.success("Category added");
+            toast.success("Kategori eklendi");
             setNewCategoryName("");
             loadData();
         }
@@ -1267,7 +1258,7 @@ function ContactSection() {
 
         const result = await updatePressKitContact(formData);
         if (result.success) {
-            toast.success("Contact info updated");
+            toast.success("İletişim bilgileri güncellendi");
         }
         setSaving(false);
     };
@@ -1357,7 +1348,7 @@ function SettingsSection() {
 
         const result = await updatePressKitSettings(formData);
         if (result.success) {
-            toast.success("Settings updated");
+            toast.success("Ayarlar güncellendi");
         }
         setSaving(false);
     };
@@ -1405,35 +1396,35 @@ export default function PressKitAdminPage() {
 
             <main className="max-w-5xl mx-auto px-4 pb-10">
                 <div className="mb-8">
-                    <h1 className="font-display text-display-md tracking-wider uppercase">Press Kit</h1>
-                    <p className="text-muted-foreground mt-2">Manage your electronic press kit content</p>
+                    <h1 className="font-display text-display-md tracking-wider uppercase">Basın Kiti</h1>
+                    <p className="text-muted-foreground mt-2">Elektronik basın kiti (EPK) içeriğinizi yönetin</p>
                 </div>
 
-                <Section title="Bio" icon={FileText} defaultOpen={true}>
+                <Section title="Biyografi" icon={FileText} defaultOpen={true}>
                     <BioSection />
                 </Section>
 
-                <Section title="Press Photos" icon={ImageIcon}>
+                <Section title="Basın Fotoğrafları" icon={ImageIcon}>
                     <PhotosSection />
                 </Section>
 
-                <Section title="Music Highlights" icon={Music}>
+                <Section title="Öne Çıkan Müzikler" icon={Music}>
                     <MusicSection />
                 </Section>
 
-                <Section title="Videos" icon={Video}>
+                <Section title="Videolar" icon={Video}>
                     <VideosSection />
                 </Section>
 
-                <Section title="Press Quotes" icon={Quote}>
+                <Section title="Basın Yorumları / Alıntılar" icon={Quote}>
                     <QuotesSection />
                 </Section>
 
-                <Section title="Contact & Booking" icon={Mail}>
+                <Section title="İletişim & Menajerlik" icon={Mail}>
                     <ContactSection />
                 </Section>
 
-                <Section title="Settings" icon={Settings}>
+                <Section title="Ayarlar" icon={Settings}>
                     <SettingsSection />
                 </Section>
             </main>

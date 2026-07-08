@@ -217,8 +217,8 @@ export default function EditEventPage() {
         return (
             <div className="min-h-screen gradient-warm-bg flex items-center justify-center">
                 <div className="text-center">
-                    <p className="text-muted-foreground mb-4">Event not found</p>
-                    <Link href="/admin/events" className="btn-primary">Back to Events</Link>
+                    <p className="text-muted-foreground mb-4">Etkinlik bulunamadı</p>
+                    <Link href="/admin/events" className="btn-primary">Etkinliklere Dön</Link>
                 </div>
             </div>
         );
@@ -227,12 +227,12 @@ export default function EditEventPage() {
     return (
         <div className="min-h-screen">
             {/* InfoBar */}
-            <InfoBar backHref="/admin/events" backLabel="Back to Events" />
+            <InfoBar backHref="/admin/events" backLabel="Etkinliklere Dön" />
 
             <main className="max-w-4xl mx-auto px-4 pb-10">
                 <div className="mb-8">
                     <h1 className="font-display text-display-md tracking-wider uppercase">Etkinliği Düzenle</h1>
-                    <p className="text-muted-foreground mt-2">Update event details</p>
+                    <p className="text-muted-foreground mt-2">Etkinlik detaylarını güncelleyin</p>
                 </div>
 
                 {error && (
@@ -246,19 +246,19 @@ export default function EditEventPage() {
                     <div className="mb-6 p-4 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-700 dark:text-amber-400 flex items-start gap-3">
                         <AlertTriangle size={20} className="flex-shrink-0 mt-0.5" />
                         <div>
-                            <p className="font-medium">Announcement already sent</p>
+                            <p className="font-medium">Duyuru zaten gönderilmiş</p>
                             <p className="text-sm opacity-80">
-                                An announcement email for this event was sent on{" "}
+                                Bu etkinlik için duyuru e-postası{" "}
                                 {event.announcementSentAt
-                                    ? new Date(event.announcementSentAt).toLocaleDateString("en-US", {
+                                    ? new Date(event.announcementSentAt).toLocaleDateString("tr-TR", {
                                         month: "long",
                                         day: "numeric",
                                         year: "numeric",
                                         hour: "2-digit",
                                         minute: "2-digit",
                                     })
-                                    : "a previous date"}.
-                                Sending another announcement will notify subscribers again.
+                                    : "önceki bir tarihte"}{" "}
+                                gönderilmiştir. Tekrar duyuru göndermek aboneleri yeniden bilgilendirecektir.
                             </p>
                         </div>
                     </div>
@@ -269,7 +269,7 @@ export default function EditEventPage() {
                     <div>
                         {event.imageUrl && !imageData && (
                             <div className="mb-4">
-                                <p className="text-sm text-muted-foreground mb-2">Current image:</p>
+                                <p className="text-sm text-muted-foreground mb-2">Mevcut görsel:</p>
                                 <img
                                     src={event.imageUrl}
                                     alt={event.title}
@@ -280,8 +280,8 @@ export default function EditEventPage() {
                         <ImageUploadWithCrop
                             aspect={16 / 9}
                             onUpload={handleImageUpload}
-                            label="Update Event Image"
-                            helpText="Leave empty to keep current image"
+                            label="Etkinlik Görselini Güncelle"
+                            helpText="Mevcut görseli korumak için boş bırakın"
                         />
                     </div>
 
@@ -289,7 +289,7 @@ export default function EditEventPage() {
                     <div>
                         <label htmlFor="title" className="block text-sm font-medium mb-2">
                             <Calendar size={16} className="inline mr-2" />
-                            Event Title *
+                            Etkinlik Başlığı *
                         </label>
                         <input
                             type="text"
@@ -305,7 +305,7 @@ export default function EditEventPage() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label htmlFor="date" className="block text-sm font-medium mb-2">
-                                Date *
+                                Tarih *
                             </label>
                             <input
                                 type="date"
@@ -318,7 +318,7 @@ export default function EditEventPage() {
                         </div>
                         <div>
                             <label htmlFor="time" className="block text-sm font-medium mb-2">
-                                Time *
+                                Saat *
                             </label>
                             <input
                                 type="time"
@@ -335,7 +335,7 @@ export default function EditEventPage() {
                     <div>
                         <label htmlFor="venue" className="block text-sm font-medium mb-2">
                             <MapPin size={16} className="inline mr-2" />
-                            Venue *
+                            Mekan *
                         </label>
                         <input
                             type="text"
@@ -361,7 +361,7 @@ export default function EditEventPage() {
                     <div>
                         <label htmlFor="ticketUrl" className="block text-sm font-medium mb-2">
                             <Ticket size={16} className="inline mr-2" />
-                            Ticket URL {isTicketUrlRequired && <span className="text-accent-coral">*</span>}
+                            Bilet Bağlantısı {isTicketUrlRequired && <span className="text-accent-coral">*</span>}
                         </label>
                         <input
                             type="url"
@@ -373,7 +373,7 @@ export default function EditEventPage() {
                         />
                         {!isTicketUrlRequired && (
                             <p className="text-xs text-muted-foreground mt-1">
-                                Optional for free or sold out events
+                                Ücretsiz veya biletleri tükenmiş etkinlikler için isteğe bağlıdır
                             </p>
                         )}
                     </div>
@@ -381,7 +381,7 @@ export default function EditEventPage() {
                     {/* Description */}
                     <div>
                         <label htmlFor="description" className="block text-sm font-medium mb-2">
-                            Description (for emails)
+                            Açıklama (e-postalar için)
                         </label>
                         <textarea
                             id="description"
@@ -395,7 +395,7 @@ export default function EditEventPage() {
                     {/* Price */}
                     <div>
                         <label htmlFor="price" className="block text-sm font-medium mb-2">
-                            Price (optional)
+                            Ücret (isteğe bağlı)
                         </label>
                         <input
                             type="text"
@@ -417,7 +417,7 @@ export default function EditEventPage() {
                                 className="w-5 h-5 rounded border-border"
                             />
                             <label htmlFor="isActive" className="text-sm font-medium">
-                                Active (visible)
+                                Aktif (görünür)
                             </label>
                         </div>
                         <div className="flex items-center gap-3">
@@ -430,7 +430,7 @@ export default function EditEventPage() {
                                 className="w-5 h-5 rounded border-border accent-green-500"
                             />
                             <label htmlFor="isFree" className="text-sm font-medium text-green-600">
-                                🎉 Free Event
+                                🎉 Ücretsiz Etkinlik
                             </label>
                         </div>
                         <div className="flex items-center gap-3">
@@ -443,7 +443,7 @@ export default function EditEventPage() {
                                 className="w-5 h-5 rounded border-border"
                             />
                             <label htmlFor="isSoldOut" className="text-sm font-medium">
-                                Sold Out
+                                Tükendi
                             </label>
                         </div>
                     </div>
@@ -452,7 +452,7 @@ export default function EditEventPage() {
                     <div className="border-t border-border pt-6">
                         <h3 className="font-medium mb-4 flex items-center gap-2">
                             <span className="text-accent-coral">⚡</span>
-                            Email Automation
+                            E-posta Otomasyonu
                         </h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div className="flex items-center gap-3">
@@ -465,9 +465,9 @@ export default function EditEventPage() {
                                 />
                                 <div>
                                     <label htmlFor="autoReminder" className="text-sm font-medium">
-                                        Auto Reminder
+                                        Otomatik Hatırlatıcı
                                     </label>
-                                    <p className="text-xs text-muted-foreground">Send 7 days before event</p>
+                                    <p className="text-xs text-muted-foreground">Etkinlikten 7 gün önce gönderir</p>
                                 </div>
                             </div>
                             <div className="flex items-center gap-3">
@@ -480,9 +480,9 @@ export default function EditEventPage() {
                                 />
                                 <div>
                                     <label htmlFor="autoSoldOut" className="text-sm font-medium">
-                                        Auto Sold-Out Alert
+                                        Otomatik Tükendi Uyarısı
                                     </label>
-                                    <p className="text-xs text-muted-foreground">Notify when sold out</p>
+                                    <p className="text-xs text-muted-foreground">Biletler tükendiğinde aboneleri bilgilendirir</p>
                                 </div>
                             </div>
                         </div>
@@ -501,10 +501,10 @@ export default function EditEventPage() {
                             <div>
                                 <label htmlFor="sendAnnouncement" className="text-sm font-medium flex items-center gap-2 cursor-pointer">
                                     <Mail size={16} className="text-accent-coral" />
-                                    Send Announcement Email
+                                    Duyuru E-postası Gönder
                                 </label>
                                 <p className="text-xs text-muted-foreground mt-1">
-                                    Notify subscribers who opted in for event alerts about this event update
+                                    Etkinlik bildirimlerini açmış olan abonelere bu etkinlik güncellemesini duyurur
                                 </p>
                             </div>
                         </div>
@@ -520,22 +520,22 @@ export default function EditEventPage() {
                             {isSubmitting ? (
                                 <>
                                     <Loader2 size={16} className="animate-spin" />
-                                    Saving...
+                                    Kaydediliyor...
                                 </>
                             ) : sendAnnouncement ? (
                                 <>
                                     <Send size={16} />
-                                    Save & Preview Email
+                                    Kaydet ve E-postayı Önizle
                                 </>
                             ) : (
                                 <>
                                     <Save size={16} />
-                                    Save Changes
+                                    Değişiklikleri Kaydet
                                 </>
                             )}
                         </button>
                         <Link href="/admin/events" className="btn-secondary">
-                            Cancel
+                            İptal
                         </Link>
                     </div>
                 </form>

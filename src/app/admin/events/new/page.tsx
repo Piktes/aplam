@@ -142,12 +142,12 @@ export default function NewEventPage() {
   return (
     <div className="min-h-screen">
       {/* InfoBar */}
-      <InfoBar backHref="/admin/events" backLabel="Back to Events" />
+      <InfoBar backHref="/admin/events" backLabel="Etkinliklere Dön" />
 
       <main className="max-w-4xl mx-auto px-4 pb-10">
         <div className="mb-8">
-          <h1 className="font-display text-display-md tracking-wider uppercase">Create Event</h1>
-          <p className="text-muted-foreground mt-2">Add a new concert or tour date</p>
+          <h1 className="font-display text-display-md tracking-wider uppercase">Etkinlik Oluştur</h1>
+          <p className="text-muted-foreground mt-2">Yeni konser veya turne tarihi ekleyin</p>
         </div>
 
         {error && (
@@ -161,22 +161,22 @@ export default function NewEventPage() {
           <ImageUploadWithCrop
             aspect={16 / 9}
             onUpload={handleImageUpload}
-            label="Event Poster / Banner"
-            helpText="Recommended: 1920x1080px (16:9 aspect ratio)"
+            label="Etkinlik Afişi / Banner"
+            helpText="Önerilen: 1920x1080 piksel (16:9 en boy oranı)"
           />
 
           {/* Event Title */}
           <div>
             <label htmlFor="title" className="block text-sm font-medium mb-2">
               <Calendar size={16} className="inline mr-2" />
-              Event Title *
+              Etkinlik Başlığı *
             </label>
             <input
               type="text"
               id="title"
               name="title"
               required
-              placeholder="e.g., Echoes Tour - Los Angeles"
+              placeholder="örn: Eko Turnesi - İstanbul"
               className="input-field"
             />
           </div>
@@ -185,7 +185,7 @@ export default function NewEventPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label htmlFor="date" className="block text-sm font-medium mb-2">
-                Date *
+                Tarih *
               </label>
               <input
                 type="date"
@@ -198,7 +198,7 @@ export default function NewEventPage() {
             </div>
             <div>
               <label htmlFor="time" className="block text-sm font-medium mb-2">
-                Time *
+                Saat *
               </label>
               <input
                 type="time"
@@ -216,14 +216,14 @@ export default function NewEventPage() {
           <div>
             <label htmlFor="venue" className="block text-sm font-medium mb-2">
               <MapPin size={16} className="inline mr-2" />
-              Venue *
+              Mekan *
             </label>
             <input
               type="text"
               id="venue"
               name="venue"
               required
-              placeholder="e.g., The Fonda Theatre"
+              placeholder="örn: Zorlu PSM"
               className="input-field"
             />
           </div>
@@ -240,7 +240,7 @@ export default function NewEventPage() {
           <div>
             <label htmlFor="ticketUrl" className="block text-sm font-medium mb-2">
               <Ticket size={16} className="inline mr-2" />
-              Ticket URL {isTicketUrlRequired && <span className="text-accent-coral">*</span>}
+              Bilet Bağlantısı {isTicketUrlRequired && <span className="text-accent-coral">*</span>}
             </label>
             <input
               type="url"
@@ -252,7 +252,7 @@ export default function NewEventPage() {
             />
             {!isTicketUrlRequired && (
               <p className="text-xs text-muted-foreground mt-1">
-                Optional for free or sold out events
+                Ücretsiz veya biletleri tükenmiş etkinlikler için isteğe bağlıdır
               </p>
             )}
           </div>
@@ -260,13 +260,13 @@ export default function NewEventPage() {
           {/* Description */}
           <div>
             <label htmlFor="description" className="block text-sm font-medium mb-2">
-              Description (for emails)
+              Açıklama (e-postalar için)
             </label>
             <textarea
               id="description"
               name="description"
               rows={3}
-              placeholder="Brief description for email notifications..."
+              placeholder="E-posta bildirimleri için kısa açıklama..."
               className="input-field resize-none"
             />
           </div>
@@ -274,13 +274,13 @@ export default function NewEventPage() {
           {/* Price */}
           <div>
             <label htmlFor="price" className="block text-sm font-medium mb-2">
-              Price (optional)
+              Ücret (isteğe bağlı)
             </label>
             <input
               type="text"
               id="price"
               name="price"
-              placeholder="e.g., $45 - $120"
+              placeholder="örn: 150 TL - 500 TL"
               className="input-field"
             />
           </div>
@@ -296,7 +296,7 @@ export default function NewEventPage() {
                 className="w-5 h-5 rounded border-border"
               />
               <label htmlFor="isActive" className="text-sm font-medium">
-                Active (visible)
+                Aktif (görünür)
               </label>
             </div>
             <div className="flex items-center gap-3">
@@ -309,7 +309,7 @@ export default function NewEventPage() {
                 className="w-5 h-5 rounded border-border accent-green-500"
               />
               <label htmlFor="isFree" className="text-sm font-medium text-green-600">
-                🎉 Free Event
+                🎉 Ücretsiz Etkinlik
               </label>
             </div>
             <div className="flex items-center gap-3">
@@ -322,7 +322,7 @@ export default function NewEventPage() {
                 className="w-5 h-5 rounded border-border"
               />
               <label htmlFor="isSoldOut" className="text-sm font-medium">
-                Sold Out
+                Tükendi
               </label>
             </div>
           </div>
@@ -331,7 +331,7 @@ export default function NewEventPage() {
           <div className="border-t border-border pt-6">
             <h3 className="font-medium mb-4 flex items-center gap-2">
               <span className="text-accent-coral">⚡</span>
-              Email Automation
+              E-posta Otomasyonu
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="flex items-center gap-3">
@@ -344,9 +344,9 @@ export default function NewEventPage() {
                 />
                 <div>
                   <label htmlFor="autoReminder" className="text-sm font-medium">
-                    Auto Reminder
+                    Otomatik Hatırlatıcı
                   </label>
-                  <p className="text-xs text-muted-foreground">Send 7 days before event</p>
+                  <p className="text-xs text-muted-foreground">Etkinlikten 7 gün önce gönderir</p>
                 </div>
               </div>
               <div className="flex items-center gap-3">
@@ -359,9 +359,9 @@ export default function NewEventPage() {
                 />
                 <div>
                   <label htmlFor="autoSoldOut" className="text-sm font-medium">
-                    Auto Sold-Out Alert
+                    Otomatik Tükendi Uyarısı
                   </label>
-                  <p className="text-xs text-muted-foreground">Notify when sold out</p>
+                  <p className="text-xs text-muted-foreground">Biletler tükendiğinde aboneleri bilgilendirir</p>
                 </div>
               </div>
             </div>
@@ -380,10 +380,10 @@ export default function NewEventPage() {
               <div>
                 <label htmlFor="sendAnnouncement" className="text-sm font-medium flex items-center gap-2 cursor-pointer">
                   <Mail size={16} className="text-accent-coral" />
-                  Send Announcement Email
+                  Duyuru E-postası Gönder
                 </label>
                 <p className="text-xs text-muted-foreground mt-1">
-                  Notify subscribers who opted in for event alerts about this new event
+                  Etkinlik bildirimlerini açmış olan abonelere bu yeni etkinliği duyurur
                 </p>
               </div>
             </div>
@@ -399,22 +399,22 @@ export default function NewEventPage() {
               {isSubmitting ? (
                 <>
                   <Loader2 size={16} className="animate-spin" />
-                  Creating...
+                  Oluşturuluyor...
                 </>
               ) : sendAnnouncement ? (
                 <>
                   <Send size={16} />
-                  Create & Preview Email
+                  Oluştur ve E-postayı Önizle
                 </>
               ) : (
                 <>
                   <Save size={16} />
-                  Create Event
+                  Etkinlik Oluştur
                 </>
               )}
             </button>
             <Link href="/admin/events" className="btn-secondary">
-              Cancel
+              İptal
             </Link>
           </div>
         </form>

@@ -87,7 +87,7 @@ export default function SettingsPage() {
 
       } catch (error) {
         console.error("Failed to fetch settings:", error);
-        setToast({ type: "error", message: "Failed to load settings. Please refresh." });
+        setToast({ type: "error", message: "Ayarlar yüklenemedi. Lütfen sayfayı yenileyin." });
       } finally {
         setIsLoading(false);
       }
@@ -129,7 +129,7 @@ export default function SettingsPage() {
           body: JSON.stringify({ image: bio.imageUrl, folder: "bio" }),
         });
 
-        if (!uploadRes.ok) throw new Error("Failed to upload bio image");
+        if (!uploadRes.ok) throw new Error("Biyografi görseli yüklenemedi");
         const uploadData = await uploadRes.json();
         finalImageUrl = uploadData.url;
       }
@@ -142,7 +142,7 @@ export default function SettingsPage() {
       });
       const bioResult = await saveBioRes.json();
       if (!bioResult.success && saveBioRes.status !== 200) { // Check status too
-        throw new Error(bioResult.error || "Failed to save Bio");
+        throw new Error(bioResult.error || "Biyografi kaydedilemedi");
       }
 
       // 3. Save Social Media
@@ -153,16 +153,16 @@ export default function SettingsPage() {
       });
       const socialResult = await saveSocialRes.json();
       if (!socialResult.success && saveSocialRes.status !== 200) {
-        throw new Error(socialResult.error || "Failed to save Social Media");
+        throw new Error(socialResult.error || "Sosyal medya bağlantıları kaydedilemedi");
       }
 
-      setToast({ type: "success", message: "Settings saved successfully!" });
+      setToast({ type: "success", message: "Ayarlar başarıyla kaydedildi!" });
       router.refresh();
 
     } catch (error) {
       setToast({
         type: "error",
-        message: error instanceof Error ? error.message : "Failed to save settings"
+        message: error instanceof Error ? error.message : "Ayarlar kaydedilemedi"
       });
     } finally {
       setIsSaving(false);
@@ -201,8 +201,8 @@ export default function SettingsPage() {
 
       <main className="max-w-4xl mx-auto px-4 pb-10">
         <div className="mb-8">
-          <h1 className="font-display text-display-md tracking-wider uppercase">Settings</h1>
-          <p className="text-muted-foreground mt-2">Manage your Artist Bio and Social Media Links</p>
+          <h1 className="font-display text-display-md tracking-wider uppercase">Ayarlar</h1>
+          <p className="text-muted-foreground mt-2">Biyografinizi ve Sosyal Medya Bağlantılarınızı Yönetin</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-8">
@@ -211,7 +211,7 @@ export default function SettingsPage() {
           <div className="glass-card p-8">
             <div className="flex items-center gap-3 mb-6">
               <ImageIcon className="text-accent-coral" size={24} />
-              <h2 className="font-display text-2xl tracking-wide">Artist Bio</h2>
+              <h2 className="font-display text-2xl tracking-wide">Biyografi</h2>
             </div>
 
             <div className="space-y-6">
@@ -220,24 +220,24 @@ export default function SettingsPage() {
                 aspect={1}
                 currentImage={bio.imageUrl || null}
                 onUpload={handleHeroImageUpload}
-                label="Profile / Bio Image"
-                helpText="Appears in the About section. High quality recommended."
+                label="Profil / Biyografi Görseli"
+                helpText="Hakkında bölümünde görünür. Yüksek kalite önerilir."
                 maxWidth={800}
               />
 
               {/* Bio Text */}
               <div>
-                <label className="block text-sm font-medium mb-2">Biography</label>
+                <label className="block text-sm font-medium mb-2">Biyografi Metni</label>
                 <textarea
                   value={bio.content}
                   onChange={(e) => handleBioChange("content", e.target.value)}
                   rows={8}
                   className="input-field resize-none"
-                  placeholder="Write your story here..."
+                  placeholder="Hikayenizi buraya yazın..."
                   required
                 />
                 <p className="text-xs text-muted-foreground mt-2">
-                  This text will be displayed on your homepage.
+                  Bu metin web sitenizin ana sayfasında gösterilecektir.
                 </p>
               </div>
             </div>
@@ -245,7 +245,7 @@ export default function SettingsPage() {
 
           {/* --- SOCIAL MEDIA SECTION --- */}
           <div className="glass-card p-8">
-            <h2 className="font-display text-2xl tracking-wide mb-6">Social Media Links</h2>
+            <h2 className="font-display text-2xl tracking-wide mb-6">Sosyal Medya Bağlantıları</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {socialLinks.map((link, index) => (
                 <div key={link.platform}>
@@ -258,7 +258,7 @@ export default function SettingsPage() {
                     {/* Toggle Visibility */}
                     <div className="flex items-center gap-2">
                       <span className="text-xs text-muted-foreground">
-                        {link.isVisible ? "Visible" : "Hidden"}
+                        {link.isVisible ? "Görünür" : "Gizli"}
                       </span>
                       <button
                         type="button"
@@ -294,17 +294,17 @@ export default function SettingsPage() {
               {isSaving ? (
                 <>
                   <Loader2 size={16} className="animate-spin" />
-                  Saving...
+                  Kaydediliyor...
                 </>
               ) : (
                 <>
                   <Save size={16} />
-                  Save All Settings
+                  Tüm Ayarları Kaydet
                 </>
               )}
             </button>
             <Link href="/admin" className="btn-secondary">
-              Cancel
+              İptal
             </Link>
           </div>
 

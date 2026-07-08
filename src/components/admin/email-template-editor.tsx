@@ -78,14 +78,14 @@ import EmojiPicker, { Theme } from "emoji-picker-react";
 
 // Available template variables
 const TEMPLATE_VARIABLES = [
-    { key: "{{event_title}}", label: "Event Title" },
-    { key: "{{event_date}}", label: "Event Date" },
-    { key: "{{event_time}}", label: "Event Time" },
-    { key: "{{event_location}}", label: "Location" },
-    { key: "{{event_price}}", label: "Price" },
-    { key: "{{event_description}}", label: "Description" },
-    { key: "{{event_image_url}}", label: "Image URL" },
-    { key: "{{ticket_link}}", label: "Ticket Link" },
+    { key: "{{event_title}}", label: "Etkinlik Başlığı" },
+    { key: "{{event_date}}", label: "Etkinlik Tarihi" },
+    { key: "{{event_time}}", label: "Etkinlik Saati" },
+    { key: "{{event_location}}", label: "Konum" },
+    { key: "{{event_price}}", label: "Ücret" },
+    { key: "{{event_description}}", label: "Açıklama" },
+    { key: "{{event_image_url}}", label: "Görsel Bağlantısı" },
+    { key: "{{ticket_link}}", label: "Bilet Bağlantısı" },
 ];
 
 // Email-safe font family options (supported by Gmail, Outlook, Yahoo, etc.)
@@ -197,21 +197,21 @@ function EditorToolbar({ editor }: { editor: Editor }) {
             <ToolbarButton
                 onClick={() => editor.chain().focus().toggleBold().run()}
                 isActive={editor.isActive("bold")}
-                title="Bold"
+                title="Kalın"
             >
                 <Bold size={16} />
             </ToolbarButton>
             <ToolbarButton
                 onClick={() => editor.chain().focus().toggleItalic().run()}
                 isActive={editor.isActive("italic")}
-                title="Italic"
+                title="İtalik"
             >
                 <Italic size={16} />
             </ToolbarButton>
             <ToolbarButton
                 onClick={() => editor.chain().focus().toggleStrike().run()}
                 isActive={editor.isActive("strike")}
-                title="Strikethrough"
+                title="Üstü Çizili"
             >
                 <Strikethrough size={16} />
             </ToolbarButton>
@@ -222,14 +222,14 @@ function EditorToolbar({ editor }: { editor: Editor }) {
             <ToolbarButton
                 onClick={() => editor.chain().focus().toggleBulletList().run()}
                 isActive={editor.isActive("bulletList")}
-                title="Bullet List"
+                title="Madde İşaretli Liste"
             >
                 <List size={16} />
             </ToolbarButton>
             <ToolbarButton
                 onClick={() => editor.chain().focus().toggleOrderedList().run()}
                 isActive={editor.isActive("orderedList")}
-                title="Numbered List"
+                title="Numaralı Liste"
             >
                 <ListOrdered size={16} />
             </ToolbarButton>
@@ -240,28 +240,28 @@ function EditorToolbar({ editor }: { editor: Editor }) {
             <ToolbarButton
                 onClick={() => editor.chain().focus().setTextAlign("left").run()}
                 isActive={editor.isActive({ textAlign: "left" })}
-                title="Align Left"
+                title="Sola Hizala"
             >
                 <AlignLeft size={16} />
             </ToolbarButton>
             <ToolbarButton
                 onClick={() => editor.chain().focus().setTextAlign("center").run()}
                 isActive={editor.isActive({ textAlign: "center" })}
-                title="Align Center"
+                title="Ortala"
             >
                 <AlignCenter size={16} />
             </ToolbarButton>
             <ToolbarButton
                 onClick={() => editor.chain().focus().setTextAlign("right").run()}
                 isActive={editor.isActive({ textAlign: "right" })}
-                title="Align Right"
+                title="Sağa Hizala"
             >
                 <AlignRight size={16} />
             </ToolbarButton>
             <ToolbarButton
                 onClick={() => editor.chain().focus().setTextAlign("justify").run()}
                 isActive={editor.isActive({ textAlign: "justify" })}
-                title="Justify"
+                title="Yasla"
             >
                 <AlignJustify size={16} />
             </ToolbarButton>
@@ -279,9 +279,9 @@ function EditorToolbar({ editor }: { editor: Editor }) {
                     }
                 }}
                 className="h-8 px-2 text-sm bg-transparent border border-border rounded-lg hover:bg-muted transition-colors cursor-pointer text-muted-foreground"
-                title="Font Family"
+                title="Yazı Tipi"
             >
-                <option value="">Font</option>
+                <option value="">Yazı Tipi</option>
                 {FONT_FAMILIES.map((font) => (
                     <option key={font.value} value={font.value}>
                         {font.label}
@@ -298,9 +298,9 @@ function EditorToolbar({ editor }: { editor: Editor }) {
                     }
                 }}
                 className="h-8 px-2 text-sm bg-transparent border border-border rounded-lg hover:bg-muted transition-colors cursor-pointer text-muted-foreground w-16"
-                title="Font Size"
+                title="Yazı Boyutu"
             >
-                <option value="">Size</option>
+                <option value="">Boyut</option>
                 {FONT_SIZES.map((size) => (
                     <option key={size.value} value={size.value}>
                         {size.label}
@@ -315,7 +315,7 @@ function EditorToolbar({ editor }: { editor: Editor }) {
                 <ToolbarButton
                     onClick={() => setShowLinkInput(!showLinkInput)}
                     isActive={editor.isActive("link")}
-                    title="Add Link"
+                    title="Bağlantı Ekle"
                 >
                     <LinkIcon size={16} />
                 </ToolbarButton>
@@ -330,7 +330,7 @@ function EditorToolbar({ editor }: { editor: Editor }) {
                             onKeyDown={(e) => e.key === "Enter" && setLink()}
                         />
                         <button onClick={setLink} className="btn-primary text-sm py-1 px-3">
-                            Add
+                            Ekle
                         </button>
                     </div>
                 )}
@@ -338,7 +338,7 @@ function EditorToolbar({ editor }: { editor: Editor }) {
             <ToolbarButton
                 onClick={() => editor.chain().focus().unsetLink().run()}
                 disabled={!editor.isActive("link")}
-                title="Remove Link"
+                title="Bağlantıyı Kaldır"
             >
                 <Unlink size={16} />
             </ToolbarButton>
@@ -349,14 +349,14 @@ function EditorToolbar({ editor }: { editor: Editor }) {
             <div className="relative">
                 <ToolbarButton
                     onClick={() => setShowVariables(!showVariables)}
-                    title="Insert Variable"
+                    title="Değişken Ekle"
                 >
                     <Code size={16} />
                 </ToolbarButton>
                 {showVariables && (
                     <div className="absolute top-full left-0 mt-1 p-2 bg-card border border-border rounded-lg shadow-lg z-10 min-w-48">
                         <p className="text-xs text-muted-foreground mb-2 px-2">
-                            Insert Variable
+                            Değişken Ekle
                         </p>
                         {TEMPLATE_VARIABLES.map((v) => (
                             <button
@@ -379,7 +379,7 @@ function EditorToolbar({ editor }: { editor: Editor }) {
             <div className="relative" ref={emojiPickerRef}>
                 <ToolbarButton
                     onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-                    title="Insert Emoji"
+                    title="Emoji Ekle"
                 >
                     <Smile size={16} />
                 </ToolbarButton>
@@ -394,7 +394,7 @@ function EditorToolbar({ editor }: { editor: Editor }) {
                             width={320}
                             height={400}
                             previewConfig={{ showPreview: false }}
-                            searchPlaceholder="Search emoji..."
+                            searchPlaceholder="Emoji ara..."
                         />
                     </div>
                 )}
@@ -406,14 +406,14 @@ function EditorToolbar({ editor }: { editor: Editor }) {
             <ToolbarButton
                 onClick={() => editor.chain().focus().undo().run()}
                 disabled={!editor.can().undo()}
-                title="Undo"
+                title="Geri Al"
             >
                 <Undo size={16} />
             </ToolbarButton>
             <ToolbarButton
                 onClick={() => editor.chain().focus().redo().run()}
                 disabled={!editor.can().redo()}
-                title="Redo"
+                title="Yinele"
             >
                 <Redo size={16} />
             </ToolbarButton>
@@ -424,7 +424,7 @@ function EditorToolbar({ editor }: { editor: Editor }) {
 export function EmailTemplateEditor({
     value,
     onChange,
-    placeholder = "Start writing your email template...",
+    placeholder = "E-posta şablonunuzu yazmaya başlayın...",
 }: EmailTemplateEditorProps) {
     const editor = useEditor({
         immediatelyRender: false, // Fix SSR hydration mismatch

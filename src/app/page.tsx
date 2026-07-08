@@ -351,7 +351,7 @@ export default async function Home() {
       </section>
 
       {/* Newsletter */}
-      <section className={`section-padding px-6 ${getSectionBg('newsletter')}`}>
+      <section id="newsletter" className={`section-padding px-6 ${getSectionBg('newsletter')}`}>
         <div className="max-w-3xl mx-auto text-center">
           <div className="glass-card p-10 md:p-16 rounded-[2.5rem]">
             <Mail className="mx-auto text-accent-coral mb-6" size={48} />

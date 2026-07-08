@@ -37,13 +37,13 @@ export default function NewProductPage() {
 
       if (!response.ok) {
         const data = await response.json();
-        throw new Error(data.error || "Failed to create product");
+        throw new Error(data.error || "Ürün oluşturulamadı");
       }
 
       router.push("/admin");
       router.refresh();
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong");
+      setError(err instanceof Error ? err.message : "Bir şeyler yanlış gitti");
     } finally {
       setIsSubmitting(false);
     }
@@ -56,8 +56,8 @@ export default function NewProductPage() {
 
       <main className="max-w-4xl mx-auto px-4 pb-10">
         <div className="mb-8">
-          <h1 className="font-display text-display-md tracking-wider uppercase">Add Product</h1>
-          <p className="text-muted-foreground mt-2">Add a new merch item to the shop</p>
+          <h1 className="font-display text-display-md tracking-wider uppercase">Ürün Ekle</h1>
+          <p className="text-muted-foreground mt-2">Mağazaya yeni bir ürün ekleyin</p>
         </div>
 
         {error && (
@@ -71,22 +71,22 @@ export default function NewProductPage() {
           <ImageUploadWithCrop
             aspect={1}
             onUpload={handleImageUpload}
-            label="Product Image"
-            helpText="Square image recommended (1:1 aspect ratio, min 800x800px)"
+            label="Ürün Görseli"
+            helpText="Kare görsel önerilir (1:1 en boy oranı, en az 800x800 piksel)"
           />
 
           {/* Product Name */}
           <div>
             <label htmlFor="name" className="block text-sm font-medium mb-2">
               <Package size={16} className="inline mr-2" />
-              Product Name *
+              Ürün Adı *
             </label>
             <input
               type="text"
               id="name"
               name="name"
               required
-              placeholder="e.g., Tour Tee - Vintage Black"
+              placeholder="örn: Tur Tişörtü - Vintage Siyah"
               className="input-field"
             />
           </div>
@@ -94,13 +94,13 @@ export default function NewProductPage() {
           {/* Description */}
           <div>
             <label htmlFor="description" className="block text-sm font-medium mb-2">
-              Description
+              Açıklama
             </label>
             <textarea
               id="description"
               name="description"
               rows={4}
-              placeholder="Describe the product details, materials, sizing info..."
+              placeholder="Ürün detaylarını, kullanılan malzemeleri, beden bilgilerini açıklayın..."
               className="input-field resize-none"
             />
           </div>
@@ -110,7 +110,7 @@ export default function NewProductPage() {
             <div>
               <label htmlFor="price" className="block text-sm font-medium mb-2">
                 <DollarSign size={16} className="inline mr-2" />
-                Price (USD) *
+                Fiyat (USD) *
               </label>
               <input
                 type="number"
@@ -125,7 +125,7 @@ export default function NewProductPage() {
             </div>
             <div>
               <label htmlFor="stock" className="block text-sm font-medium mb-2">
-                Stock Quantity
+                Stok Miktarı
               </label>
               <input
                 type="number"
@@ -142,7 +142,7 @@ export default function NewProductPage() {
           <div>
             <label htmlFor="category" className="block text-sm font-medium mb-2">
               <Tag size={16} className="inline mr-2" />
-              Category
+              Kategori
             </label>
             <select
               id="category"
@@ -150,11 +150,11 @@ export default function NewProductPage() {
               className="input-field"
               defaultValue="apparel"
             >
-              <option value="apparel">Apparel</option>
-              <option value="music">Music</option>
-              <option value="accessories">Accessories</option>
-              <option value="collectibles">Collectibles</option>
-              <option value="other">Other</option>
+              <option value="apparel">Giyim</option>
+              <option value="music">Müzik</option>
+              <option value="accessories">Aksesuar</option>
+              <option value="collectibles">Koleksiyon Ürünleri</option>
+              <option value="other">Diğer</option>
             </select>
           </div>
 
@@ -162,18 +162,18 @@ export default function NewProductPage() {
           <div>
             <label htmlFor="buyUrl" className="block text-sm font-medium mb-2">
               <LinkIcon size={16} className="inline mr-2" />
-              Buy URL *
+              Satın Alma Bağlantısı *
             </label>
             <input
               type="url"
               id="buyUrl"
               name="buyUrl"
               required
-              placeholder="https://shop.heiraza.com/product/..."
+              placeholder="https://shop.begumatak.com/product/..."
               className="input-field"
             />
             <p className="text-xs text-muted-foreground mt-2">
-              Link to external store (Shopify, Big Cartel, etc.)
+              Harici mağaza bağlantısı (Shopify, Big Cartel vb.)
             </p>
           </div>
 
@@ -187,7 +187,7 @@ export default function NewProductPage() {
               className="w-5 h-5 rounded border-border"
             />
             <label htmlFor="isActive" className="text-sm font-medium">
-              Active (visible in shop)
+              Aktif (mağazada görünür)
             </label>
           </div>
 
@@ -201,17 +201,17 @@ export default function NewProductPage() {
               {isSubmitting ? (
                 <>
                   <Loader2 size={16} className="animate-spin" />
-                  Creating...
+                  Oluşturuluyor...
                 </>
               ) : (
                 <>
                   <Save size={16} />
-                  Create Product
+                  Ürün Oluştur
                 </>
               )}
             </button>
             <Link href="/admin" className="btn-secondary">
-              Cancel
+              İptal
             </Link>
           </div>
         </form>
