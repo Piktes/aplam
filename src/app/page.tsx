@@ -181,7 +181,7 @@ export default async function Home() {
         <div className="absolute bottom-1/4 right-10 w-96 h-96 bg-accent-peach/20 rounded-full blur-3xl animate-float z-10" style={{ animationDelay: "3s" }} />
 
         <div className="relative z-30 text-center px-6 max-w-5xl mx-auto flex flex-col items-center">
-          <h1 className="opacity-0 animate-fade-in animate-delay-100 font-display text-display-xl tracking-widest uppercase">
+          <h1 className="opacity-0 animate-fade-in animate-delay-100 font-display text-display-xl tracking-widest normal-case">
             {artistName}
           </h1>
           <p className="opacity-0 animate-fade-in animate-delay-200 mt-8 text-xl md:text-2xl text-white/80 max-w-2xl mx-auto leading-relaxed font-serif italic">
