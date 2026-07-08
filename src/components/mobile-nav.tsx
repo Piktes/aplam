@@ -43,15 +43,14 @@ export function MobileNav({ artistName = "Begüm Atak", showVideos = true, showS
 
     return (
         <div className="md:hidden">
-            {/* Hamburger Button */}
-            {/* Hamburger Button - Floating Bottom Center */}
+            {/* Hamburger Button - Top Left */}
             <button
                 onClick={() => setIsOpen(true)}
-                className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 flex items-center justify-center w-14 h-14 rounded-full bg-background/80 backdrop-blur-md border border-foreground/10 shadow-2xl hover:scale-110 active:scale-95 transition-all duration-300 md:hidden group"
+                className="fixed top-3 left-3 z-50 flex items-center justify-center w-12 h-12 rounded-full bg-background/80 backdrop-blur-md border border-foreground/10 shadow-2xl hover:scale-110 active:scale-95 transition-all duration-300 md:hidden group"
                 aria-label="Menüyü aç"
                 aria-expanded={isOpen}
             >
-                <Menu size={28} className="text-foreground group-hover:text-accent-coral transition-colors" />
+                <Menu size={24} className="text-foreground group-hover:text-accent-coral transition-colors" />
             </button>
 
             {/* Backdrop */}

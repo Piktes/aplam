@@ -644,6 +644,11 @@
 .public-v2 {
   font-family: var(--font-jost-v2), "Jost", system-ui, sans-serif;
   font-weight: 400;
+  /* body scope dışında kaldığı için zemin buradan verilir — yoksa
+     gradient-warm-bg olmayan section'lar body'nin ESKİ rengini gösterir
+     (koyu temada siyah sızıntısı). */
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
 }
 
 .public-v2 p,

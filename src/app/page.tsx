@@ -145,14 +145,6 @@ export default async function Home() {
         <div className="max-w-7xl mx-auto flex justify-center">
           <div className="rounded-full px-6 py-1.5 md:px-8 md:py-2 flex items-center justify-between w-full max-w-5xl mx-auto bg-transparent border-none shadow-none md:backdrop-blur-xl md:border md:border-[#D8A48F]/25 md:bg-[#FDF8F4]/75 md:shadow-lg dark:md:bg-[#382B2B]/85 dark:md:border-[#D8A48F]/15 transition-all duration-300 relative">
 
-            <Link href="/" className="hover:opacity-70 transition-opacity flex items-center gap-2 sm:gap-3">
-              <div className="relative w-8 h-8 rounded-full overflow-hidden border border-foreground/10 bg-white/50 flex items-center justify-center">
-                <Image src="/logo-dark.png" alt="Logo" width={32} height={32} className="object-cover dark:hidden scale-[2.0]" />
-                <Image src="/logo-light.png" alt="Logo" width={32} height={32} className="object-cover hidden dark:block scale-[2.0]" />
-              </div>
-              <span className="font-display text-lg sm:text-xl tracking-widest uppercase">{artistName}</span>
-            </Link>
-
             <div className="hidden md:flex items-center gap-8">
               <Link href="#concerts" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Etkinlikler</Link>
               {settings?.isYoutubeVisible && videos.length > 0 && <Link href="#videos" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Videolar</Link>}
@@ -161,7 +153,7 @@ export default async function Home() {
               <Link href="#contact" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">İletişim</Link>
               <Link href="/press-kit" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Basın Kiti</Link>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 ml-auto">
               <div className="scale-75 md:scale-100 origin-right">
                 <ThemeToggle />
               </div>
@@ -185,10 +177,6 @@ export default async function Home() {
         <div className="absolute bottom-1/4 right-10 w-96 h-96 bg-accent-peach/20 rounded-full blur-3xl animate-float z-10" style={{ animationDelay: "3s" }} />
 
         <div className="relative z-30 text-center px-6 max-w-5xl mx-auto flex flex-col items-center">
-          <div className="opacity-0 animate-fade-in mb-6 relative w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden border-2 border-white/20 bg-black/40 backdrop-blur-md shadow-2xl flex items-center justify-center">
-            <Image src="/logo-dark.png" alt="Begüm Atak Logo" width={128} height={128} className="object-cover dark:hidden scale-[2.0]" />
-            <Image src="/logo-light.png" alt="Begüm Atak Logo" width={128} height={128} className="object-cover hidden dark:block scale-[2.0]" />
-          </div>
           <h1 className="opacity-0 animate-fade-in animate-delay-100 font-display text-display-xl tracking-widest uppercase">
             {artistName}
           </h1>
