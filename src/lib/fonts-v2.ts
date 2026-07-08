@@ -21,12 +21,14 @@ export const jost = Jost({
     weight: ["300", "400", "500"],
 });
 
-// Dekoratif aksan: yalnızca kısa script vurgular için
+// Dekoratif aksan: yalnızca kısa script vurgular için.
+// preload: false — sadece footer'da geçiyor, preload uyarısı üretmesin.
 export const dancingScript = Dancing_Script({
     subsets: ["latin", "latin-ext"],
     variable: "--font-dancing-v2",
     display: "swap",
     weight: ["400", "500"],
+    preload: false,
 });
 
 // İki public sayfanın kök sarmalayıcısına eklenecek ortak sınıf dizisi

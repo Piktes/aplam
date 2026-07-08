@@ -7,11 +7,15 @@ import { Toaster } from "sonner";
 import "./globals.css";
 
 // Sharp/Runic font for brand name and headings
+// preload: false — public sayfalar (version2) bu fontları kullanmıyor;
+// preload edilince konsolda "kullanılmadı" uyarısı üretiyorlardı.
+// Kullanıldıkları yerde (admin) talep anında yüklenirler.
 const cinzel = Cinzel({
   subsets: ["latin"],
   variable: "--font-cinzel",
   display: "swap",
   weight: ["400", "500", "600", "700"],
+  preload: false,
 });
 
 // Elegant serif for secondary headings
@@ -19,6 +23,7 @@ const playfair = Playfair_Display({
   subsets: ["latin"],
   variable: "--font-playfair",
   display: "swap",
+  preload: false,
 });
 
 // Clean sans-serif for body
@@ -26,6 +31,7 @@ const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
   display: "swap",
+  preload: false,
 });
 
 import { headers } from "next/headers";
