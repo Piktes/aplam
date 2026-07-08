@@ -153,14 +153,14 @@ export default async function Home() {
               <Link href="#contact" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">İletişim</Link>
               <Link href="/press-kit" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Basın Kiti</Link>
             </div>
-            {/* transform kullanma: içindeki fixed hamburger/çekmece viewport yerine
+            {/* transform kullanma: içindeki fixed çekmece/backdrop viewport yerine
                 bu kutuya bağlanır (transform'lu ata fixed'in çapası olur) */}
-            <div className="flex items-center gap-2 absolute right-2 md:right-4 inset-y-0">
+            <div className="md:hidden absolute left-2 inset-y-0 flex items-center">
+              <MobileNav artistName={artistName} showVideos={settings?.isYoutubeVisible} showShop={settings?.isShopVisible} />
+            </div>
+            <div className="flex items-center absolute right-2 md:right-4 inset-y-0">
               <div className="scale-75 md:scale-100 origin-right">
                 <ThemeToggle />
-              </div>
-              <div className="md:hidden">
-                <MobileNav artistName={artistName} showVideos={settings?.isYoutubeVisible} showShop={settings?.isShopVisible} />
               </div>
             </div>
           </div>

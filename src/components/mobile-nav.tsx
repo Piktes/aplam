@@ -43,14 +43,14 @@ export function MobileNav({ artistName = "Begüm Atak", showVideos = true, showS
 
     return (
         <div className="md:hidden">
-            {/* Hamburger Button - Top Left */}
+            {/* Hamburger Button - nav pill içinde, toggle ile aynı hizada */}
             <button
                 onClick={() => setIsOpen(true)}
-                className="fixed top-3 left-3 z-50 flex items-center justify-center w-12 h-12 rounded-full bg-background/80 backdrop-blur-md border border-foreground/10 shadow-2xl hover:scale-110 active:scale-95 transition-all duration-300 md:hidden group"
+                className="flex items-center justify-center w-9 h-9 rounded-full bg-background/80 backdrop-blur-md border border-foreground/10 shadow-lg hover:scale-110 active:scale-95 transition-all duration-300 md:hidden group"
                 aria-label="Menüyü aç"
                 aria-expanded={isOpen}
             >
-                <Menu size={24} className="text-foreground group-hover:text-accent-coral transition-colors" />
+                <Menu size={20} className="text-foreground group-hover:text-accent-coral transition-colors" />
             </button>
 
             {/* Backdrop */}
@@ -97,8 +97,8 @@ export function MobileNav({ artistName = "Begüm Atak", showVideos = true, showS
 
                     {/* Footer Info */}
                     <div className="p-6 pt-10 bg-gradient-to-t from-[#FDF8F4]/90 via-[#FDF8F4]/40 to-transparent dark:from-[#382B2B]/90 dark:via-[#382B2B]/40 dark:to-transparent">
-                        <p className="text-xs text-muted-foreground uppercase tracking-widest mb-1">{artistName}</p>
-                        <p className="text-xs text-muted-foreground/50">Resmi Web Sitesi</p>
+                        <p className="text-xs text-[#5C4A42] dark:text-[#F5E9E2]/85 uppercase tracking-widest mb-1">{artistName}</p>
+                        <p className="text-xs text-[#5C4A42]/60 dark:text-[#F5E9E2]/50">Resmi Web Sitesi</p>
                     </div>
                 </div>
             </div>
