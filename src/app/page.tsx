@@ -336,7 +336,7 @@ export default async function Home() {
                 </div>
                 <div className="glass-card p-4 flex items-center gap-4">
                   <div className="w-12 h-12 rounded-full bg-accent-coral/10 flex items-center justify-center"><MessageCircle className="text-accent-coral" size={20} /></div>
-                  <div><p className="text-sm text-muted-foreground">Menajerlik</p><p className="font-medium">menajerlik@begumatak.com</p></div>
+                  <div><p className="text-sm text-muted-foreground">Menajerlik</p><p className="font-medium">info@begumatak.com</p></div>
                 </div>
               </div>
               {settings?.isSocialLinksVisible && (<div className="mt-8"><p className="text-sm text-muted-foreground mb-4">Sosyal medyada takip edin</p><SocialLinksRow links={socialLinks} size={18} /></div>)}
