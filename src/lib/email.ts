@@ -3,34 +3,79 @@ import prisma from "@/lib/prisma";
 import dns from "dns";
 import { promisify } from "util";
 
+// Use public DNS resolvers to bypass local router DNS cache issues
+try {
+    dns.setServers(["8.8.8.8", "1.1.1.1"]);
+} catch (e) {
+    console.warn("Failed to set DNS servers:", e);
+}
+
 const resolveMx = promisify(dns.resolveMx);
 
-// ========================================
-// EMAIL CONFIGURATION
-// ========================================
+// Asynchronously resolve SMTP host to IP with hardcoded fallback
+async function getSmtpHostIp(host: string): Promise<string> {
+    if (host === "localhost" || host === "127.0.0.1") {
+        return host;
+    }
+    
+    try {
+        const ipAddresses = await new Promise<string[]>((resolve, reject) => {
+            dns.resolve4(host, (err, addresses) => {
+                if (err || !addresses || addresses.length === 0) reject(err);
+                else resolve(addresses);
+            });
+        });
+        if (ipAddresses && ipAddresses.length > 0) {
+            return ipAddresses[0];
+        }
+    } catch (error: any) {
+        console.warn(`DNS resolve4 failed for ${host}:`, error.message);
+    }
 
-// Gmail transporter - for event notifications
-const gmailTransporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-        user: process.env.GMAIL_USER || process.env.EMAIL_USER,
-        pass: process.env.GMAIL_APP_PASSWORD || process.env.EMAIL_PASSWORD,
-    },
-});
+    try {
+        const ipAddress = await new Promise<string>((resolve, reject) => {
+            dns.lookup(host, { family: 4 }, (err, address) => {
+                if (err || !address) reject(err);
+                else resolve(address);
+            });
+        });
+        if (ipAddress) {
+            return ipAddress;
+        }
+    } catch (error: any) {
+        console.warn(`DNS lookup failed for ${host}:`, error.message);
+    }
 
-// Custom SMTP transporter - for ALL emails (event notifications + replies)
-const smtpTransporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST || "mail.begumatak.com",
-    port: parseInt(process.env.SMTP_PORT || "587"),
-    secure: false, // TLS
-    auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASSWORD,
-    },
-});
+    // Hardcoded fallback for begumatak.com's mail server if DNS is completely blocked/cached
+    if (host === "mail.begumatak.com") {
+        console.log("Using hardcoded fallback IP: 188.40.214.22");
+        return "188.40.214.22";
+    }
 
-// Use SMTP for all emails
-const transporter = smtpTransporter;
+    return host;
+}
+
+// Centralized dynamic SMTP sender function
+async function sendSmtpEmail(options: nodemailer.SendMailOptions): Promise<any> {
+    const rawHost = process.env.SMTP_HOST || "mail.begumatak.com";
+    const resolvedHost = await getSmtpHostIp(rawHost);
+
+    const smtpTransporter = nodemailer.createTransport({
+        host: resolvedHost,
+        port: parseInt(process.env.SMTP_PORT || "587"),
+        secure: parseInt(process.env.SMTP_PORT || "587") === 465,
+        auth: {
+            user: process.env.SMTP_USER,
+            pass: process.env.SMTP_PASSWORD,
+        },
+        tls: {
+            servername: rawHost, // Ensure SNI matches the hostname, not the IP
+            rejectUnauthorized: false,
+        },
+    });
+
+    return smtpTransporter.sendMail(options);
+}
 
 // ========================================
 // VARIABLE REPLACEMENT
@@ -320,7 +365,7 @@ export async function sendEventEmail(
                 // Generate unique Message-ID to prevent email threading
                 const uniqueMessageId = `<${Date.now()}-${Math.random().toString(36).substring(2, 15)}-${subscriber.id}@${domain}>`;
 
-                await smtpTransporter.sendMail({
+                await sendSmtpEmail({
                     from: `"Begüm Atak" <${smtpFrom}>`,
                     to: subscriber.email,
                     subject,
@@ -415,7 +460,7 @@ export async function sendTestEmail(
 
         // Use custom SMTP transporter (same as message replies)
         const smtpFrom = process.env.SMTP_FROM || "info@begumatak.com";
-        await smtpTransporter.sendMail({
+        await sendSmtpEmail({
             from: `"Begüm Atak" <${smtpFrom}>`,
             to,
             subject,
@@ -592,7 +637,7 @@ export async function sendMessageReply(
 
         // Use custom SMTP transporter for message replies
         const smtpFrom = process.env.SMTP_FROM || "info@begumatak.com";
-        await smtpTransporter.sendMail({
+        await sendSmtpEmail({
             from: `"Begüm Atak" <${smtpFrom}>`,
             to,
             subject,
@@ -633,8 +678,9 @@ export async function sendReply(
             </div>
         `;
 
-        await transporter.sendMail({
-            from: `"Begüm Atak" <${process.env.GMAIL_USER || process.env.EMAIL_USER}>`,
+        const smtpFrom = process.env.SMTP_FROM || "info@begumatak.com";
+        await sendSmtpEmail({
+            from: `"Begüm Atak" <${smtpFrom}>`,
             to,
             subject,
             html: htmlContent,
