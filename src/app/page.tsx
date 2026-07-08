@@ -4,6 +4,8 @@ import prisma from "@/lib/prisma";
 import { formatPrice } from "@/lib/utils";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { MobileNav } from "@/components/mobile-nav";
+import { ScrollReveal } from "@/components/scroll-reveal";
+import { publicV2FontVars } from "@/lib/fonts-v2";
 import { SocialLinksRow } from "@/components/social-icons";
 import { HeroAudioPlayer } from "@/components/hero-audio-player";
 import { HeroSlider } from "@/components/hero-slider";
@@ -133,15 +135,15 @@ export default async function Home() {
   const spotifyLink = socialLinks.find(l => l.platform.toLowerCase().includes('spotify'))?.url;
 
   return (
-    <main className="relative grain">
+    <main className={`public-v2 ${publicV2FontVars} relative grain`}>
       {/* <JsonLd artist={artist} /> */}
       <SpecialEventPopup event={specialEvent} />
       <VisitorTracker />
 
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 px-2 py-1 md:px-4 md:py-2">
+      <nav className="fixed top-0 left-0 right-0 z-50 px-2 py-1 md:px-4 md:py-2 opacity-0 animate-fade-in">
         <div className="max-w-7xl mx-auto flex justify-center">
-          <div className="rounded-full px-6 py-1.5 md:px-8 md:py-2 flex items-center justify-between w-full max-w-5xl mx-auto bg-transparent border-none shadow-none md:backdrop-blur-xl md:border md:border-white/20 md:bg-white/70 md:shadow-lg dark:md:bg-black/80 dark:md:border-white/10 transition-all duration-300 relative">
+          <div className="rounded-full px-6 py-1.5 md:px-8 md:py-2 flex items-center justify-between w-full max-w-5xl mx-auto bg-transparent border-none shadow-none md:backdrop-blur-xl md:border md:border-[#D8A48F]/25 md:bg-[#FDF8F4]/75 md:shadow-lg dark:md:bg-[#2B211D]/85 dark:md:border-[#D8A48F]/15 transition-all duration-300 relative">
 
             <Link href="/" className="hover:opacity-70 transition-opacity flex items-center gap-2 sm:gap-3">
               <div className="relative w-8 h-8 rounded-full overflow-hidden border border-foreground/10 bg-white/50 flex items-center justify-center">
@@ -219,7 +221,7 @@ export default async function Home() {
 
       {/* Concerts */}
       <section id="concerts" className={`section-padding px-6 ${getSectionBg('concerts')}`}>
-        <div className="max-w-6xl mx-auto">
+        <ScrollReveal className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <span className="inline-flex items-center gap-2 text-sm font-medium tracking-[0.2em] uppercase text-accent-coral mb-4">
               <Calendar size={16} /> Sahne ve Etkinlikler
@@ -266,16 +268,18 @@ export default async function Home() {
               <p className="text-muted-foreground mt-2">Yeni tarihler için yakında tekrar bakın!</p>
             </div>
           )}
-        </div>
+        </ScrollReveal>
       </section>
 
       {/* Videos */}
-      <YouTubeCarousel videos={videos} autoScrollInterval={settings?.youtubeScrollInterval || 2000} isVisible={settings?.isYoutubeVisible ?? true} className={getSectionBg('videos')} />
+      <ScrollReveal>
+        <YouTubeCarousel videos={videos} autoScrollInterval={settings?.youtubeScrollInterval || 2000} isVisible={settings?.isYoutubeVisible ?? true} className={getSectionBg('videos')} />
+      </ScrollReveal>
 
       {/* Shop */}
       {settings?.isShopVisible && products.length > 0 && (
         <section id="shop" className={`section-padding px-6 ${getSectionBg('shop')}`}>
-          <div className="max-w-7xl mx-auto">
+          <ScrollReveal className="max-w-7xl mx-auto">
             <div className="text-center mb-16">
               <span className="inline-flex items-center gap-2 text-sm font-medium tracking-[0.2em] uppercase text-accent-coral mb-4">
                 <Sparkles size={16} /> Resmi Ürünler
@@ -304,26 +308,32 @@ export default async function Home() {
                 </a>
               ))}
             </div>
-          </div>
+          </ScrollReveal>
         </section>
       )}
 
       {/* Gallery */}
-      {galleryImages.length > 0 && <GalleryStack images={galleryImages} className={getSectionBg('gallery')} />}
+      {galleryImages.length > 0 && (
+        <ScrollReveal>
+          <GalleryStack images={galleryImages} className={getSectionBg('gallery')} />
+        </ScrollReveal>
+      )}
 
       {/* About (Bio) */}
-      <BioSection
-        artist={{
-          name: artistName,
-          bio: bio?.content || "",
-        }}
-        bioImages={bio?.images || []}
-        className={getSectionBg('about')}
-      />
+      <ScrollReveal>
+        <BioSection
+          artist={{
+            name: artistName,
+            bio: bio?.content || "",
+          }}
+          bioImages={bio?.images || []}
+          className={getSectionBg('about')}
+        />
+      </ScrollReveal>
 
       {/* Contact */}
       <section id="contact" className={`section-padding px-6 ${getSectionBg('contact')}`}>
-        <div className="max-w-6xl mx-auto">
+        <ScrollReveal className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             <div>
               <span className="text-sm font-medium tracking-[0.2em] uppercase text-accent-coral mb-4 block">İletişime Geçin</span>
@@ -347,12 +357,12 @@ export default async function Home() {
               successMessage={settings?.contactSuccessMessage}
             />
           </div>
-        </div>
+        </ScrollReveal>
       </section>
 
       {/* Newsletter */}
       <section id="newsletter" className={`section-padding px-6 ${getSectionBg('newsletter')}`}>
-        <div className="max-w-3xl mx-auto text-center">
+        <ScrollReveal className="max-w-3xl mx-auto text-center">
           <div className="glass-card p-10 md:p-16 rounded-[2.5rem]">
             <Mail className="mx-auto text-accent-coral mb-6" size={48} />
             <h2 className="font-display text-display-md tracking-wider uppercase">Haberdar Olun</h2>
@@ -364,12 +374,12 @@ export default async function Home() {
             />
             <p className="mt-6 text-sm text-muted-foreground">Asla spam yok. İstediğiniz zaman abonelikten çıkabilirsiniz.</p>
           </div>
-        </div>
+        </ScrollReveal>
       </section>
 
       {/* Footer */}
       <footer className="py-16 px-6 border-t border-border">
-        <div className="max-w-6xl mx-auto">
+        <ScrollReveal className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
             <div className="md:col-span-2">
               <Link href="/" className="hover:opacity-70 transition-opacity flex items-center gap-3 mb-4">
@@ -395,9 +405,9 @@ export default async function Home() {
           </div>
           <div className="mt-12 pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-sm text-muted-foreground">© {new Date().getFullYear()} {artistName}. Tüm hakları saklıdır.</p>
-            <p className="text-sm text-muted-foreground">Sanat için ♥ ile yapıldı</p>
+            <p className="font-script text-lg text-accent-peach">Sanat için ♥ ile yapıldı</p>
           </div>
-        </div>
+        </ScrollReveal>
       </footer>
     </main>
   );

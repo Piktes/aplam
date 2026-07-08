@@ -64,7 +64,7 @@ export function MobileNav({ artistName = "Begüm Atak", showVideos = true, showS
 
             {/* Left Sidebar Drawer */}
             <div
-                className={`fixed top-0 bottom-0 left-0 z-[201] w-[65%] max-w-[260px] bg-gradient-to-b from-neutral-100/95 to-transparent dark:from-neutral-900/95 dark:to-transparent border-r border-black/5 dark:border-white/5 shadow-2xl transition-transform duration-300 ease-out transform ${isOpen ? "translate-x-0" : "-translate-x-full"}`}
+                className={`fixed top-0 bottom-0 left-0 z-[201] w-[65%] max-w-[260px] bg-gradient-to-b from-[#F9EDE7]/95 to-transparent dark:from-[#362A25]/95 dark:to-transparent border-r border-black/5 dark:border-white/5 shadow-2xl transition-transform duration-300 ease-out transform ${isOpen ? "translate-x-0" : "-translate-x-full"}`}
             >
                 <div className="flex flex-col h-full bg-transparent">
                     {/* Header with Close Button */}
@@ -97,7 +97,7 @@ export function MobileNav({ artistName = "Begüm Atak", showVideos = true, showS
                     </nav>
 
                     {/* Footer Info */}
-                    <div className="p-6 border-t border-black/5 dark:border-white/5 bg-neutral-50 dark:bg-black/20">
+                    <div className="p-6 border-t border-black/5 dark:border-white/5 bg-[#FDF8F4] dark:bg-black/20">
                         <p className="text-xs text-muted-foreground uppercase tracking-widest mb-1">{artistName}</p>
                         <p className="text-xs text-muted-foreground/50">Resmi Web Sitesi</p>
                     </div>

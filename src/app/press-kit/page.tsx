@@ -2,6 +2,7 @@ import Link from "next/link";
 import prisma from "@/lib/prisma";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { PressKitClientContent } from "./press-kit-client";
+import { publicV2FontVars } from "@/lib/fonts-v2";
 
 export const revalidate = 60;
 
@@ -73,9 +74,9 @@ export default async function PressKitPage() {
     const artistName = "Begüm Atak";
 
     return (
-        <main className="min-h-screen gradient-warm-bg grain relative">
+        <main className={`public-v2 ${publicV2FontVars} min-h-screen gradient-warm-bg grain relative`}>
             {/* Navigation */}
-            <nav className="fixed top-0 left-0 right-0 z-50 px-4 py-4">
+            <nav className="fixed top-0 left-0 right-0 z-50 px-4 py-4 opacity-0 animate-fade-in">
                 <div className="max-w-5xl mx-auto">
                     <div className="glass rounded-full px-6 py-3 flex items-center justify-between">
                         <Link href="/" className="hover:opacity-70 transition-opacity font-display text-lg tracking-widest uppercase">
@@ -93,8 +94,8 @@ export default async function PressKitPage() {
 
             {/* Hero */}
             <section className="pt-32 pb-16 px-4 text-center relative z-10">
-                <h1 className="font-display text-display-lg tracking-widest uppercase mb-4">Basın Kiti</h1>
-                <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+                <h1 className="opacity-0 animate-fade-in animate-delay-100 font-display text-display-lg tracking-widest uppercase mb-4">Basın Kiti</h1>
+                <p className="opacity-0 animate-fade-in animate-delay-200 text-xl text-muted-foreground max-w-2xl mx-auto">
                     {artistName} için resmi basın materyalleri
                 </p>
             </section>

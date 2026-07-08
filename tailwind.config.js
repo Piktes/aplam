@@ -44,15 +44,18 @@ module.exports = {
           950: "#0D0B09",
         },
         // Accent Colors - Soft Warm Gradients
+        // coral/peach/rose CSS variable üzerinden okunur; :root varsayılanları
+        // (globals.css) orijinal hex'lerle birebir aynı RGB kanallarıdır —
+        // admin görünümü değişmez. .public-v2 scope'u bu değişkenleri override eder.
         accent: {
-          coral: "#F4A28C",
-          peach: "#FCCDB6",
+          coral: "rgb(var(--accent-coral) / <alpha-value>)",
+          peach: "rgb(var(--accent-peach) / <alpha-value>)",
           blush: "#F8D4D4",
           sage: "#B5C4B1",
           moss: "#8B9D77",
           sand: "#D4C5A9",
           terracotta: "#C67D5E",
-          rose: "#E8B4B4",
+          rose: "rgb(var(--accent-rose) / <alpha-value>)",
         },
         // Semantic Colors
         background: "hsl(var(--background))",

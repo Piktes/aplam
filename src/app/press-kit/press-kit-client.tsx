@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Download, Loader2, ChevronDown, ChevronUp } from "lucide-react";
 import { Lightbox } from "@/components/lightbox";
+import { ScrollReveal } from "@/components/scroll-reveal";
 
 // ========================================
 // TYPES
@@ -94,20 +95,22 @@ function CollapsibleSection({
     const handleToggle = onToggle || (() => setInternalIsOpen(!internalIsOpen));
 
     return (
-        <section id={id} className="glass-card rounded-3xl overflow-hidden">
-            <button
-                onClick={handleToggle}
-                className="w-full p-8 md:p-12 flex items-center justify-between hover:bg-white/5 transition-colors text-left"
-            >
-                <h2 className="font-display text-2xl tracking-wide">{title}</h2>
-                {isOpen ? <ChevronUp size={24} /> : <ChevronDown size={24} />}
-            </button>
-            <div className={`overflow-hidden transition-all duration-300 ${isOpen ? 'max-h-[5000px] opacity-100' : 'max-h-0 opacity-0'}`}>
-                <div className="px-8 md:px-12 pb-8 md:pb-12 border-t border-border/30">
-                    {children}
+        <ScrollReveal>
+            <section id={id} className="glass-card rounded-3xl overflow-hidden">
+                <button
+                    onClick={handleToggle}
+                    className="w-full p-8 md:p-12 flex items-center justify-between hover:bg-white/5 transition-colors text-left"
+                >
+                    <h2 className="font-display text-2xl tracking-wide">{title}</h2>
+                    {isOpen ? <ChevronUp size={24} /> : <ChevronDown size={24} />}
+                </button>
+                <div className={`overflow-hidden transition-all duration-300 ${isOpen ? 'max-h-[5000px] opacity-100' : 'max-h-0 opacity-0'}`}>
+                    <div className="px-8 md:px-12 pb-8 md:pb-12 border-t border-border/30">
+                        {children}
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        </ScrollReveal>
     );
 }
 
