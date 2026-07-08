@@ -143,7 +143,9 @@ export default async function Home() {
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 px-2 py-1 md:px-4 md:py-2 opacity-0 animate-fade-in">
         <div className="max-w-7xl mx-auto flex justify-center">
-          <div className="rounded-full px-6 py-1.5 md:px-8 md:py-2 flex items-center justify-center w-full max-w-5xl mx-auto bg-transparent border-none shadow-none md:backdrop-blur-xl md:border md:border-[#D8A48F]/25 md:bg-[#FDF8F4]/75 md:shadow-lg dark:md:bg-[#382B2B]/85 dark:md:border-[#D8A48F]/15 transition-all duration-300 relative">
+          {/* min-h-12: mobilde linkler gizli olduğundan pill büzüşür ve absolute
+              konumlu butonlar üstten taşıp kesilir — minimum yükseklik şart */}
+          <div className="rounded-full px-6 py-1.5 md:px-8 md:py-2 min-h-12 md:min-h-0 flex items-center justify-center w-full max-w-5xl mx-auto bg-transparent border-none shadow-none md:backdrop-blur-xl md:border md:border-[#D8A48F]/25 md:bg-[#FDF8F4]/75 md:shadow-lg dark:md:bg-[#382B2B]/85 dark:md:border-[#D8A48F]/15 transition-all duration-300 relative">
 
             <div className="hidden md:flex items-center gap-8">
               <Link href="#concerts" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Etkinlikler</Link>
