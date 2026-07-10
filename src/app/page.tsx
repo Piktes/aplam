@@ -119,12 +119,17 @@ export default async function Home() {
   const artistName = "Begüm Atak"; // Hardcoded for now as requested for Single Artist
 
   // ========================================
-  // HERO KAPAK METNİ (admin panelden; boşsa hardcoded fallback — site asla
-  // boş başlıkla açılmaz). HTML DB'de sanitize edilmiş olsa da render'da
-  // tekrar sanitize edilir; renk stilleri her durumda atılır, renk temadan gelir.
+  // HERO KAPAK METNİ (admin panelden). Üç durum:
+  //   null  = hiç ayarlanmadı → eski hardcoded metin (fallback)
+  //   ""    = admin bilerek boş bıraktı → o metin hiç gösterilmez
+  //   dolu  = özel içerik render edilir
+  // HTML DB'de sanitize edilmiş olsa da render'da tekrar sanitize edilir;
+  // renk stilleri her durumda atılır, renk temadan gelir.
   // ========================================
-  const heroTitleHtml = sanitizeHeroHtml(settings?.heroTitle);
-  const heroSubtitleHtml = sanitizeHeroHtml(settings?.heroSubtitle);
+  const heroTitleSet = settings?.heroTitle != null;
+  const heroSubtitleSet = settings?.heroSubtitle != null;
+  const heroTitleHtml = heroTitleSet ? sanitizeHeroHtml(settings!.heroTitle) : null;
+  const heroSubtitleHtml = heroSubtitleSet ? sanitizeHeroHtml(settings!.heroSubtitle) : null;
   const heroTitleFont = asHeroFont(settings?.heroTitleFont) ?? HERO_DEFAULTS.titleFont;
   const heroSubtitleFont = asHeroFont(settings?.heroSubtitleFont) ?? HERO_DEFAULTS.subtitleFont;
   const heroTitleSize = asHeroSize(settings?.heroTitleSize) ?? HERO_DEFAULTS.titleSize;
@@ -210,22 +215,22 @@ export default async function Home() {
               style={{ fontFamily: HERO_FONTS[heroTitleFont].fontFamily }}
               dangerouslySetInnerHTML={{ __html: heroTitleHtml }}
             />
-          ) : (
+          ) : !heroTitleSet ? (
             <h1 className="opacity-0 animate-fade-in animate-delay-100 font-display text-display-xl tracking-widest normal-case">
               {artistName}
             </h1>
-          )}
+          ) : null}
           {heroSubtitleHtml ? (
             <p
               className={`opacity-0 animate-fade-in animate-delay-200 mt-8 text-white/80 max-w-2xl leading-relaxed ${HERO_SUBTITLE_SIZE_CLASSES[heroSubtitleSize]}`}
               style={{ fontFamily: HERO_FONTS[heroSubtitleFont].fontFamily }}
               dangerouslySetInnerHTML={{ __html: heroSubtitleHtml }}
             />
-          ) : (
+          ) : !heroSubtitleSet ? (
             <p className="opacity-0 animate-fade-in animate-delay-200 mt-8 text-xl md:text-2xl text-white/80 max-w-2xl leading-relaxed font-serif italic">
               Tiyatro sahnesinden ekrana uzanan bir yolculuk
             </p>
-          )}
+          ) : null}
           <div className="opacity-0 animate-fade-in animate-delay-300 mt-12 flex flex-col sm:flex-row items-center justify-center gap-4">
             <a href="#concerts" className="btn-primary">Etkinlikleri Gör</a>
             {spotifyLink && (

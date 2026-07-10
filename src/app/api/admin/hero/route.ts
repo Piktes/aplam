@@ -149,9 +149,11 @@ export async function PATCH(request: NextRequest) {
             await prisma.siteSettings.update({
                 where: { id: settings.id },
                 data: {
-                    // sanitize: yalnız satır içi etiketler kalır, style/renk atılır
-                    heroTitle: sanitizeHeroHtml(title),
-                    heroSubtitle: sanitizeHeroHtml(subtitle),
+                    // sanitize: yalnız satır içi etiketler kalır, style/renk atılır.
+                    // Boş içerik "" olarak saklanır = admin bilerek boş bıraktı
+                    // (public'te hiç gösterilmez); null = hiç ayarlanmadı (fallback).
+                    heroTitle: sanitizeHeroHtml(title) ?? "",
+                    heroSubtitle: sanitizeHeroHtml(subtitle) ?? "",
                     heroTitleFont: asHeroFont(titleFont),
                     heroSubtitleFont: asHeroFont(subtitleFont),
                     heroTitleSize: asHeroSize(titleSize),

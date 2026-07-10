@@ -5,6 +5,7 @@ import StarterKit from "@tiptap/starter-kit";
 import Placeholder from "@tiptap/extension-placeholder";
 import { useRouter } from "next/navigation";
 import { useState, useEffect, useRef, useMemo } from "react";
+import { toast } from "sonner";
 import {
     Bold,
     Italic,
@@ -14,7 +15,6 @@ import {
     Type,
     Save,
     Loader2,
-    CheckCircle,
     Sun,
     Moon,
     Eye,
@@ -367,11 +367,13 @@ interface HeroTextEditorProps {
 export function HeroTextEditor({ coverImageUrl, initial }: HeroTextEditorProps) {
     const router = useRouter();
 
+    // null = hiç ayarlanmamış → varsayılan metinle başla; "" = admin bilerek
+    // boş bırakmış → editör de boş kalır (varsayılanla DOLDURMA).
     const [titleHtml, setTitleHtml] = useState(
-        initial.title || `<p>${HERO_DEFAULTS.title}</p>`
+        initial.title ?? `<p>${HERO_DEFAULTS.title}</p>`
     );
     const [subtitleHtml, setSubtitleHtml] = useState(
-        initial.subtitle || `<p>${HERO_DEFAULTS.subtitle}</p>`
+        initial.subtitle ?? `<p>${HERO_DEFAULTS.subtitle}</p>`
     );
     const [titleFont, setTitleFont] = useState<HeroFontKey>(
         asHeroFont(initial.titleFont) ?? HERO_DEFAULTS.titleFont
@@ -391,28 +393,20 @@ export function HeroTextEditor({ coverImageUrl, initial }: HeroTextEditorProps) 
 
     const [previewDark, setPreviewDark] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
-    const [saved, setSaved] = useState(false);
-    const [error, setError] = useState<string | null>(null);
 
     // Önizleme debounce ile güncellenir
     const debTitle = useDebounced(titleHtml);
     const debSubtitle = useDebounced(subtitleHtml);
 
-    const previewTitle = useMemo(() => {
-        const s = stripForPreview(debTitle);
-        return s || escapeHtml(HERO_DEFAULTS.title);
-    }, [debTitle]);
-    const previewSubtitle = useMemo(() => {
-        const s = stripForPreview(debSubtitle);
-        return s || escapeHtml(HERO_DEFAULTS.subtitle);
-    }, [debSubtitle]);
+    // Boş alan önizlemede de boş görünür (public davranışının aynası)
+    const previewTitle = useMemo(() => stripForPreview(debTitle), [debTitle]);
+    const previewSubtitle = useMemo(() => stripForPreview(debSubtitle), [debSubtitle]);
 
     const theme = previewDark ? PREVIEW_THEME.dark : PREVIEW_THEME.light;
     const pos = HERO_POSITION_CLASSES[position];
 
     const handleSave = async () => {
         setIsSaving(true);
-        setError(null);
         try {
             const res = await fetch("/api/admin/hero", {
                 method: "PATCH",
@@ -429,11 +423,10 @@ export function HeroTextEditor({ coverImageUrl, initial }: HeroTextEditorProps) 
                 }),
             });
             if (!res.ok) throw new Error("Kaydetme başarısız");
-            setSaved(true);
+            toast.success("Kapak metni başarıyla kaydedildi");
             router.refresh();
-            setTimeout(() => setSaved(false), 3000);
         } catch {
-            setError("Kapak metni kaydedilemedi. Lütfen tekrar deneyin.");
+            toast.error("Kapak metni kaydedilemedi. Lütfen tekrar deneyin.");
         } finally {
             setIsSaving(false);
         }
@@ -447,7 +440,7 @@ export function HeroTextEditor({ coverImageUrl, initial }: HeroTextEditorProps) 
             </div>
             <p className="text-muted-foreground text-sm mb-6">
                 Ana sayfa hero bölümündeki başlık ve alt metni düzenleyin. Metin rengi
-                site temasından otomatik gelir. Alan boş bırakılırsa varsayılan metin gösterilir.
+                site temasından otomatik gelir. Boş bırakılan alan hero&apos;da gösterilmez.
             </p>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -493,22 +486,26 @@ export function HeroTextEditor({ coverImageUrl, initial }: HeroTextEditorProps) 
                             )}
                             <div className={`absolute inset-0 flex p-5 ${pos.flex}`}>
                                 <div className={`flex flex-col max-w-[85%] ${pos.block}`}>
-                                    <div
-                                        className={`tracking-widest leading-tight ${PREVIEW_TITLE_SIZE_CLASSES[titleSize]}`}
-                                        style={{
-                                            fontFamily: HERO_FONTS[titleFont].fontFamily,
-                                            color: theme.fg,
-                                        }}
-                                        dangerouslySetInnerHTML={{ __html: previewTitle }}
-                                    />
-                                    <div
-                                        className={`mt-2 leading-relaxed ${PREVIEW_SUBTITLE_SIZE_CLASSES[subtitleSize]}`}
-                                        style={{
-                                            fontFamily: HERO_FONTS[subtitleFont].fontFamily,
-                                            color: SUBTITLE_COLOR,
-                                        }}
-                                        dangerouslySetInnerHTML={{ __html: previewSubtitle }}
-                                    />
+                                    {previewTitle && (
+                                        <div
+                                            className={`tracking-widest leading-tight ${PREVIEW_TITLE_SIZE_CLASSES[titleSize]}`}
+                                            style={{
+                                                fontFamily: HERO_FONTS[titleFont].fontFamily,
+                                                color: theme.fg,
+                                            }}
+                                            dangerouslySetInnerHTML={{ __html: previewTitle }}
+                                        />
+                                    )}
+                                    {previewSubtitle && (
+                                        <div
+                                            className={`mt-2 leading-relaxed ${PREVIEW_SUBTITLE_SIZE_CLASSES[subtitleSize]}`}
+                                            style={{
+                                                fontFamily: HERO_FONTS[subtitleFont].fontFamily,
+                                                color: SUBTITLE_COLOR,
+                                            }}
+                                            dangerouslySetInnerHTML={{ __html: previewSubtitle }}
+                                        />
+                                    )}
                                 </div>
                             </div>
                         </div>
@@ -560,8 +557,6 @@ export function HeroTextEditor({ coverImageUrl, initial }: HeroTextEditorProps) 
                         />
                     </div>
 
-                    {error && <p className="text-sm text-red-500">{error}</p>}
-
                     <button
                         onClick={handleSave}
                         disabled={isSaving}
@@ -571,11 +566,6 @@ export function HeroTextEditor({ coverImageUrl, initial }: HeroTextEditorProps) 
                             <>
                                 <Loader2 size={18} className="animate-spin" />
                                 Kaydediliyor...
-                            </>
-                        ) : saved ? (
-                            <>
-                                <CheckCircle size={18} />
-                                Kaydedildi!
                             </>
                         ) : (
                             <>
