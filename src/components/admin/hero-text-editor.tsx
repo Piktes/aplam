@@ -46,12 +46,9 @@ import {
 // kaynak: globals.css "VERSION2 PUBLIC" bloğu.
 // ========================================
 const PREVIEW_THEME = {
-    light: { fg: "#5C4A42", bg: "#FBF3EE" },
-    dark: { fg: "#F5E9E2", bg: "#382B2B" },
+    light: { fg: "#5C4A42", bg: "#FBF3EE", subtitle: "rgba(92, 74, 66, 0.8)" },
+    dark: { fg: "#F5E9E2", bg: "#382B2B", subtitle: "rgba(245, 233, 226, 0.8)" },
 };
-
-// Alt metin public hero'da temadan bağımsız text-white/80 (görsel üstünde durur)
-const SUBTITLE_COLOR = "rgba(255, 255, 255, 0.8)";
 
 // ========================================
 // Önizleme için client-side temizlik: izinli satır içi etiketler kalır,
@@ -501,7 +498,7 @@ export function HeroTextEditor({ coverImageUrl, initial }: HeroTextEditorProps) 
                                             className={`mt-2 leading-relaxed ${PREVIEW_SUBTITLE_SIZE_CLASSES[subtitleSize]}`}
                                             style={{
                                                 fontFamily: HERO_FONTS[subtitleFont].fontFamily,
-                                                color: SUBTITLE_COLOR,
+                                                color: theme.subtitle,
                                             }}
                                             dangerouslySetInnerHTML={{ __html: previewSubtitle }}
                                         />

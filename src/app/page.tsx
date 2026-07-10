@@ -155,14 +155,16 @@ export default async function Home() {
           {artistName}
         </h1>
       ) : null}
+      {/* Alt metin rengi temadan gelir (foreground %80) — açık/koyu geçişinde
+          başlık gibi kendiliğinden uyum sağlar (eski sabit text-white/80 kaldırıldı) */}
       {heroSubtitleHtml ? (
         <p
-          className={`opacity-0 animate-fade-in animate-delay-200 mt-8 text-white/80 max-w-2xl leading-relaxed ${HERO_SUBTITLE_SIZE_CLASSES[heroSubtitleSize]}`}
+          className={`opacity-0 animate-fade-in animate-delay-200 mt-8 text-[hsl(var(--foreground)/0.8)] max-w-2xl leading-relaxed ${HERO_SUBTITLE_SIZE_CLASSES[heroSubtitleSize]}`}
           style={{ fontFamily: HERO_FONTS[heroSubtitleFont].fontFamily }}
           dangerouslySetInnerHTML={{ __html: heroSubtitleHtml }}
         />
       ) : !heroSubtitleSet ? (
-        <p className="opacity-0 animate-fade-in animate-delay-200 mt-8 text-xl md:text-2xl text-white/80 max-w-2xl leading-relaxed font-serif italic">
+        <p className="opacity-0 animate-fade-in animate-delay-200 mt-8 text-xl md:text-2xl text-[hsl(var(--foreground)/0.8)] max-w-2xl leading-relaxed font-serif italic">
           Tiyatro sahnesinden ekrana uzanan bir yolculuk
         </p>
       ) : null}
@@ -253,7 +255,13 @@ export default async function Home() {
 
         <div className="relative z-30 text-center px-6 max-w-5xl flex flex-col items-center">
           {heroPosIsCenter && heroTextContent}
-          <div className="opacity-0 animate-fade-in animate-delay-300 mt-12 flex flex-col sm:flex-row items-center justify-center gap-4">
+          {/* Sosyal ikonlar üstte, CTA butonları onların altında */}
+          {settings?.isSocialLinksVisible && (
+            <div className="opacity-0 animate-fade-in animate-delay-300 mt-12 flex items-center justify-center">
+              <SocialLinksRow links={socialLinks} size={18} />
+            </div>
+          )}
+          <div className="opacity-0 animate-fade-in animate-delay-400 mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
             <a href="#concerts" className="btn-primary btn-hero-glass">Etkinlikleri Gör</a>
             {spotifyLink && (
               <a href={spotifyLink} target="_blank" rel="noopener noreferrer" className="btn-secondary flex items-center gap-2">
@@ -261,11 +269,6 @@ export default async function Home() {
               </a>
             )}
           </div>
-          {settings?.isSocialLinksVisible && (
-            <div className="opacity-0 animate-fade-in animate-delay-400 mt-10 flex items-center justify-center">
-              <SocialLinksRow links={socialLinks} size={18} />
-            </div>
-          )}
           <HeroAudioPlayer tracks={tracks} isVisible={settings?.isAudioPlayerVisible ?? true} />
         </div>
 
