@@ -134,7 +134,40 @@ export default async function Home() {
   const heroSubtitleFont = asHeroFont(settings?.heroSubtitleFont) ?? HERO_DEFAULTS.subtitleFont;
   const heroTitleSize = asHeroSize(settings?.heroTitleSize) ?? HERO_DEFAULTS.titleSize;
   const heroSubtitleSize = asHeroSize(settings?.heroSubtitleSize) ?? HERO_DEFAULTS.subtitleSize;
-  const heroPos = HERO_POSITION_CLASSES[asHeroPosition(settings?.heroTextPosition)];
+  const heroPosition = asHeroPosition(settings?.heroTextPosition);
+  const heroPos = HERO_POSITION_CLASSES[heroPosition];
+  const heroPosIsCenter = heroPosition === "tam-orta";
+
+  // Konumlanan katman YALNIZ bu metin bloğunu içerir; butonlar/sosyal ikonlar
+  // her zaman ortadaki sabit kolonda kalır.
+  const heroTextContent = (
+    <>
+      {heroTitleHtml ? (
+        /* Özel metin: font inline style ile yalnız buraya uygulanır; renk
+           sınıfı YOK — .public-v2 tema değişkeninden (foreground) gelir */
+        <h1
+          className={`opacity-0 animate-fade-in animate-delay-100 font-display tracking-widest normal-case ${HERO_TITLE_SIZE_CLASSES[heroTitleSize]}`}
+          style={{ fontFamily: HERO_FONTS[heroTitleFont].fontFamily }}
+          dangerouslySetInnerHTML={{ __html: heroTitleHtml }}
+        />
+      ) : !heroTitleSet ? (
+        <h1 className="opacity-0 animate-fade-in animate-delay-100 font-display text-display-xl tracking-widest normal-case">
+          {artistName}
+        </h1>
+      ) : null}
+      {heroSubtitleHtml ? (
+        <p
+          className={`opacity-0 animate-fade-in animate-delay-200 mt-8 text-white/80 max-w-2xl leading-relaxed ${HERO_SUBTITLE_SIZE_CLASSES[heroSubtitleSize]}`}
+          style={{ fontFamily: HERO_FONTS[heroSubtitleFont].fontFamily }}
+          dangerouslySetInnerHTML={{ __html: heroSubtitleHtml }}
+        />
+      ) : !heroSubtitleSet ? (
+        <p className="opacity-0 animate-fade-in animate-delay-200 mt-8 text-xl md:text-2xl text-white/80 max-w-2xl leading-relaxed font-serif italic">
+          Tiyatro sahnesinden ekrana uzanan bir yolculuk
+        </p>
+      ) : null}
+    </>
+  );
 
   // ========================================
   // DYNAMIC SECTION COLORING
@@ -195,8 +228,10 @@ export default async function Home() {
         </div>
       </nav>
 
-      {/* Hero Section — metin konumu admin panelden (varsayılan tam-orta = eski görünüm) */}
-      <section className={`relative min-h-screen flex overflow-hidden gradient-warm-bg ${heroPos.flex} ${heroPos.pad}`}>
+      {/* Hero Section — konum seçimi YALNIZ metni (başlık+alt metin) taşır;
+          butonlar / sosyal ikonlar / oynatıcı her zaman ortada sabittir.
+          tam-orta'da metin ve aksiyonlar eskisi gibi tek ortalanmış kolondadır. */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden gradient-warm-bg">
         <HeroSlider
           images={heroImages}
           fallbackImage={bio?.imageUrl || ""} // Fallback to Bio image if no hero images
@@ -206,31 +241,18 @@ export default async function Home() {
         <div className="absolute top-1/4 left-10 w-64 h-64 bg-accent-coral/20 rounded-full blur-3xl animate-float z-10" />
         <div className="absolute bottom-1/4 right-10 w-96 h-96 bg-accent-peach/20 rounded-full blur-3xl animate-float z-10" style={{ animationDelay: "3s" }} />
 
-        <div className={`relative z-30 px-6 max-w-5xl flex flex-col ${heroPos.block}`}>
-          {heroTitleHtml ? (
-            /* Özel metin: font inline style ile yalnız buraya uygulanır; renk
-               sınıfı YOK — .public-v2 tema değişkeninden (foreground) gelir */
-            <h1
-              className={`opacity-0 animate-fade-in animate-delay-100 font-display tracking-widest normal-case ${HERO_TITLE_SIZE_CLASSES[heroTitleSize]}`}
-              style={{ fontFamily: HERO_FONTS[heroTitleFont].fontFamily }}
-              dangerouslySetInnerHTML={{ __html: heroTitleHtml }}
-            />
-          ) : !heroTitleSet ? (
-            <h1 className="opacity-0 animate-fade-in animate-delay-100 font-display text-display-xl tracking-widest normal-case">
-              {artistName}
-            </h1>
-          ) : null}
-          {heroSubtitleHtml ? (
-            <p
-              className={`opacity-0 animate-fade-in animate-delay-200 mt-8 text-white/80 max-w-2xl leading-relaxed ${HERO_SUBTITLE_SIZE_CLASSES[heroSubtitleSize]}`}
-              style={{ fontFamily: HERO_FONTS[heroSubtitleFont].fontFamily }}
-              dangerouslySetInnerHTML={{ __html: heroSubtitleHtml }}
-            />
-          ) : !heroSubtitleSet ? (
-            <p className="opacity-0 animate-fade-in animate-delay-200 mt-8 text-xl md:text-2xl text-white/80 max-w-2xl leading-relaxed font-serif italic">
-              Tiyatro sahnesinden ekrana uzanan bir yolculuk
-            </p>
-          ) : null}
+        {!heroPosIsCenter && (
+          /* Metin bloğu seçilen konumda ayrı bir katmanda; pointer-events-none
+             ile alttaki içeriğe tıklamayı engellemez */
+          <div className={`absolute inset-0 z-30 flex pointer-events-none ${heroPos.flex} ${heroPos.pad}`}>
+            <div className={`px-6 max-w-5xl flex flex-col ${heroPos.block}`}>
+              {heroTextContent}
+            </div>
+          </div>
+        )}
+
+        <div className="relative z-30 text-center px-6 max-w-5xl flex flex-col items-center">
+          {heroPosIsCenter && heroTextContent}
           <div className="opacity-0 animate-fade-in animate-delay-300 mt-12 flex flex-col sm:flex-row items-center justify-center gap-4">
             <a href="#concerts" className="btn-primary">Etkinlikleri Gör</a>
             {spotifyLink && (
