@@ -139,10 +139,15 @@ export default async function Home() {
   const heroPos = HERO_POSITION_CLASSES[heroPosition];
   const heroPosIsCenter = heroPosition === "tam-orta";
 
-  // Konumlanan katman YALNIZ bu metin bloğunu içerir; butonlar/sosyal ikonlar
-  // her zaman ortadaki sabit kolonda kalır.
+  // Konumlanan katman bu bloğu içerir: "Sosyal Medya" akordeonu metnin biraz
+  // üzerinde durur ve metinle birlikte konumlanır.
   const heroTextContent = (
     <>
+      {settings?.isSocialLinksVisible && (
+        <div className="opacity-0 animate-fade-in animate-delay-300 mb-6 pointer-events-auto">
+          <SocialAccordion links={socialLinks} size={18} />
+        </div>
+      )}
       {heroTitleHtml ? (
         /* Özel metin: font inline style ile yalnız buraya uygulanır; renk
            sınıfı YOK — .public-v2 tema değişkeninden (foreground) gelir */
@@ -256,20 +261,15 @@ export default async function Home() {
 
         <div className="relative z-30 text-center px-6 max-w-5xl flex flex-col items-center">
           {heroPosIsCenter && heroTextContent}
-          {/* CTA üstte; "Sosyal Medya" akordeon hapı hemen altında (hover/dokun
-              ile açılır, dışarı dokununca kapanır). mt-6 sıkı tutuldu ki
-              alttaki öğeler aşağı kaymasın. */}
-          <div className="opacity-0 animate-fade-in animate-delay-300 mt-12 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a href="#concerts" className="btn-primary btn-hero-glass">Etkinlikleri Gör</a>
-            {spotifyLink && (
+          {/* "Etkinlikleri Gör" CTA'sı şimdilik yayından kaldırıldı — geri almak
+              için aşağıdaki yorumu açman yeterli:
+          <a href="#concerts" className="btn-primary btn-hero-glass">Etkinlikleri Gör</a>
+          */}
+          {spotifyLink && (
+            <div className="opacity-0 animate-fade-in animate-delay-300 mt-12 flex flex-col sm:flex-row items-center justify-center gap-4">
               <a href={spotifyLink} target="_blank" rel="noopener noreferrer" className="btn-secondary flex items-center gap-2">
                 <Music2 size={18} /> Şimdi Dinle
               </a>
-            )}
-          </div>
-          {settings?.isSocialLinksVisible && (
-            <div className="opacity-0 animate-fade-in animate-delay-400 mt-6 flex items-center justify-center">
-              <SocialAccordion links={socialLinks} size={18} />
             </div>
           )}
           <HeroAudioPlayer tracks={tracks} isVisible={settings?.isAudioPlayerVisible ?? true} />
