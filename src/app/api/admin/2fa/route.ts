@@ -44,7 +44,9 @@ export async function POST(request: NextRequest) {
                 });
             }
 
-            const uri = totpUri(user.username, secret);
+            const host = (request.headers.get("x-forwarded-host") || request.headers.get("host") || "")
+                .split(",")[0].trim().split(":")[0] || undefined;
+            const uri = totpUri(user.username, secret, host);
             const qrDataUrl = await QRCode.toDataURL(uri, { margin: 1, width: 240 });
 
             return NextResponse.json({ qrDataUrl, secret, uri });

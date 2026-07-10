@@ -21,9 +21,11 @@ export function generateTotpSecret(): string {
     return new Secret({ size: 20 }).base32;
 }
 
-export function totpUri(username: string, secretBase32: string): string {
+// host verilirse etikete eklenir (örn. "Sahadmin@begumatak.com") — böylece
+// authenticator'da lokal ve canlı ortam kayıtları birbirinden ayırt edilir.
+export function totpUri(username: string, secretBase32: string, host?: string): string {
     const totp = buildTotp(secretBase32);
-    totp.label = username;
+    totp.label = host ? `${username}@${host}` : username;
     return totp.toString();
 }
 
