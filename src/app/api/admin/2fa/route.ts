@@ -31,11 +31,18 @@ export async function POST(request: NextRequest) {
         }
 
         if (action === "init") {
-            const secret = generateTotpSecret();
-            await prisma.adminUser.update({
-                where: { id: user.id },
-                data: { totpSecret: secret, totpEnabled: false, backupCodes: null },
-            });
+            // Onaylanmamış bir secret zaten varsa AYNISINI kullan — sayfa
+            // yenilenince QR değişmesin (telefondaki kayıt geçersiz kalmasın).
+            // Yalnız hiç secret yokken ya da 2FA etkinken (yeniden kurulum)
+            // yeni secret üretilir.
+            const reuse = user.totpSecret && !user.totpEnabled;
+            const secret = reuse ? user.totpSecret! : generateTotpSecret();
+            if (!reuse) {
+                await prisma.adminUser.update({
+                    where: { id: user.id },
+                    data: { totpSecret: secret, totpEnabled: false, backupCodes: null },
+                });
+            }
 
             const uri = totpUri(user.username, secret);
             const qrDataUrl = await QRCode.toDataURL(uri, { margin: 1, width: 240 });
