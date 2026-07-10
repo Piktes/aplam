@@ -15,6 +15,7 @@ import {
   HERO_SUBTITLE_SIZE_CLASSES,
 } from "@/components/hero-text-config";
 import { SocialLinksRow } from "@/components/social-icons";
+import { SocialAccordion } from "@/components/social-accordion";
 import { HeroAudioPlayer } from "@/components/hero-audio-player";
 import { HeroSlider } from "@/components/hero-slider";
 import { YouTubeCarousel } from "@/components/youtube-carousel";
@@ -255,10 +256,11 @@ export default async function Home() {
 
         <div className="relative z-30 text-center px-6 max-w-5xl flex flex-col items-center">
           {heroPosIsCenter && heroTextContent}
-          {/* Sosyal ikonlar üstte, CTA butonları onların altında */}
+          {/* Sosyal ikonlar üstte (akordeon: ilk ziyarette açık, sonra "Social
+              Media" hapı — hover/tıkla ile açılır), CTA butonları altında */}
           {settings?.isSocialLinksVisible && (
             <div className="opacity-0 animate-fade-in animate-delay-300 mt-12 flex items-center justify-center">
-              <SocialLinksRow links={socialLinks} size={18} />
+              <SocialAccordion links={socialLinks} size={18} />
             </div>
           )}
           <div className="opacity-0 animate-fade-in animate-delay-400 mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
