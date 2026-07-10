@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
-import { Music2, ArrowUpRight, Menu } from "lucide-react";
+import { Drama, ArrowUpRight, Menu } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { SignOutButton } from "@/components/admin/sign-out-button";
 import { MobileSidebarProvider, useMobileSidebar } from "@/components/admin/mobile-sidebar-context";
@@ -59,7 +59,7 @@ function AdminLayoutContent({ children }: { children: React.ReactNode }) {
                             </button>
 
                             <Link href="/admin" className="flex items-center gap-2">
-                                <Music2 size={20} className="text-accent-coral sm:w-6 sm:h-6" />
+                                <Drama size={20} className="text-accent-coral sm:w-6 sm:h-6" />
                                 <span className="font-display text-lg sm:text-xl tracking-widest uppercase hidden sm:inline">Begüm Atak</span>
                                 <span className="text-[10px] sm:text-xs font-medium tracking-wider uppercase text-muted-foreground px-1.5 sm:px-2 py-0.5 sm:py-1 bg-muted rounded-full">Yönetim</span>
                             </Link>

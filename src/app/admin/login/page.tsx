@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { Lock, User, AlertCircle, Loader2, Music2, Eye, EyeOff, ShieldCheck, ArrowLeft } from "lucide-react";
+import { Lock, User, AlertCircle, Loader2, Drama, Eye, EyeOff, ShieldCheck, ArrowLeft } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
 
 export default function AdminLoginPage() {
@@ -69,7 +69,7 @@ export default function AdminLoginPage() {
           {/* Header */}
           <div className="text-center mb-8">
             <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-accent-coral/10 flex items-center justify-center">
-              <Music2 size={32} className="text-accent-coral" />
+              <Drama size={32} className="text-accent-coral" />
             </div>
             <h1 className="font-display text-2xl tracking-widest uppercase">
               Begüm Atak Yönetim
