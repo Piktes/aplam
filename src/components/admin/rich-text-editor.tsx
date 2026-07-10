@@ -80,21 +80,21 @@ function EditorToolbar({ editor }: { editor: Editor }) {
             <ToolbarButton
                 onClick={() => editor.chain().focus().toggleBold().run()}
                 isActive={editor.isActive("bold")}
-                title="Bold"
+                title="Kalın"
             >
                 <Bold size={16} />
             </ToolbarButton>
             <ToolbarButton
                 onClick={() => editor.chain().focus().toggleItalic().run()}
                 isActive={editor.isActive("italic")}
-                title="Italic"
+                title="İtalik"
             >
                 <Italic size={16} />
             </ToolbarButton>
             <ToolbarButton
                 onClick={() => editor.chain().focus().toggleStrike().run()}
                 isActive={editor.isActive("strike")}
-                title="Strikethrough"
+                title="Üstü Çizili"
             >
                 <Strikethrough size={16} />
             </ToolbarButton>
@@ -105,14 +105,14 @@ function EditorToolbar({ editor }: { editor: Editor }) {
             <ToolbarButton
                 onClick={() => editor.chain().focus().toggleBulletList().run()}
                 isActive={editor.isActive("bulletList")}
-                title="Bullet List"
+                title="Madde İşaretli Liste"
             >
                 <List size={16} />
             </ToolbarButton>
             <ToolbarButton
                 onClick={() => editor.chain().focus().toggleOrderedList().run()}
                 isActive={editor.isActive("orderedList")}
-                title="Numbered List"
+                title="Numaralı Liste"
             >
                 <ListOrdered size={16} />
             </ToolbarButton>
@@ -123,21 +123,21 @@ function EditorToolbar({ editor }: { editor: Editor }) {
             <ToolbarButton
                 onClick={() => editor.chain().focus().setTextAlign("left").run()}
                 isActive={editor.isActive({ textAlign: "left" })}
-                title="Align Left"
+                title="Sola Hizala"
             >
                 <AlignLeft size={16} />
             </ToolbarButton>
             <ToolbarButton
                 onClick={() => editor.chain().focus().setTextAlign("center").run()}
                 isActive={editor.isActive({ textAlign: "center" })}
-                title="Align Center"
+                title="Ortala"
             >
                 <AlignCenter size={16} />
             </ToolbarButton>
             <ToolbarButton
                 onClick={() => editor.chain().focus().setTextAlign("right").run()}
                 isActive={editor.isActive({ textAlign: "right" })}
-                title="Align Right"
+                title="Sağa Hizala"
             >
                 <AlignRight size={16} />
             </ToolbarButton>
@@ -149,7 +149,7 @@ function EditorToolbar({ editor }: { editor: Editor }) {
                 <ToolbarButton
                     onClick={() => setShowLinkInput(!showLinkInput)}
                     isActive={editor.isActive("link")}
-                    title="Add Link"
+                    title="Bağlantı Ekle"
                 >
                     <LinkIcon size={16} />
                 </ToolbarButton>
@@ -164,7 +164,7 @@ function EditorToolbar({ editor }: { editor: Editor }) {
                             onKeyDown={(e) => e.key === "Enter" && setLink()}
                         />
                         <button onClick={setLink} className="btn-primary text-sm py-1 px-3">
-                            Add
+                            Ekle
                         </button>
                     </div>
                 )}
@@ -172,7 +172,7 @@ function EditorToolbar({ editor }: { editor: Editor }) {
             <ToolbarButton
                 onClick={() => editor.chain().focus().unsetLink().run()}
                 disabled={!editor.isActive("link")}
-                title="Remove Link"
+                title="Bağlantıyı Kaldır"
             >
                 <Unlink size={16} />
             </ToolbarButton>
@@ -184,7 +184,7 @@ function EditorToolbar({ editor }: { editor: Editor }) {
                 <ToolbarButton
                     onClick={() => editor.chain().focus().undo().run()}
                     disabled={!editor.can().undo()}
-                    title="Undo"
+                    title="Geri Al"
                     className="hover:bg-background text-foreground"
                 >
                     <Undo size={16} />
@@ -193,7 +193,7 @@ function EditorToolbar({ editor }: { editor: Editor }) {
                 <ToolbarButton
                     onClick={() => editor.chain().focus().redo().run()}
                     disabled={!editor.can().redo()}
-                    title="Redo"
+                    title="Yinele"
                     className="hover:bg-background text-foreground"
                 >
                     <Redo size={16} />
@@ -206,7 +206,7 @@ function EditorToolbar({ editor }: { editor: Editor }) {
 export function RichTextEditor({
     value,
     onChange,
-    placeholder = "Start writing...",
+    placeholder = "Yazmaya başlayın...",
     className = "",
     maxLength,
 }: RichTextEditorProps & { maxLength?: number }) {
@@ -265,7 +265,7 @@ export function RichTextEditor({
             </div>
             <div className={`px-3 py-1.5 border-t border-border bg-muted/20 text-[10px] flex justify-end transition-colors ${editor.storage.characterCount.characters() === maxLength ? "text-red-500 font-bold" : "text-muted-foreground"
                 }`}>
-                {editor.storage.characterCount.characters()} {maxLength ? `/ ${maxLength}` : ""} characters
+                {editor.storage.characterCount.characters()} {maxLength ? `/ ${maxLength}` : ""} karakter
             </div>
         </div>
     );

@@ -8,7 +8,7 @@ interface InfoBarProps {
     counterIcon?: React.ReactNode;
     /** Optional custom back link URL (defaults to /admin) */
     backHref?: string;
-    /** Optional custom back link label (defaults to "Back to Dashboard") */
+    /** Optional custom back link label (defaults to "Panele Dön") */
     backLabel?: string;
 }
 
@@ -20,7 +20,7 @@ export function InfoBar({
     counter,
     counterIcon,
     backHref = "/admin",
-    backLabel = "Back to Dashboard"
+    backLabel = "Panele Dön"
 }: InfoBarProps) {
     return (
         <div className="max-w-7xl mx-auto px-4 pt-6">

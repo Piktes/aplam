@@ -51,10 +51,10 @@ export default async function EmailSignaturePage() {
                 <div className="mb-6">
                     <h1 className="font-display text-display-md tracking-wider uppercase flex items-center gap-3">
                         <Mail className="text-accent-coral" size={32} />
-                        Email Signature
+                        E-posta İmzası
                     </h1>
                     <p className="text-muted-foreground mt-2">
-                        Create your custom email signature for replies. This will be automatically added to the bottom of your reply emails.
+                        Yanıt e-postaları için özel imzanızı oluşturun. İmza, gönderdiğiniz yanıtların altına otomatik eklenir.
                     </p>
                 </div>
 
@@ -62,11 +62,11 @@ export default async function EmailSignaturePage() {
                 <div className="glass-card p-4 mb-6 flex items-start gap-3 border-l-4 border-l-accent-coral">
                     <AlertCircle className="text-accent-coral shrink-0 mt-0.5" size={20} />
                     <div>
-                        <p className="font-medium">Signature Tips</p>
+                        <p className="font-medium">İmza İpuçları</p>
                         <ul className="text-sm text-muted-foreground mt-1 space-y-1">
-                            <li>• Keep it professional and concise</li>
-                            <li>• Include your name, role, and contact info</li>
-                            <li>• Uploaded logos will display with <code className="bg-muted px-1 rounded">contain</code> fit (no cropping)</li>
+                            <li>• Kısa ve profesyonel tutun</li>
+                            <li>• Ad, unvan ve iletişim bilgilerinizi ekleyin</li>
+                            <li>• Yüklenen logolar kırpılmadan, orantısı korunarak gösterilir</li>
                         </ul>
                     </div>
                 </div>
