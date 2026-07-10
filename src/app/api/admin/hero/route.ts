@@ -5,6 +5,8 @@ import prisma from "@/lib/prisma";
 import { writeFile, mkdir, unlink } from "fs/promises";
 import path from "path";
 import { revalidatePath } from "next/cache";
+import { sanitizeHeroHtml } from "@/lib/sanitize-hero";
+import { asHeroFont, asHeroSize, asHeroPosition } from "@/lib/hero-text";
 
 // Helper to ensure authenticated
 async function requireAuth() {
@@ -134,6 +136,29 @@ export async function PATCH(request: NextRequest) {
                     data: { sortOrder: currentImage.sortOrder },
                 }),
             ]);
+        } else if (action === "updateHeroText") {
+            const { title, subtitle, titleFont, subtitleFont, titleSize, subtitleSize, position } = data;
+
+            let settings = await prisma.siteSettings.findFirst();
+            if (!settings) {
+                settings = await prisma.siteSettings.create({
+                    data: { heroSliderInterval: 5000 },
+                });
+            }
+
+            await prisma.siteSettings.update({
+                where: { id: settings.id },
+                data: {
+                    // sanitize: yalnız satır içi etiketler kalır, style/renk atılır
+                    heroTitle: sanitizeHeroHtml(title),
+                    heroSubtitle: sanitizeHeroHtml(subtitle),
+                    heroTitleFont: asHeroFont(titleFont),
+                    heroSubtitleFont: asHeroFont(subtitleFont),
+                    heroTitleSize: asHeroSize(titleSize),
+                    heroSubtitleSize: asHeroSize(subtitleSize),
+                    heroTextPosition: asHeroPosition(position),
+                },
+            });
         } else if (action === "updateSpeed") {
             const { interval } = data;
             if (isNaN(interval) || interval < 1000 || interval > 20000) {

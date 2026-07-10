@@ -6,6 +6,14 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { MobileNav } from "@/components/mobile-nav";
 import { ScrollReveal } from "@/components/scroll-reveal";
 import { publicV2FontVars } from "@/lib/fonts-v2";
+import { HERO_FONTS } from "@/lib/hero-fonts";
+import { sanitizeHeroHtml } from "@/lib/sanitize-hero";
+import { HERO_DEFAULTS, asHeroFont, asHeroSize, asHeroPosition } from "@/lib/hero-text";
+import {
+  HERO_POSITION_CLASSES,
+  HERO_TITLE_SIZE_CLASSES,
+  HERO_SUBTITLE_SIZE_CLASSES,
+} from "@/components/hero-text-config";
 import { SocialLinksRow } from "@/components/social-icons";
 import { HeroAudioPlayer } from "@/components/hero-audio-player";
 import { HeroSlider } from "@/components/hero-slider";
@@ -111,6 +119,19 @@ export default async function Home() {
   const artistName = "Begüm Atak"; // Hardcoded for now as requested for Single Artist
 
   // ========================================
+  // HERO KAPAK METNİ (admin panelden; boşsa hardcoded fallback — site asla
+  // boş başlıkla açılmaz). HTML DB'de sanitize edilmiş olsa da render'da
+  // tekrar sanitize edilir; renk stilleri her durumda atılır, renk temadan gelir.
+  // ========================================
+  const heroTitleHtml = sanitizeHeroHtml(settings?.heroTitle);
+  const heroSubtitleHtml = sanitizeHeroHtml(settings?.heroSubtitle);
+  const heroTitleFont = asHeroFont(settings?.heroTitleFont) ?? HERO_DEFAULTS.titleFont;
+  const heroSubtitleFont = asHeroFont(settings?.heroSubtitleFont) ?? HERO_DEFAULTS.subtitleFont;
+  const heroTitleSize = asHeroSize(settings?.heroTitleSize) ?? HERO_DEFAULTS.titleSize;
+  const heroSubtitleSize = asHeroSize(settings?.heroSubtitleSize) ?? HERO_DEFAULTS.subtitleSize;
+  const heroPos = HERO_POSITION_CLASSES[asHeroPosition(settings?.heroTextPosition)];
+
+  // ========================================
   // DYNAMIC SECTION COLORING
   // ========================================
   const visibleSections = [
@@ -169,8 +190,8 @@ export default async function Home() {
         </div>
       </nav>
 
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden gradient-warm-bg">
+      {/* Hero Section — metin konumu admin panelden (varsayılan tam-orta = eski görünüm) */}
+      <section className={`relative min-h-screen flex overflow-hidden gradient-warm-bg ${heroPos.flex} ${heroPos.pad}`}>
         <HeroSlider
           images={heroImages}
           fallbackImage={bio?.imageUrl || ""} // Fallback to Bio image if no hero images
@@ -180,13 +201,31 @@ export default async function Home() {
         <div className="absolute top-1/4 left-10 w-64 h-64 bg-accent-coral/20 rounded-full blur-3xl animate-float z-10" />
         <div className="absolute bottom-1/4 right-10 w-96 h-96 bg-accent-peach/20 rounded-full blur-3xl animate-float z-10" style={{ animationDelay: "3s" }} />
 
-        <div className="relative z-30 text-center px-6 max-w-5xl mx-auto flex flex-col items-center">
-          <h1 className="opacity-0 animate-fade-in animate-delay-100 font-display text-display-xl tracking-widest normal-case">
-            {artistName}
-          </h1>
-          <p className="opacity-0 animate-fade-in animate-delay-200 mt-8 text-xl md:text-2xl text-white/80 max-w-2xl mx-auto leading-relaxed font-serif italic">
-            Tiyatro sahnesinden ekrana uzanan bir yolculuk
-          </p>
+        <div className={`relative z-30 px-6 max-w-5xl flex flex-col ${heroPos.block}`}>
+          {heroTitleHtml ? (
+            /* Özel metin: font inline style ile yalnız buraya uygulanır; renk
+               sınıfı YOK — .public-v2 tema değişkeninden (foreground) gelir */
+            <h1
+              className={`opacity-0 animate-fade-in animate-delay-100 font-display tracking-widest normal-case ${HERO_TITLE_SIZE_CLASSES[heroTitleSize]}`}
+              style={{ fontFamily: HERO_FONTS[heroTitleFont].fontFamily }}
+              dangerouslySetInnerHTML={{ __html: heroTitleHtml }}
+            />
+          ) : (
+            <h1 className="opacity-0 animate-fade-in animate-delay-100 font-display text-display-xl tracking-widest normal-case">
+              {artistName}
+            </h1>
+          )}
+          {heroSubtitleHtml ? (
+            <p
+              className={`opacity-0 animate-fade-in animate-delay-200 mt-8 text-white/80 max-w-2xl leading-relaxed ${HERO_SUBTITLE_SIZE_CLASSES[heroSubtitleSize]}`}
+              style={{ fontFamily: HERO_FONTS[heroSubtitleFont].fontFamily }}
+              dangerouslySetInnerHTML={{ __html: heroSubtitleHtml }}
+            />
+          ) : (
+            <p className="opacity-0 animate-fade-in animate-delay-200 mt-8 text-xl md:text-2xl text-white/80 max-w-2xl leading-relaxed font-serif italic">
+              Tiyatro sahnesinden ekrana uzanan bir yolculuk
+            </p>
+          )}
           <div className="opacity-0 animate-fade-in animate-delay-300 mt-12 flex flex-col sm:flex-row items-center justify-center gap-4">
             <a href="#concerts" className="btn-primary">Etkinlikleri Gör</a>
             {spotifyLink && (

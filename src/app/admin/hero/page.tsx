@@ -1,5 +1,6 @@
 import prisma from "@/lib/prisma";
 import { HeroImageManager } from "@/components/admin/hero-image-manager";
+import { HeroTextEditor } from "@/components/admin/hero-text-editor";
 import { InfoBar } from "@/components/admin/info-bar";
 
 export const dynamic = "force-dynamic";
@@ -27,12 +28,15 @@ async function getSiteSettings() {
 // PAGE COMPONENT
 // ========================================
 export default async function HeroEditorPage() {
-    const [heroImages, settings] = await Promise.all([
+    const [heroImages, settings, bio] = await Promise.all([
         getHeroImages(),
         getSiteSettings(),
+        prisma.bio.findFirst(), // önizleme arka planı için fallback görsel (public hero ile aynı)
     ]);
 
     const activeCount = heroImages.filter(img => img.isActive).length;
+    const previewCover =
+        heroImages.find(img => img.isActive)?.imageUrl || bio?.imageUrl || null;
 
     return (
         <div className="min-h-screen">
@@ -48,6 +52,20 @@ export default async function HeroEditorPage() {
                 <HeroImageManager
                     images={heroImages}
                     sliderInterval={settings.heroSliderInterval}
+                />
+
+                {/* Kapak görseli alanının hemen altında: Kapak Metni editörü */}
+                <HeroTextEditor
+                    coverImageUrl={previewCover}
+                    initial={{
+                        title: settings.heroTitle,
+                        subtitle: settings.heroSubtitle,
+                        titleFont: settings.heroTitleFont,
+                        subtitleFont: settings.heroSubtitleFont,
+                        titleSize: settings.heroTitleSize,
+                        subtitleSize: settings.heroSubtitleSize,
+                        position: settings.heroTextPosition,
+                    }}
                 />
             </main>
         </div>

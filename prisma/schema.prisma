@@ -74,6 +74,15 @@ model SiteSettings {
   heroSliderEnabled     Boolean  @default(true)
   heroSliderInterval    Int      @default(5000)
   heroKenBurnsEffect    Boolean  @default(true)
+
+  // Hero Cover Text (admin-editable; null => hardcoded fallback texts)
+  heroTitle             String?  @db.LongText          // sanitized HTML
+  heroSubtitle          String?  @db.LongText          // sanitized HTML
+  heroTitleFont         String?  @db.VarChar(64)       // hero-fonts.ts key
+  heroSubtitleFont      String?  @db.VarChar(64)
+  heroTitleSize         String?  @db.VarChar(16)       // kucuk | orta | buyuk
+  heroSubtitleSize      String?  @db.VarChar(16)
+  heroTextPosition      String?  @db.VarChar(16)       // sol-ust ... sag-alt (default tam-orta)
   
   // Auto Reply - Contact Form Success Popup
   contactSuccessImage   String?  @db.LongText
