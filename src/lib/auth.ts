@@ -2,6 +2,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import prisma from "@/lib/prisma";
 import { logAdminAction } from "@/lib/audit-logger";
+import { verifyTotp, consumeBackupCode } from "@/lib/totp";
 import type { AuthOptions } from "next-auth";
 
 // Helper to get first value from potentially comma-separated header (LiteSpeed/proxy fix)
@@ -16,6 +17,7 @@ export const authOptions: AuthOptions = {
             credentials: {
                 username: { label: "Username", type: "text" },
                 password: { label: "Password", type: "password" },
+                otp: { label: "Doğrulama Kodu", type: "text" },
             },
             async authorize(credentials, req) {
                 if (!credentials?.username || !credentials?.password) {
@@ -56,6 +58,39 @@ export const authOptions: AuthOptions = {
                         return null;
                     }
 
+                    // 2FA (TOTP) — etkinse şifreden SONRA kod zorunlu.
+                    // Hata mesajları login sayfasında adım/uyarı olarak yakalanır.
+                    if (user.totpEnabled && user.totpSecret) {
+                        const otp = (credentials.otp || "").trim();
+                        if (!otp) {
+                            throw new Error("2FA_REQUIRED");
+                        }
+                        if (!verifyTotp(user.totpSecret, otp)) {
+                            // TOTP tutmadı → tek kullanımlık yedek kod dene
+                            const remaining = consumeBackupCode(user.backupCodes, otp);
+                            if (remaining === null) {
+                                await logAdminAction(
+                                    credentials.username,
+                                    "LOGIN_FAILED",
+                                    `Failed login attempt - Invalid 2FA code`,
+                                    { level: "WARN" }
+                                );
+                                throw new Error("2FA_INVALID");
+                            }
+                            // Yedek kod kullanıldı → listeden düş
+                            await prisma.adminUser.update({
+                                where: { id: user.id },
+                                data: { backupCodes: remaining },
+                            });
+                            await logAdminAction(
+                                user.username,
+                                "LOGIN_2FA_BACKUP",
+                                `Login with backup code (${JSON.parse(remaining).length} left)`,
+                                { userId: user.id, level: "WARN" }
+                            );
+                        }
+                    }
+
                     // Update last login time
                     await prisma.adminUser.update({
                         where: { id: user.id },
@@ -76,8 +111,16 @@ export const authOptions: AuthOptions = {
                         name: user.username,
                         email: user.email || `${user.username}@admin.local`,
                         role: user.role,
-                    };
+                        totpEnabled: user.totpEnabled,
+                    } as any;
                 } catch (error) {
+                    // 2FA akış hataları login sayfasına ulaşmalı — yutma
+                    if (
+                        error instanceof Error &&
+                        (error.message === "2FA_REQUIRED" || error.message === "2FA_INVALID")
+                    ) {
+                        throw error;
+                    }
                     console.error("Auth error:", error);
                     return null;
                 }
@@ -115,6 +158,9 @@ export const authOptions: AuthOptions = {
                 token.id = user.id;
                 token.role = (user as any).role;
                 token.username = user.name;
+                // middleware bu claim ile 2FA kurulumuna zorlar; kurulum
+                // tamamlanınca kullanıcı yeniden giriş yapar (claim tazelenir)
+                token.totpEnabled = (user as any).totpEnabled === true;
             }
             return token;
         },

@@ -17,9 +17,9 @@ export default function AdminLayout({
 }) {
     const pathname = usePathname();
 
-    // Don't show the header on login page
-    const isLoginPage = pathname === "/admin/login";
-    if (isLoginPage) {
+    // Don't show the header on login + 2FA setup pages (bare layout)
+    const isBarePage = pathname === "/admin/login" || pathname === "/admin/2fa-setup";
+    if (isBarePage) {
         return <>{children}</>;
     }
 

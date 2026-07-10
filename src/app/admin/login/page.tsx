@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { Lock, User, AlertCircle, Loader2, Music2, Eye, EyeOff } from "lucide-react";
+import { Lock, User, AlertCircle, Loader2, Music2, Eye, EyeOff, ShieldCheck, ArrowLeft } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
 
 export default function AdminLoginPage() {
@@ -13,6 +13,9 @@ export default function AdminLoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  // 2FA ikinci adımı: şifre doğruysa ve hesapta TOTP etkinse kod istenir
+  const [otpStep, setOtpStep] = useState(false);
+  const [otp, setOtp] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,10 +26,20 @@ export default function AdminLoginPage() {
       const result = await signIn("credentials", {
         username,
         password,
+        otp,
         redirect: false,
       });
 
-      if (result?.error) {
+      if (result?.error === "2FA_REQUIRED") {
+        // Şifre doğru → doğrulama kodu adımına geç
+        setOtpStep(true);
+        setOtp("");
+        setIsLoading(false);
+      } else if (result?.error === "2FA_INVALID") {
+        setError("Doğrulama kodu geçersiz. Tekrar deneyin.");
+        setOtp("");
+        setIsLoading(false);
+      } else if (result?.error) {
         setError("Geçersiz kullanıcı adı veya şifre");
         setIsLoading(false);
       } else {
@@ -76,6 +89,43 @@ export default function AdminLoginPage() {
 
           {/* Login Form */}
           <form onSubmit={handleSubmit} className="space-y-6">
+            {otpStep ? (
+              /* ---- 2. adım: doğrulama kodu ---- */
+              <>
+                <div className="flex items-center gap-3 p-4 rounded-xl bg-accent-coral/10 border border-accent-coral/20">
+                  <ShieldCheck size={20} className="text-accent-coral shrink-0" />
+                  <p className="text-sm text-muted-foreground">
+                    <span className="font-medium text-foreground">{username}</span> için
+                    authenticator uygulamasındaki 6 haneli kodu girin.
+                  </p>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-2">Doğrulama Kodu</label>
+                  <input
+                    type="text"
+                    inputMode="text"
+                    autoComplete="one-time-code"
+                    value={otp}
+                    onChange={(e) => setOtp(e.target.value)}
+                    className="w-full px-4 py-3 rounded-xl bg-muted/50 border border-border focus:border-accent-coral focus:ring-2 focus:ring-accent-coral/20 outline-none transition-all text-center text-2xl tracking-[0.4em] font-mono"
+                    placeholder="••••••"
+                    required
+                    autoFocus
+                  />
+                  <p className="text-xs text-muted-foreground mt-2">
+                    Telefonunuza erişemiyorsanız yedek kodlardan birini girin (örn. ABCD-EFGH).
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => { setOtpStep(false); setOtp(""); setError(""); }}
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1"
+                >
+                  <ArrowLeft size={14} /> Farklı hesapla gir
+                </button>
+              </>
+            ) : (
+            <>
             {/* Username Field */}
             <div>
               <label className="block text-sm font-medium mb-2">Kullanıcı Adı</label>
@@ -121,6 +171,8 @@ export default function AdminLoginPage() {
                 </button>
               </div>
             </div>
+            </>
+            )}
 
             {/* Submit Button */}
             <button
@@ -131,8 +183,10 @@ export default function AdminLoginPage() {
               {isLoading ? (
                 <>
                   <Loader2 size={20} className="animate-spin" />
-                  Giriş yapılıyor...
+                  {otpStep ? "Doğrulanıyor..." : "Giriş yapılıyor..."}
                 </>
+              ) : otpStep ? (
+                "Doğrula ve Giriş Yap"
               ) : (
                 "Giriş Yap"
               )}

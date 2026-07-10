@@ -6,6 +6,8 @@ export type AdminAction =
   // Auth
   | "LOGIN_SUCCESS"
   | "LOGIN_FAILED"
+  | "LOGIN_2FA_BACKUP"
+  | "2FA_ENABLED"
   | "LOGOUT"
   // Tracks
   | "CREATE_TRACK"

@@ -21,6 +21,11 @@ model AdminUser {
   role         String    @default("admin") @db.VarChar(50)
   lastLoginAt  DateTime?
   isActive     Boolean   @default(true)
+
+  // 2FA (TOTP — Microsoft/Google Authenticator uyumlu; tüm adminlere zorunlu)
+  totpSecret   String?   @db.VarChar(64)   // base32 secret
+  totpEnabled  Boolean   @default(false)   // false => middleware kuruluma zorlar
+  backupCodes  String?   @db.Text          // bcrypt'lenmiş tek kullanımlık kodlar (JSON dizi)
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
   

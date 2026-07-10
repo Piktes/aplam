@@ -77,6 +77,16 @@ export async function middleware(request: NextRequest) {
             url.searchParams.set("callbackUrl", pathname);
             return NextResponse.redirect(url);
         }
+
+        // 2FA zorunlu: kurulumu tamamlanmamış admin (şifreyle girmiş ama
+        // TOTP etkin değil) yalnız kurulum sayfasını görebilir
+        if (
+            pathname.startsWith("/admin") &&
+            pathname !== "/admin/2fa-setup" &&
+            (token as any).totpEnabled !== true
+        ) {
+            return NextResponse.redirect(new URL("/admin/2fa-setup", origin));
+        }
     }
 
     // For all requests, set normalized headers to prevent duplication issues
