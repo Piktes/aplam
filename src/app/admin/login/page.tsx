@@ -54,18 +54,17 @@ export default function AdminLoginPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background grain relative">
-      {/* Theme Toggle - Top Right */}
-      <div className="absolute top-4 right-4 z-20">
-        <ThemeToggle />
-      </div>
-
       {/* Background decorations */}
       <div className="absolute top-1/4 left-10 w-64 h-64 bg-accent-coral/10 rounded-full blur-3xl" />
       <div className="absolute bottom-1/4 right-10 w-96 h-96 bg-accent-peach/10 rounded-full blur-3xl" />
 
       <div className="relative z-10 w-full max-w-md mx-4">
         {/* Login Card */}
-        <div className="glass-card p-8 md:p-10 rounded-3xl">
+        <div className="glass-card p-8 md:p-10 rounded-3xl relative">
+          {/* Tema düğmesi kartın içinde, sağ üst köşede */}
+          <div className="absolute top-4 right-4">
+            <ThemeToggle />
+          </div>
           {/* Header */}
           <div className="text-center mb-8">
             <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-accent-coral/10 flex items-center justify-center">
