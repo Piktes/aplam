@@ -4,15 +4,12 @@ import { useState, useEffect, useRef } from "react";
 import { Sparkles } from "lucide-react";
 import { SocialLinksRow } from "@/components/social-icons";
 
-// Hero'daki sosyal ikon satırı için akordeon sarmalayıcı.
-// - İlk ziyarette ikonlar AÇIK başlar, ~3.5 sn sonra "Social Media" hapına
-//   toplanır (localStorage ile hatırlanır; sonraki ziyaretlerde kapalı başlar).
-// - PC: hover ile sağdan sola açılır, mouse çekilince toplanır.
-// - Mobil: hapa dokununca açılır/kapanır.
-// İkonların kendisi SocialLinksRow — görünümleri aynen korunur.
-
-const INTRO_KEY = "ba_social_intro_seen";
-const INTRO_MS = 3500;
+// Hero'daki sosyal ikon satırı için akordeon.
+// - Her sayfa açılışında KAPALI başlar ("Sosyal Medya" hapı görünür).
+// - Açılınca hap kaybolur, ikonlar ekrana ortalanmış olarak belirir
+//   (sağdan sola süzülerek); görünümleri aynen korunur.
+// - PC: hover ile açılır, mouse ayrılınca kapanır.
+// - Mobil: hapa dokununca açılır; DIŞARI dokununca kapanır.
 
 interface SocialAccordionProps {
     links: any[];
@@ -20,59 +17,49 @@ interface SocialAccordionProps {
 }
 
 export function SocialAccordion({ links, size = 18 }: SocialAccordionProps) {
-    const [open, setOpen] = useState(true); // ilk ziyaretçi açık görsün
-    const introDone = useRef(false);
+    const [open, setOpen] = useState(false);
+    const ref = useRef<HTMLDivElement>(null);
 
+    // Dışarı dokunma/tıklama → kapan (mobil için şart, PC'de de zararsız)
     useEffect(() => {
-        try {
-            if (localStorage.getItem(INTRO_KEY)) {
-                // Tekrar gelen ziyaretçi: kapalı başla
-                introDone.current = true;
-                setOpen(false);
-                return;
-            }
-            localStorage.setItem(INTRO_KEY, "1");
-            const t = setTimeout(() => {
-                introDone.current = true;
-                setOpen(false);
-            }, INTRO_MS);
-            return () => clearTimeout(t);
-        } catch {
-            // localStorage yoksa (gizli mod vb.) hep açık kalsın
-            introDone.current = true;
-        }
-    }, []);
+        if (!open) return;
+        const closeOutside = (e: PointerEvent) => {
+            if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+        };
+        document.addEventListener("pointerdown", closeOutside);
+        return () => document.removeEventListener("pointerdown", closeOutside);
+    }, [open]);
 
     return (
         <div
-            className="flex items-center justify-center"
+            ref={ref}
+            className="grid place-items-center"
             onMouseEnter={() => setOpen(true)}
-            onMouseLeave={() => {
-                if (introDone.current) setOpen(false);
-            }}
+            onMouseLeave={() => setOpen(false)}
         >
-            {/* İkonlar hapın SOLUNDA: açılış sağdan sola okunur */}
+            {/* Açık hal: ikonlar tam ortada; kapalıyken sağa toplanmış ve görünmez */}
             <div
-                className={`overflow-hidden transition-all duration-500 ease-out ${open ? "max-w-[480px] opacity-100 mr-3" : "max-w-0 opacity-0 mr-0"
+                className={`col-start-1 row-start-1 transition-all duration-500 ease-out ${open
+                    ? "opacity-100 translate-x-0 scale-100"
+                    : "opacity-0 translate-x-8 scale-95 pointer-events-none"
                     }`}
             >
-                <div className="w-max">
-                    <SocialLinksRow links={links} size={size} />
-                </div>
+                <SocialLinksRow links={links} size={size} />
             </div>
 
+            {/* Kapalı hal: yalnız hap görünür; açılınca tamamen kaybolur */}
             <button
                 type="button"
-                onClick={() => {
-                    introDone.current = true;
-                    setOpen(!open);
-                }}
+                onClick={() => setOpen(true)}
                 aria-expanded={open}
-                aria-label="Sosyal medya bağlantılarını göster/gizle"
-                className="flex items-center gap-2 rounded-full px-4 py-2 text-xs font-medium tracking-[0.2em] uppercase border border-foreground/15 bg-foreground/5 backdrop-blur-md text-muted-foreground hover:text-foreground hover:bg-foreground/10 transition-colors whitespace-nowrap"
+                aria-label="Sosyal medya bağlantılarını göster"
+                className={`col-start-1 row-start-1 flex items-center gap-2 rounded-full px-4 py-2 text-xs font-medium tracking-[0.2em] uppercase border border-foreground/15 bg-foreground/5 backdrop-blur-md text-muted-foreground whitespace-nowrap transition-all duration-300 ${open
+                    ? "opacity-0 scale-95 pointer-events-none"
+                    : "opacity-100 scale-100 hover:text-foreground hover:bg-foreground/10"
+                    }`}
             >
                 <Sparkles size={13} className="text-accent-coral" />
-                Social Media
+                Sosyal Medya
             </button>
         </div>
     );
