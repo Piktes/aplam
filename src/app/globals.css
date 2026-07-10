@@ -786,6 +786,31 @@
   background-color: #E8C4B0;
 }
 
+/* Hero CTA'sı ("Etkinlikleri Gör"): yarı şeffaf cam görünüm — arkadaki
+   kapak görseli belli belirsiz görünür. Yalnız bu butona uygulanır,
+   diğer btn-primary'ler dolu kalır. */
+.public-v2 .btn-hero-glass {
+  background-color: rgba(200, 155, 123, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(253, 248, 244, 0.25);
+}
+
+.public-v2 .btn-hero-glass:hover:not(:active) {
+  background-color: rgba(179, 126, 98, 0.75);
+}
+
+.dark .public-v2 .btn-hero-glass {
+  background-color: rgba(216, 164, 143, 0.45);
+  color: #FDF8F4;
+  border-color: rgba(245, 233, 226, 0.2);
+}
+
+.dark .public-v2 .btn-hero-glass:hover:not(:active) {
+  background-color: rgba(232, 196, 176, 0.65);
+  color: #382B2B;
+}
+
 .public-v2 .btn-secondary {
   transition: background-color 300ms ease-out, color 300ms ease-out,
     border-color 300ms ease-out, transform 300ms ease-out;

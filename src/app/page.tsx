@@ -254,7 +254,7 @@ export default async function Home() {
         <div className="relative z-30 text-center px-6 max-w-5xl flex flex-col items-center">
           {heroPosIsCenter && heroTextContent}
           <div className="opacity-0 animate-fade-in animate-delay-300 mt-12 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a href="#concerts" className="btn-primary">Etkinlikleri Gör</a>
+            <a href="#concerts" className="btn-primary btn-hero-glass">Etkinlikleri Gör</a>
             {spotifyLink && (
               <a href={spotifyLink} target="_blank" rel="noopener noreferrer" className="btn-secondary flex items-center gap-2">
                 <Music2 size={18} /> Şimdi Dinle
