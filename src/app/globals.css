@@ -711,19 +711,21 @@
   background: #443434;
 }
 
+/* Hero foto perdesi: ara duraklar hafifletildi (foto daha net görünsün);
+   en alttaki %100 alttaki bölüme dikişsiz geçiş için DOKUNMA */
 .public-v2 .gradient-hero {
   background: linear-gradient(180deg,
       transparent 0%,
-      rgba(251, 243, 238, 0.3) 30%,
-      rgba(251, 243, 238, 0.8) 70%,
+      rgba(251, 243, 238, 0.2) 30%,
+      rgba(251, 243, 238, 0.65) 70%,
       #FBF3EE 100%);
 }
 
 .dark .public-v2 .gradient-hero {
   background: linear-gradient(180deg,
       transparent 0%,
-      rgba(68, 52, 52, 0.4) 30%,
-      rgba(68, 52, 52, 0.9) 70%,
+      rgba(68, 52, 52, 0.3) 30%,
+      rgba(68, 52, 52, 0.75) 70%,
       #443434 100%);
 }
 
