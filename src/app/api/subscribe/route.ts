@@ -23,28 +23,19 @@ function isRateLimited(identifier: string): boolean {
   return false;
 }
 
-// Get client IP for additional rate limiting - check multiple headers
+// Get client IP for additional rate limiting.
+// ÖNCELİK cf-connecting-ip: Cloudflare arkasındayız ve bu başlığı Cloudflare
+// kendisi yazar (sahtelenemez). x-forwarded-for'un ilk değeri istemci
+// tarafından sahte doldurulabilir — tek başına güvenilmez.
 function getClientIP(request: NextRequest): string {
-  // Check multiple headers in order of reliability
-  const xForwardedFor = request.headers.get("x-forwarded-for");
-  const xRealIP = request.headers.get("x-real-ip");
   const cfConnectingIP = request.headers.get("cf-connecting-ip");
+  if (cfConnectingIP) return cfConnectingIP.trim();
 
-  let ip = "unknown";
+  const xRealIP = request.headers.get("x-real-ip");
+  if (xRealIP) return xRealIP.trim();
 
-  if (xForwardedFor) {
-    // x-forwarded-for can contain multiple IPs, take the first (client)
-    ip = xForwardedFor.split(",")[0].trim();
-  } else if (xRealIP) {
-    ip = xRealIP.trim();
-  } else if (cfConnectingIP) {
-    ip = cfConnectingIP.trim();
-  }
-
-  // Log for debugging (remove in production if noisy)
-  console.log(`[Subscribe] IP detection: x-forwarded-for=${xForwardedFor}, x-real-ip=${xRealIP}, result=${ip}`);
-
-  return ip;
+  const xForwardedFor = request.headers.get("x-forwarded-for");
+  return xForwardedFor ? xForwardedFor.split(",")[0].trim() : "unknown";
 }
 
 // Fetch geolocation from IP (privacy-focused: no raw IP stored after lookup)

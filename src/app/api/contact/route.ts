@@ -24,11 +24,19 @@ function isRateLimited(identifier: string): boolean {
   return false;
 }
 
-// Get client IP for additional rate limiting
+// Get client IP for additional rate limiting.
+// ÖNCELİK cf-connecting-ip: Cloudflare arkasındayız ve bu başlığı Cloudflare
+// kendisi yazar (sahtelenemez). x-forwarded-for'un ilk değeri istemci
+// tarafından sahte doldurulabilir — tek başına güvenilmez.
 function getClientIP(request: NextRequest): string {
+  const cfConnectingIP = request.headers.get("cf-connecting-ip");
+  if (cfConnectingIP) return cfConnectingIP.trim();
+
+  const xRealIP = request.headers.get("x-real-ip");
+  if (xRealIP) return xRealIP.trim();
+
   const forwarded = request.headers.get("x-forwarded-for");
-  const ip = forwarded ? forwarded.split(",")[0].trim() : "unknown";
-  return ip;
+  return forwarded ? forwarded.split(",")[0].trim() : "unknown";
 }
 
 // Fetch geolocation from IP (privacy-focused: no IP stored)
