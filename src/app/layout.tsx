@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Cinzel, Playfair_Display, Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { AuthProvider } from "@/components/providers/auth-provider";
@@ -120,6 +121,9 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
+// Google Analytics 4 ölçüm kimliği (analytics.google.com'daki mülk)
+const GA_MEASUREMENT_ID = "G-NERHNRDWMT";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -140,6 +144,24 @@ export default function RootLayout({
             <Toaster position="top-right" richColors />
           </ThemeProvider>
         </AuthProvider>
+        {/* Google Analytics — yalnız production'da yüklenir (lokal geliştirme
+            trafiği istatistikleri kirletmesin) */}
+        {process.env.NODE_ENV === "production" && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+              strategy="afterInteractive"
+            />
+            <Script id="gtag-init" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${GA_MEASUREMENT_ID}');
+              `}
+            </Script>
+          </>
+        )}
       </body>
     </html>
   );
