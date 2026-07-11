@@ -90,6 +90,9 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     ...baseMetadata,
     metadataBase,
+    alternates: {
+      canonical: "/",
+    },
     openGraph: {
       title: "Begüm Atak | Resmi Web Sitesi",
       description: "Tiyatro ve dizi oyuncusu Begüm Atak'ın resmi web sitesi. Biyografi, oyunlar, diziler, etkinlikler ve iletişim.",

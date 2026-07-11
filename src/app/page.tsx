@@ -24,7 +24,7 @@ import { SpecialEventPopup } from "@/components/special-event-popup";
 import { GalleryStack } from "@/components/gallery-stack";
 import { ContactForm } from "@/components/contact-form";
 import { NewsletterForm } from "@/components/newsletter-form";
-// import { JsonLd } from "@/components/json-ld"; // Temporarily disabled or needs refactoring
+import { JsonLd } from "@/components/json-ld";
 import { VisitorTracker } from "@/components/visitor-tracker";
 import {
   ArrowRight, Mail, MessageCircle, Calendar, Sparkles, Music2, MapPin
@@ -201,9 +201,20 @@ export default async function Home() {
 
   const spotifyLink = socialLinks.find(l => l.platform.toLowerCase().includes('spotify'))?.url;
 
+  // SEO: bio metni etiketlerden arındırılıp kısaltılarak schema.org açıklaması yapılır
+  const plainBio = (bio?.content || "").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+  const seoDescription = plainBio
+    ? plainBio.slice(0, 200)
+    : "Tiyatro ve dizi oyuncusu Begüm Atak'ın resmi web sitesi. Biyografi, oyunlar, diziler, etkinlikler ve iletişim.";
+
   return (
     <main className={`public-v2 ${publicV2FontVars} relative grain`}>
-      {/* <JsonLd artist={artist} /> */}
+      <JsonLd
+        name={artistName}
+        description={seoDescription}
+        sameAs={socialLinks.map((l) => l.url)}
+        image={heroImages[0]?.imageUrl ? `https://begumatak.com${heroImages[0].imageUrl}` : undefined}
+      />
       <SpecialEventPopup event={specialEvent} />
       <VisitorTracker />
 
