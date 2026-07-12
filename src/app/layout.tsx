@@ -103,9 +103,9 @@ export async function generateMetadata(): Promise<Metadata> {
       locale: "tr_TR",
       images: [
         {
-          // v2: BA logolu güncel paylaşım görseli (eski Heiraza og-image.png yerine;
-          // yeni dosya adı = WhatsApp/FB önbelleği taze görseli çeksin diye)
-          url: "/og-image-v2.png",
+          // v3: yeni BA monogram logolu paylaşım görseli
+          // (yeni dosya adı = WhatsApp/FB önbelleği taze görseli çeksin diye)
+          url: "/og-image-v3.png",
           width: 1200,
           height: 630,
           alt: "Begüm Atak - Resmi Web Sitesi",
@@ -116,7 +116,7 @@ export async function generateMetadata(): Promise<Metadata> {
       card: "summary_large_image",
       title: "Begüm Atak | Resmi Web Sitesi",
       description: "Tiyatro ve dizi oyuncusu Begüm Atak'ın resmi web sitesi. Biyografi, oyunlar, diziler, etkinlikler ve iletişim.",
-      images: ["/og-image-v2.png"],
+      images: ["/og-image-v3.png"],
     },
   };
 }

@@ -19,7 +19,7 @@ export function JsonLd({ name, description, sameAs, image }: JsonLdProps) {
         name,
         description,
         url: baseUrl,
-        image: image || `${baseUrl}/og-image-v2.png`,
+        image: image || `${baseUrl}/og-image-v3.png`,
         jobTitle: "Oyuncu",
         nationality: { "@type": "Country", name: "Türkiye" },
         sameAs,
